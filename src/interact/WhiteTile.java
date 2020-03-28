@@ -1,8 +1,5 @@
 package interact;
 
-
-
-
 import logic.Sprites;
 
 public class WhiteTile extends Tile {
@@ -11,10 +8,8 @@ public class WhiteTile extends Tile {
 		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	public int getSymbol()
-	{
+
+	public int getSymbol() {
 		return Sprites.WhiteTile;
 	}
 
