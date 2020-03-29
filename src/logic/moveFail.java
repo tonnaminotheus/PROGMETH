@@ -1,6 +1,6 @@
 package logic;
 
-public class addBarricadeFail extends Exception {
+public class moveFail extends Exception{
 	/**
 	 * 
 	 */
@@ -8,7 +8,7 @@ public class addBarricadeFail extends Exception {
 	// you CAN add SerialVersionID if eclipse gives you warning
 	public String message;
 
-	public addBarricadeFail(String message) {
+	public moveFail(String message) {
 		this.message=message;
 	}
 }

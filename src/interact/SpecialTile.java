@@ -12,27 +12,28 @@ public class SpecialTile extends Tile {
 	}
 
 	public static void getAction(Player e) {
-		double random = Math.random();// random later
-		if (random <= 0.33) {
-			move2(e);
-		} else if (random <= 0.66) {
+		int random = (int) (Math.random() * 10);
+		if (random % 10 == 0) {
+			move1(e);
+		} else if (random % 10 == 1) {
 			addBarricade(e);
-		} else {
+		} else if (random % 10 == 2)
+			move1(e.getOtherPlayer());
+		else {
 			removeBarricade();
 		}
 	}
+	
 
-	public static void move2(Player e) {
-		double random = Math.random();// random later
+	public static void move1(Player e) {
+		double random = Math.random();
 		int dir = (int) (random * 100 - 1) / 25;
 		int[] dirx = { 0, 1, 0, -1 };
 		int[] diry = { -1, 0, 1, 0 };
-		GameController.move(e, e.getX() + 2 * dirx[dir], e.getY() + 2 * diry[dir]);
-		GameController.move(e, e.getX() + 2 * dirx[dir], e.getY() + 2 * diry[dir]);
+		GameController.move(e , e.getX() + 2 * dirx[dir], e.getY() + 2 * diry[dir], e.getX(), e.getY());
 	}
 
 	public static void addBarricade(Player e) {
-		System.out.println("Congradtuation you have more barricade");
 		e.setBarricade(e.getHaveBaricade() + 1);
 	}
 

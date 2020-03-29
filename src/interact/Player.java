@@ -7,12 +7,21 @@ import logic.Sprites;
 public class Player extends Entity {
 	private int index;
 	private int haveBarricade;
+	private Player otherPlayer;
 
 	public Player(int x, int y, int index) {
 		super(x, y);
 		this.setIndex(index);
 		this.setBarricade(10);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void setOtherPlayer(Player otherPlayer) {
+		this.otherPlayer = otherPlayer;
+	}
+	
+	public Player getOtherPlayer() {
+		return otherPlayer;
 	}
 
 	public void setIndex(int index) {

@@ -20,12 +20,14 @@ public class GameController {
 	private static int player1index;
 	private static int player2index;
 	private static int turn = 1;
-	private static boolean is_win;
+	private static boolean isWin;
 
 	public static void IntializeMap() {
-		setGameWin(false);
+		setIsWin(false);
 		player1 = new Player(0, 8, player1index);
 		player2 = new Player(16, 8, player2index);
+		player1.setOtherPlayer(player2);
+		player2.setOtherPlayer(player1);
 		gameMap = new GameMap();
 		gameMap.removeEntity(0, 8);
 		gameMap.removeEntity(16, 8);
@@ -35,15 +37,15 @@ public class GameController {
 
 	}
 
-	public static Player get_Player1() {
+	public static Player getPlayer1() {
 		return GameController.player1;
 	}
 
-	public static Player get_Player2() {
+	public static Player getPlayer2() {
 		return GameController.player2;
 	}
 
-	public static int get_turn() {
+	public static int getTurn() {
 		return turn;
 	}
 
@@ -52,87 +54,130 @@ public class GameController {
 		return gameMap;
 	}
 
-	public static void setGameWin(boolean stat) {
-		is_win = stat;
+	public static void setIsWin(boolean stat) {
+		isWin = stat;
 	}
 
-	public static boolean is_win() {
-		return is_win;
+	public static boolean getIs_win() {
+		return isWin;
 	}
 
-	public static void set_turn(int t) {
+	public static void setTurn(int t) {
 		turn = t;
 	}
 
-	public static boolean move(Player player, int x, int y) {
+	public static void spawnSpecialTile() {
+		int randomX = (int) (Math.random() * 16);
+		int randomY = (int) (Math.random() * 16);
+		if (getCurrentMap().getEntity(randomX, randomY).is_BlackTile()) {
+
+			int[] dirX = { 0, 2, 0, -2 };
+			int[] dirY = { 2, 0, -2, 0 };
+			boolean check = true;
+			for (int i = 0; i < 4; i++) {
+				if (!GameController.getCurrentMap().getEntity(randomX + dirX[i], randomY + dirY[i]).is_BlackTile()) {
+					check = false;
+				}
+			}
+			if (check) {
+				getCurrentMap().removeEntity(randomX, randomY);
+				getCurrentMap().addEntity(new SpecialTile(randomX, randomY), randomX, randomY);
+			}
+		}
+	}
+
+	public static void move(Player player, int posx, int posy, int x, int y) throws moveFail {
 		// dir 0 up 1 right 2 down 3 left
 		// check class is blackTile check barricade tile
 		// this.setX(x); +2
 		// this.setY(y); +2
 		// check white tile
-		if (getCurrentMap().getEntity(x, y).is_BlackTile() || getCurrentMap().getEntity(x, y).is_SpecialTile()) {
-			// change varrible name
-			int xx = player.getX();
-			int yy = player.getY();
-			player.setX(x);
-			player.setY(y);
-			Entity now = getCurrentMap().getEntity(x, y);
-			getCurrentMap().removeEntity(x, y);
-			getCurrentMap().removeEntity(xx, yy);
-			getCurrentMap().addEntity(player, x, y);
-			getCurrentMap().addEntity(new BlackTile(xx, yy), xx, yy);
-			if (now.is_SpecialTile()) {
-				SpecialTile.getAction(player);
+		try {
+			boolean t1 = GameController.getCurrentMap().getEntity((posx + x) / 2, (posy + y) / 2).is_WhiteTile();
+			boolean t2 = GameController.getCurrentMap().getEntity(posx, posy).is_BlackTile();
+			boolean t3 = GameController.getCurrentMap().getEntity(posx, posy).is_SpecialTile();
+			boolean t4 = (Math.abs(posx - x) <= 2 ? true : false) && (Math.abs(posy - y) <= 2 ? true : false)
+					&& (posx == x || posy == y);
+			if (t1 && (t2 || t3) && t4) {
+				// change varrible name
+				int xx = player.getX();
+				int yy = player.getY();
+				player.setX(posx);
+				player.setY(posy);
+				Entity now = getCurrentMap().getEntity(posx, posy);
+				getCurrentMap().removeEntity(posx, posy);
+				getCurrentMap().removeEntity(xx, yy);
+				getCurrentMap().addEntity(player, posx, posy);
+				getCurrentMap().addEntity(new BlackTile(xx, yy), xx, yy);
+				if (now.is_SpecialTile()) {
+					SpecialTile.getAction(player);
+				}
+			} else {
+				if (!t1)
+					throw new moveFail("there is barricade");
+				else if (!(t2 || t3))
+					throw new moveFail("you can not step on that tile");
+				else
+					throw new moveFail("The possition is out of movable range");
+
 			}
-			return true;
-		} else {
-			return false;
+		} catch (moveFail e) {
+			throw new moveFail("The possition is out of the board");
 		}
 	}
 
-	public static boolean removeBarricade(int x, int y) {
-		if (GameController.getCurrentMap().getEntity(x, y).is_BarricadeTile()) {
-			BarricadeTile bar1 = (BarricadeTile) getCurrentMap().getEntity(x, y);
-			BarricadeTile bar2 = (BarricadeTile) getCurrentMap().getEntity(bar1.otherx, bar1.othery);
-			int x1 = bar1.getX();
-			int y1 = bar1.getY();
-			int x2 = bar2.getX();
-			int y2 = bar2.getY();
-			getCurrentMap().removeEntity(x1, y1);
-			getCurrentMap().removeEntity(x2, y2);
-			getCurrentMap().addEntity(new WhiteTile(x1, y1), x1, y1);
-			getCurrentMap().addEntity(new WhiteTile(x2, y2), x2, y2);
-			return true;
-		} else {
-			return false;
+	public static void removeBarricade(int x, int y) throws removeBarricadeFail {
+		try {
+			if (GameController.getCurrentMap().getEntity(x, y).is_BarricadeTile()) {
+				BarricadeTile bar1 = (BarricadeTile) getCurrentMap().getEntity(x, y);
+				BarricadeTile bar2 = (BarricadeTile) getCurrentMap().getEntity(bar1.otherx, bar1.othery);
+				int x1 = bar1.getX();
+				int y1 = bar1.getY();
+				int x2 = bar2.getX();
+				int y2 = bar2.getY();
+				getCurrentMap().removeEntity(x1, y1);
+				getCurrentMap().removeEntity(x2, y2);
+				getCurrentMap().addEntity(new WhiteTile(x1, y1), x1, y1);
+				getCurrentMap().addEntity(new WhiteTile(x2, y2), x2, y2);
+			} else {
+				throw new removeBarricadeFail("The choosen possition is not BarricadeTile");
+			}
+		} catch (Exception e) {
+			throw new removeBarricadeFail("The possition is out of the map");
 		}
 	}
 
-	public static boolean addVerticalBarricade(int x, int y) {
-		Entity e1 = getCurrentMap().getEntity(x, y - 1);
-		Entity e2 = getCurrentMap().getEntity(x, y + 1);
-		if (e1.getClass() == WhiteTile.class && e2.getClass() == WhiteTile.class) {
-			getCurrentMap().removeEntity(e1.getX(), e1.getY());
-			getCurrentMap().removeEntity(e2.getX(), e2.getY());
-			getCurrentMap().addEntity(new BarricadeTile(x, y - 1, x, y + 1), x, y - 1);
-			getCurrentMap().addEntity(new BarricadeTile(x, y + 1, x, y - 1), x, y + 1);
-			return true;
-		} else {
-			return false;
+	public static void addVerticalBarricade(int x, int y) throws addBarricadeFail {
+		try {
+			Entity e1 = getCurrentMap().getEntity(x, y - 1);
+			Entity e2 = getCurrentMap().getEntity(x, y + 1);
+			if (e1.getClass() == WhiteTile.class && e2.getClass() == WhiteTile.class) {
+				getCurrentMap().removeEntity(e1.getX(), e1.getY());
+				getCurrentMap().removeEntity(e2.getX(), e2.getY());
+				getCurrentMap().addEntity(new BarricadeTile(x, y - 1, x, y + 1), x, y - 1);
+				getCurrentMap().addEntity(new BarricadeTile(x, y + 1, x, y - 1), x, y + 1);
+			} else {
+				throw new addBarricadeFail("There are barricade on that tile");
+			}
+		} catch (Exception e) {
+			throw new addBarricadeFail("The possition is out of the map");
 		}
 	}
 
-	public static boolean addHorisontalBarricade(int x, int y) {
-		Entity e1 = getCurrentMap().getEntity(x - 1, y);
-		Entity e2 = getCurrentMap().getEntity(x + 1, y);
-		if (e1.getClass() == WhiteTile.class && e2.getClass() == WhiteTile.class) {
-			getCurrentMap().removeEntity(e1.getX(), e1.getY());
-			getCurrentMap().removeEntity(e2.getX(), e2.getY());
-			getCurrentMap().addEntity(new BarricadeTile(x - 1, y, x + 1, y), x - 1, y);
-			getCurrentMap().addEntity(new BarricadeTile(x + 1, y, x - 1, y), x + 1, y);
-			return true;
-		} else {
-			return false;
+	public static void addHorisontalBarricade(int x, int y) throws addBarricadeFail {
+		try {
+			Entity e1 = getCurrentMap().getEntity(x - 1, y);
+			Entity e2 = getCurrentMap().getEntity(x + 1, y);
+			if (e1.getClass() == WhiteTile.class && e2.getClass() == WhiteTile.class) {
+				getCurrentMap().removeEntity(e1.getX(), e1.getY());
+				getCurrentMap().removeEntity(e2.getX(), e2.getY());
+				getCurrentMap().addEntity(new BarricadeTile(x - 1, y, x + 1, y), x - 1, y);
+				getCurrentMap().addEntity(new BarricadeTile(x + 1, y, x - 1, y), x + 1, y);
+			} else {
+				throw new addBarricadeFail("There are barricade on that tile");
+			}
+		} catch (Exception e) {
+			throw new addBarricadeFail("The possition is out of the map");
 		}
 	}
 
