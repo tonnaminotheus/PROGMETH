@@ -37,7 +37,8 @@ class Application {
 				}
 				System.out.println("");
 			}
-			if (GameController.getTurn() % 5 == 0) {
+			if (GameController.getTurn() % 3 == 0) {
+				System.out.println("spawn Activate");
 				GameController.spawnSpecialTile();
 			}
 
@@ -123,8 +124,7 @@ class Application {
 								GameController.removeBarricade(x - 1, y);
 								System.out.println("you can not place barricade there please try again");
 								continue;
-							}
-							else
+							} else
 								break;
 						} catch (addBarricadeFail e) {
 							System.out.println("please try again: " + e.message);
@@ -139,52 +139,48 @@ class Application {
 								GameController.removeBarricade(x, y - 1);
 								System.out.println("you can not place barricade there please try again");
 								continue;
-							}
-							else
+							} else
 								break;
 						} catch (addBarricadeFail e) {
 							System.out.println("please try again: " + e.message);
 						}
 					}
 				}
-			}else if(choice.equals("3"))
+			} else if (choice.equals("3"))
 
-	{
-		while (true) {
-			System.out.println("input x y");
-			int x = scanner.nextInt();
-			int y = scanner.nextInt();
-			// scanner.nextLine();
-			try {
-				GameController.removeBarricade(x, y);
+			{
+				while (true) {
+					System.out.println("input x y");
+					int x = scanner.nextInt();
+					int y = scanner.nextInt();
+					// scanner.nextLine();
+					try {
+						GameController.removeBarricade(x, y);
+						break;
+					} catch (removeBarricadeFail e) {
+						System.out.println("please try again: " + e.message);
+					}
+				}
+			} else if (choice.equals("999")) {
+				System.out.println("done");
 				break;
-			} catch (removeBarricadeFail e) {
-				System.out.println("please try again: " + e.message);
 			}
+
+			if (GameController.getPlayer1().getX() == 16) {
+				result = "player1 win";
+				GameController.setIsWin(true);
+			} else if (GameController.getPlayer2().getX() == 0) {
+				result = "player2 win";
+				GameController.setIsWin(true);
+			}
+
+			if (GameController.getIs_win()) {
+				System.out.println(result);
+				break;
+			}
+			GameController.setTurn(GameController.getTurn() + 1);
 		}
-	}else if(choice.equals("999"))
-	{
-		System.out.println("done");
-		break;
+
 	}
-
-	if(GameController.getPlayer1().getX()==16)
-	{
-		result = "player1 win";
-		GameController.setIsWin(true);
-	}else if(GameController.getPlayer2().getX()==0)
-	{
-		result = "player2 win";
-		GameController.setIsWin(true);
-	}
-
-	if(GameController.getIs_win())
-	{
-		System.out.println(result);
-		break;
-	}GameController.setTurn(GameController.getTurn()+1);
-}
-
-}
 
 }

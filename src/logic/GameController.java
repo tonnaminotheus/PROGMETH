@@ -6,7 +6,11 @@ import interact.Player;
 import interact.SpecialTile;
 import interact.WhiteTile;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
 
 import entity.base.Coordinate;
 import entity.base.Entity;
@@ -33,7 +37,7 @@ public class GameController {
 		gameMap.removeEntity(16, 8);
 		gameMap.addEntity(player1, 0, 8);
 		gameMap.addEntity(player2, 16, 8);
-		System.out.println("Finish Initialize");
+		//System.out.println("Finish Initialize");
 
 	}
 
@@ -80,6 +84,7 @@ public class GameController {
 				}
 			}
 			if (check) {
+				System.out.println("spawnSuccess");
 				getCurrentMap().removeEntity(randomX, randomY);
 				getCurrentMap().addEntity(new SpecialTile(randomX, randomY), randomX, randomY);
 			}
@@ -212,6 +217,35 @@ public class GameController {
 		}
 		return false;
 
+	}
+	
+	public static void printmapcheck()
+	{
+		for (int j = 16; j >= 0; j--) {
+			for (int i = 0; i < 17; i++) {
+				if(getCurrentMap().getEntity(i, j).is_BarricadeTile())
+				{
+					System.out.print("B");
+				}
+				else if(getCurrentMap().getEntity(i, j).is_BlackTile())
+				{
+					System.out.print("_");
+				}
+				else if(getCurrentMap().getEntity(i, j).is_Player())
+				{
+					System.out.print("P");
+				}
+				else if(getCurrentMap().getEntity(i, j).is_WhiteTile())
+				{
+					System.out.print(" ");
+				}
+				else
+				{
+					System.out.print("S");
+				}
+			}
+			System.out.println("");
+		}
 	}
 
 }

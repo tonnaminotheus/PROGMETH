@@ -1,27 +1,31 @@
 package test.interact;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import interact.Player;
+import logic.GameController;
+import logic.Sprites;
+
 public class PlayerTest {
-	/* initiate map 
-	 * construct player1 (8,0,10)
-	 * get x get y getBarricade ;8,0,10
-	 * 
-	 * 
-	 * setBarricade 4
-	 * getbarricade ; 4
-	 * 
-	 * construct player2 (4,8,6)
-	 * setOtherPlayer1
-	 * setOtherPlayer2
-	 * 
-	 * 
-	 * getOtherPlayer Player1 Player2
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
+	Player test1;
+	Player test2;
+	
+	@BeforeEach
+	protected void setUpBeforeEachTest() {
+		test1=new Player(0,8,1);
+		test2=new Player(16,8,2);
+		test1.setOtherPlayer(test1);
+		test2.setOtherPlayer(test2);
+	}
+	
+	
+	
+	@Test
+	void testGetSymbol() {
+		assertEquals(Sprites.Player1,test1.getSymbol());
+		assertEquals(Sprites.Player2,test2.getSymbol());
+	}
 }
