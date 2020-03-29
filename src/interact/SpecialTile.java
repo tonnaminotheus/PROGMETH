@@ -1,6 +1,7 @@
 package interact;
 
 import logic.Sprites;
+import logic.moveFail;
 import interact.Player;
 import logic.GameController;
 
@@ -11,7 +12,7 @@ public class SpecialTile extends Tile {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void getAction(Player e) {
+	public static void getAction(Player e) throws moveFail {
 		int random = (int) (Math.random() * 10);
 		if (random % 10 == 0) {
 			move1(e);
@@ -25,7 +26,7 @@ public class SpecialTile extends Tile {
 	}
 	
 
-	public static void move1(Player e) {
+	public static void move1(Player e) throws moveFail {
 		double random = Math.random();
 		int dir = (int) (random * 100 - 1) / 25;
 		int[] dirx = { 0, 1, 0, -1 };
