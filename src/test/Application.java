@@ -11,6 +11,7 @@ import logic.moveFail;
 import logic.removeBarricadeFail;
 import entity.base.Entity;
 import interact.Player;
+import interact.SpecialTile;
 
 class Application {
 
@@ -20,25 +21,9 @@ class Application {
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
 			System.out.println("-----------Turn " + GameController.getTurn() + " -------------");
-			for (int j = 16; j >= 0; j--) {
-				for (int i = 0; i < 17; i++) {
-					Entity check = GameController.getCurrentMap().getEntity(i, j);
-					if (check.isBarricadeTile()) {
-						System.out.print("B");
-					} else if (check.isBlackTile()) {
-						System.out.print("_");
-					} else if (check.isWhiteTile()) {
-						System.out.print(" ");
-					} else if (check.isSpecialTile()) {
-						System.out.print("S");
-					} else {
-						System.out.print("P");
-					}
-				}
-				System.out.println("");
-			}
-			if (GameController.getTurn() % 3 == 0) {
-				System.out.println("spawn Activate");
+			GameController.printmapcheck();
+			if (GameController.getTurn() % 2 == 0) {
+				// System.out.println("spawn Activate");
 				GameController.spawnSpecialTile();
 			}
 
@@ -47,6 +32,7 @@ class Application {
 			System.out.println("(2) place barricade");
 			System.out.println("(3) remove barricade");
 			System.out.println("(4) pass the turn");
+			System.out.println("(5) place ExplodingTile");
 			System.out.println("(999) Exit");
 			String choice = scanner.nextLine();
 			String result = "";
@@ -108,6 +94,7 @@ class Application {
 
 				System.out.println("(1) place horizontally");
 				System.out.println("(2) place vertically");
+				System.out.println("(9999) place vertically");
 				while (true) {
 					String ch = scanner.nextLine();
 					System.out.println("input x y");
@@ -117,10 +104,8 @@ class Application {
 					if (ch.equals("1")) {
 						try {
 							GameController.addHorizontalBarricade(x, y);
-							if (!GameController.checkbfs(
-									GameController.getTurn() % 2 == 1 ? GameController.getPlayer1()
-											: GameController.getPlayer2(),
-									GameController.getTurn() % 2 == 1 ? 16 : 0)) {
+							if (!(GameController.checkbfs(GameController.getPlayer1(), 16)
+									&& GameController.checkbfs(GameController.getPlayer2(), 0))) {
 								GameController.removeBarricade(x - 1, y);
 								System.out.println("you can not place barricade there please try again");
 								continue;
@@ -132,10 +117,8 @@ class Application {
 					} else {
 						try {
 							GameController.addVerticalBarricade(x, y);
-							if (!GameController.checkbfs(
-									GameController.getTurn() % 2 == 1 ? GameController.getPlayer1()
-											: GameController.getPlayer2(),
-									GameController.getTurn() % 2 == 1 ? 16 : 0)) {
+							if (!(GameController.checkbfs(GameController.getPlayer1(), 16)
+									&& GameController.checkbfs(GameController.getPlayer2(), 0))) {
 								GameController.removeBarricade(x, y - 1);
 								System.out.println("you can not place barricade there please try again");
 								continue;
@@ -165,12 +148,22 @@ class Application {
 				System.out.println("done");
 				break;
 			}
+			else if(choice.equals("5")) {
+				SpecialTile.placeBomb();
+			}
 
 			if (GameController.getPlayer1().getX() == 16) {
 				result = "player1 win";
 				GameController.setIsWin(true);
 			} else if (GameController.getPlayer2().getX() == 0) {
 				result = "player2 win";
+				GameController.setIsWin(true);
+			}
+			if (GameController.getPlayer1().getLp() == 0) {
+				result = "player2 win";
+				GameController.setIsWin(true);
+			} else if (GameController.getPlayer2().getLp() == 0) {
+				result = "player1 win";
 				GameController.setIsWin(true);
 			}
 

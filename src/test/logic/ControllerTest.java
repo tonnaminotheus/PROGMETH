@@ -61,6 +61,7 @@ public class ControllerTest {
 		GameController.addHorizontalBarricade(1, 1);
 		//GameController.printmapcheck();
 		assertEquals(BarricadeTile.class, GameController.getCurrentMap().getEntity(0, 1).getClass());
+		assertEquals(BarricadeTile.class, GameController.getCurrentMap().getEntity(1, 1).getClass());
 		assertEquals(BarricadeTile.class, GameController.getCurrentMap().getEntity(2, 1).getClass());
 		
 	}
@@ -72,6 +73,7 @@ public class ControllerTest {
 		GameController.addVerticalBarricade(1, 1);
 		//GameController.printmapcheck();
 		assertEquals(BarricadeTile.class, GameController.getCurrentMap().getEntity(1, 0).getClass());
+		assertEquals(BarricadeTile.class, GameController.getCurrentMap().getEntity(1, 1).getClass());
 		assertEquals(BarricadeTile.class, GameController.getCurrentMap().getEntity(1, 2).getClass());
 	}
 	
@@ -84,7 +86,7 @@ public class ControllerTest {
 		assertEquals(BarricadeTile.class, GameController.getCurrentMap().getEntity(1, 0).getClass());
 		assertEquals(BarricadeTile.class, GameController.getCurrentMap().getEntity(1, 2).getClass());
 		GameController.removeBarricade(1, 0);
-		GameController.printmapcheck();
+		//GameController.printmapcheck();
 		assertEquals(WhiteTile.class, GameController.getCurrentMap().getEntity(1, 0).getClass());
 		assertEquals(WhiteTile.class, GameController.getCurrentMap().getEntity(1, 2).getClass());
 	}
@@ -93,41 +95,106 @@ public class ControllerTest {
 	public void move() throws moveFail 
 	{
 		GameController.move(GameController.getPlayer1(), 2, 8, GameController.getPlayer1().getX(), GameController.getPlayer1().getY());
-		GameController.printmapcheck();
+		//GameController.printmapcheck();
 		assertEquals(BlackTile.class, GameController.getCurrentMap().getEntity(0, 8).getClass());
 		assertEquals(Player.class, GameController.getCurrentMap().getEntity(2, 8).getClass());
 	}
 	
+	@Test
+	public void checkbfs1()
+	{
+		/* 0 1 2 3 4 5 6 7 8 9 A B C D E F G
+		 * 
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 P w b w b w b w b w b w b w b w P
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 */
+		assertEquals(true,GameController.checkbfs(GameController.getPlayer1(), 16));
+		assertEquals(true,GameController.checkbfs(GameController.getPlayer2(), 0));
+		
+	}
+	
+	@Test
+	public void checkbfs2() throws moveFail, addBarricadeFail
+	{
+		/* 0 1 2 3 4 5 6 7 8 9 A B C D E F G
+		 * 
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 B B B B w w w w w w w w w w w w w
+		 *	 b w P B b w b w b w b w b w b w P
+		 *	 B B B B w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b w b w b w b w b w b w b w b w b
+		 */
+		GameController.move(GameController.getPlayer1(), 2, 8, 0,8);
+		GameController.addHorizontalBarricade(1, 9);
+		GameController.addHorizontalBarricade(1, 7);
+		GameController.addVerticalBarricade(3, 8);
+		
+		assertEquals(false,GameController.checkbfs(GameController.getPlayer1(), 16));
+		assertEquals(true,GameController.checkbfs(GameController.getPlayer2(), 0));
+		
+	}
 	
 	
-	
-
-	/*
-	 * initiate map construct player1 (8,0,10) get x get y getBarricade ;8,0,10
-	 * 
-	 * 
-	 * setBarricade 4 getbarricade ; 4
-	 * 
-	 * construct player2 (4,8,6) setOtherPlayer1 setOtherPlayer2
-	 * 
-	 * 
-	 * getOtherPlayer Player1 Player2
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-
-	// test all barricade
-	/*
-	 * initiate map p1 (8,0,10)
-	 * 
-	 * 
-	 * 
-	 */
+	@Test
+	public void checkbfs3() throws addBarricadeFail
+	{
+		/* 0 1 2 3 4 5 6 7 8 9 A B C D E F G
+		 * 
+		 *	 b w b w b B b w b w b w b w b w b
+		 *	 w w B B B B w w w w w w w w w w w
+		 *	 b B b w b B b w b w b w b w b w b
+		 *	 w B w w w w w w w w w w w w w w w
+		 *	 b B b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b B b w b w b w b w b w b w b w b
+		 *	 w B w w w w w w w w w w w w w w w
+		 *	 P B b w b w b w b w b w b w b w P
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b B b w b w b w b w b w b w b w b
+		 *	 w B w w w w w w w w w w w w w w w
+		 *	 b B b w b w b w b w b w b w b w b
+		 *	 w w w w w w w w w w w w w w w w w
+		 *	 b B b w b w b w b w b w b w b w b
+		 *	 w B w w w w w w w w w w w w w w w
+		 *	 b B b w b w b w b w b w b w b w b
+		 */
+		GameController.addVerticalBarricade(1, 1);
+		GameController.addVerticalBarricade(1, 5);
+		GameController.addVerticalBarricade(1, 9);
+		GameController.addVerticalBarricade(1, 13);
+		GameController.addVerticalBarricade(3, 15);
+		GameController.addHorizontalBarricade(3, 13);
+		
+		assertEquals(false,GameController.checkbfs(GameController.getPlayer1(), 16));
+		assertEquals(false,GameController.checkbfs(GameController.getPlayer2(), 0));
+		
+	}
 
 }

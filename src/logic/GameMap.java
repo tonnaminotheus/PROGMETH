@@ -43,9 +43,7 @@ public class GameMap {
 		for (int i = 0; i < column; i++) {
 			for (int j = 0; j < row; j++) {
 				cellmap[i][j] = new Cell();
-				if (i == 8 && j == 8) {
-					addEntity(new SpecialTile(i, j), i, j);
-				} else if (i % 2 == 0 && j % 2 == 0) {
+				if (i % 2 == 0 && j % 2 == 0) {
 					addEntity(new BlackTile(i, j), i, j);
 				} else {
 					addEntity(new WhiteTile(i, j), i, j);
@@ -65,6 +63,19 @@ public class GameMap {
 			}
 			System.out.println(rowstring);
 		}
+	}
+	
+	public ArrayList<BlackTile> getSpawnTile(){
+		ArrayList<BlackTile> ans=new ArrayList<BlackTile>();
+		for(int i=0;i<this.allEntity.size();i++)
+		{
+			if(this.allEntity.get(i).isBlackTile()&&this.allEntity.get(i).getX()!=0&&this.allEntity.get(i).getX()!=16)
+			{
+				ans.add((BlackTile) this.allEntity.get(i));
+			}
+		}
+		return ans;
+		
 	}
 
 	public Cell[][] getMap() {

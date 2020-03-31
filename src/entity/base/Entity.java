@@ -2,6 +2,7 @@ package entity.base;
 
 import interact.BarricadeTile;
 import interact.BlackTile;
+import interact.ExplodingTile;
 import interact.Player;
 import interact.SpecialTile;
 import interact.WhiteTile;
@@ -52,6 +53,10 @@ public abstract class Entity {
 
 	public boolean isSpecialTile() {
 		return this.getClass() == SpecialTile.class;
+	}
+	
+	public boolean isExplodingTile() {
+		return this.getClass() == ExplodingTile.class;
 	}
 
 }
