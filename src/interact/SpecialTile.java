@@ -38,12 +38,12 @@ public class SpecialTile extends Tile {
 	}
 
 	public static void addBarricade(Player e) {
-		System.out.println("--Congratulation you get one barricade--");
+		System.out.println("--Congratulation! You get one barricade--");
 		e.setBarricade(e.getHaveBaricade() + 1);
 	}
 
 	public static void removeBarricade() {
-		System.out.println("--Congratulation you can remove one barricade--");
+		System.out.println("--Remove one barricade--");
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
 			System.out.println("input x y");
@@ -60,7 +60,7 @@ public class SpecialTile extends Tile {
 		// check have barricade in map
 		// get input click on barricade tile
 		// remove both BarricadeTile that have same index
-		// chage that possition to white barricade
+		// change that position to white barricade
 	}
 
 	public int getSymbol() {

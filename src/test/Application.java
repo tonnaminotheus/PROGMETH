@@ -42,7 +42,7 @@ class Application {
 				GameController.spawnSpecialTile();
 			}
 
-			System.out.println("Please choose action");
+			System.out.println("Please choose the action");
 			System.out.println("(1) move");
 			System.out.println("(2) place barricade");
 			System.out.println("(3) remove barricade");
@@ -56,7 +56,7 @@ class Application {
 				if (GameController.getTurn() % 2 == 1) {
 					x = GameController.getPlayer1().getX();
 					y = GameController.getPlayer1().getY();
-					System.out.println("Player1 at possition: " + x + " " + y);
+					System.out.println("Player1 at position: " + x + " " + y);
 					while (true) {
 						System.out.println("input x y");
 						posx = scanner.nextInt();
@@ -64,7 +64,7 @@ class Application {
 						try {
 							GameController.move(GameController.getPlayer1(), posx, posy, x, y);
 							if (posx >= 12)
-								System.out.println("Player 1 is almost reach the goal");
+								System.out.println("Player 1 almost reach the goal");
 							break;
 						} catch (moveFail e) {
 							System.out.println("Please try again: " + e.message);
@@ -73,7 +73,7 @@ class Application {
 				} else {
 					x = GameController.getPlayer2().getX();
 					y = GameController.getPlayer2().getY();
-					System.out.println("Player2 at possition: " + x + " " + y);
+					System.out.println("Player2 at position: " + x + " " + y);
 					while (true) {
 						posx = scanner.nextInt();
 						posy = scanner.nextInt();
@@ -81,7 +81,7 @@ class Application {
 						try {
 							GameController.move(GameController.getPlayer2(), posx, posy, x, y);
 							if (posx <= 4)
-								System.out.println("Player 2 is almost reach the goal");
+								System.out.println("Player 2 almost reach the goal");
 							break;
 						} catch (moveFail e) {
 							System.out.println("Please try again: " + e.message);
@@ -106,8 +106,8 @@ class Application {
 				// System.out.println(GameController.get_Player1().getHaveBaricade()+"
 				// "+GameController.get_Player2().getHaveBaricade());
 
-				System.out.println("(1) place horrisontal");
-				System.out.println("(2) place vertical");
+				System.out.println("(1) place horizontally");
+				System.out.println("(2) place vertically");
 				while (true) {
 					String ch = scanner.nextLine();
 					System.out.println("input x y");

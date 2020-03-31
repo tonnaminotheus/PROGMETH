@@ -98,36 +98,36 @@ public class GameController {
 		// this.setY(y); +2
 		// check white tile
 		try {
-			boolean t1 = GameController.getCurrentMap().getEntity((posx + x) / 2, (posy + y) / 2).is_WhiteTile();
-			boolean t2 = GameController.getCurrentMap().getEntity(posx, posy).is_BlackTile();
-			boolean t3 = GameController.getCurrentMap().getEntity(posx, posy).is_SpecialTile();
+			boolean isWhite = GameController.getCurrentMap().getEntity((posx + x) / 2, (posy + y) / 2).is_WhiteTile();
+			boolean isBlack = GameController.getCurrentMap().getEntity(posx, posy).is_BlackTile();
+			boolean isSpecial = GameController.getCurrentMap().getEntity(posx, posy).is_SpecialTile();
 			boolean t4 = (Math.abs(posx - x) <= 2 ? true : false) && (Math.abs(posy - y) <= 2 ? true : false)
 					&& (posx == x || posy == y);
-			if (t1 && (t2 || t3) && t4) {
-				// change varrible name
-				int xx = player.getX();
-				int yy = player.getY();
+			if (isWhite && (isBlack || isSpecial) && t4) {
+				// change variable name
+				int playerX = player.getX();
+				int playerY = player.getY();
 				player.setX(posx);
 				player.setY(posy);
 				Entity now = getCurrentMap().getEntity(posx, posy);
 				getCurrentMap().removeEntity(posx, posy);
-				getCurrentMap().removeEntity(xx, yy);
+				getCurrentMap().removeEntity(playerX, playerY);
 				getCurrentMap().addEntity(player, posx, posy);
-				getCurrentMap().addEntity(new BlackTile(xx, yy), xx, yy);
+				getCurrentMap().addEntity(new BlackTile(playerX, playerY), playerX, playerY);
 				if (now.is_SpecialTile()) {
 					SpecialTile.getAction(player);
 				}
 			} else {
-				if (!t1)
-					throw new moveFail("there is barricade");
-				else if (!(t2 || t3))
-					throw new moveFail("you can not step on that tile");
+				if (!isWhite)
+					throw new moveFail("blocked by barricade");
+				else if (!(isBlack || isSpecial))
+					throw new moveFail("you cannot move to the chosen tile");
 				else
-					throw new moveFail("The possition is out of movable range");
+					throw new moveFail("The position is out of movable range");
 
 			}
 		} catch (moveFail e) {
-			throw new moveFail("The possition is out of the board");
+			throw new moveFail("The position is out of the board");
 		}
 	}
 
@@ -162,10 +162,10 @@ public class GameController {
 				getCurrentMap().addEntity(new BarricadeTile(x, y - 1, x, y + 1), x, y - 1);
 				getCurrentMap().addEntity(new BarricadeTile(x, y + 1, x, y - 1), x, y + 1);
 			} else {
-				throw new addBarricadeFail("There are barricade on that tile");
+				throw new addBarricadeFail("There is barricade on that tile");
 			}
 		} catch (Exception e) {
-			throw new addBarricadeFail("The possition is out of the map");
+			throw new addBarricadeFail("The position is out of the map");
 		}
 	}
 
@@ -179,20 +179,20 @@ public class GameController {
 				getCurrentMap().addEntity(new BarricadeTile(x - 1, y, x + 1, y), x - 1, y);
 				getCurrentMap().addEntity(new BarricadeTile(x + 1, y, x - 1, y), x + 1, y);
 			} else {
-				throw new addBarricadeFail("There are barricade on that tile");
+				throw new addBarricadeFail("There is barricade on that tile");
 			}
 		} catch (Exception e) {
-			throw new addBarricadeFail("The possition is out of the map");
+			throw new addBarricadeFail("The position is out of the map");
 		}
 	}
 
 	public static boolean checkbfs(Player player, int finish) {
-		int xx = player.getX();
-		int yy = player.getY();
+		int playerX = player.getX();
+		int playerY = player.getY();
 		ArrayList<Coordinate> q = new ArrayList<>();
 		boolean[][] visit = new boolean[17][17];
-		visit[xx][yy] = true;
-		q.add(new Coordinate(xx, yy));
+		visit[playerX][playerY] = true;
+		q.add(new Coordinate(playerX, playerY));
 		while (!q.isEmpty()) {
 			Coordinate aa = q.get(0);
 			int[] dirx = { 0, 2, 0, -2 };

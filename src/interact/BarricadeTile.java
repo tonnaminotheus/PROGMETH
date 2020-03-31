@@ -12,7 +12,7 @@ public class BarricadeTile extends Tile {
 	public int othery;
 
 	// public Coordinate other1;
-	// public Coordibnate other2;
+	// public Coordinate other2;
 	public BarricadeTile(int x, int y, int X, int Y) {
 		super(x, y);
 		this.otherx = X;
