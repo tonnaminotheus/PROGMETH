@@ -123,6 +123,7 @@ public class GameController {
 			boolean isSpecial = GameController.getCurrentMap().getEntity(posx, posy).isSpecialTile();
 			boolean isInRange = (Math.abs(posx - x) <= 2 ? true : false) && (Math.abs(posy - y) <= 2 ? true : false)
 					&& (posx == x || posy == y);
+			System.out.println(posx +" " +posy);
 			if (isWhite && (isBlack || isSpecial||isExplodingTile) && isInRange) {
 				// change variable name
 				int playerX = player.getX();
@@ -189,10 +190,10 @@ public class GameController {
 				getCurrentMap().addEntity(new WhiteTile(x2, y2), x2, y2);
 				getCurrentMap().addEntity(new WhiteTile(x3, y3), x3, y3);
 			} else {
-				throw new removeBarricadeFail("The choosen possition is not BarricadeTile");
+				throw new removeBarricadeFail("The chosen position is not BarricadeTile");
 			}
 		} else {
-			throw new removeBarricadeFail("The possition is out of the map");
+			throw new removeBarricadeFail("The position is out of the map");
 		}
 	}
 
