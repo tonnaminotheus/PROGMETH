@@ -58,7 +58,7 @@ public class ControllerTest {
 	public void testAddHorizontal() throws addBarricadeFail
 	{
 		
-		GameController.addHorisontalBarricade(1, 1);
+		GameController.addHorizontalBarricade(1, 1);
 		//GameController.printmapcheck();
 		assertEquals(BarricadeTile.class, GameController.getCurrentMap().getEntity(0, 1).getClass());
 		assertEquals(BarricadeTile.class, GameController.getCurrentMap().getEntity(2, 1).getClass());

@@ -43,6 +43,10 @@ public class SpecialTile extends Tile {
 	}
 
 	public static void removeBarricade() {
+		// check have barricade in map
+		// get input click on barricade tile
+		// remove both BarricadeTile that have same index
+				// change that position to white barricade
 		System.out.println("--Remove one barricade--");
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
@@ -57,10 +61,6 @@ public class SpecialTile extends Tile {
 				System.out.println("please try again: " + e.message);
 			}
 		}
-		// check have barricade in map
-		// get input click on barricade tile
-		// remove both BarricadeTile that have same index
-		// change that position to white barricade
 	}
 
 	public int getSymbol() {

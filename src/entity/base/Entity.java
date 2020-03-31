@@ -34,23 +34,23 @@ public abstract class Entity {
 		return this.y;
 	}
 
-	public boolean is_Player() {
+	public boolean isPlayer() {
 		return this.getClass() == Player.class;
 	}
 
-	public boolean is_BarricadeTile() {
+	public boolean isBarricadeTile() {
 		return this.getClass() == BarricadeTile.class;
 	}
 
-	public boolean is_WhiteTile() {
+	public boolean isWhiteTile() {
 		return this.getClass() == WhiteTile.class;
 	}
 
-	public boolean is_BlackTile() {
+	public boolean isBlackTile() {
 		return this.getClass() == BlackTile.class;
 	}
 
-	public boolean is_SpecialTile() {
+	public boolean isSpecialTile() {
 		return this.getClass() == SpecialTile.class;
 	}
 

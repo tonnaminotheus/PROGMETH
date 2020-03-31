@@ -23,13 +23,13 @@ class Application {
 			for (int j = 16; j >= 0; j--) {
 				for (int i = 0; i < 17; i++) {
 					Entity check = GameController.getCurrentMap().getEntity(i, j);
-					if (check.is_BarricadeTile()) {
+					if (check.isBarricadeTile()) {
 						System.out.print("B");
-					} else if (check.is_BlackTile()) {
+					} else if (check.isBlackTile()) {
 						System.out.print("_");
-					} else if (check.is_WhiteTile()) {
+					} else if (check.isWhiteTile()) {
 						System.out.print(" ");
-					} else if (check.is_SpecialTile()) {
+					} else if (check.isSpecialTile()) {
 						System.out.print("S");
 					} else {
 						System.out.print("P");
@@ -116,7 +116,7 @@ class Application {
 					// scanner.nextLine();
 					if (ch.equals("1")) {
 						try {
-							GameController.addHorisontalBarricade(x, y);
+							GameController.addHorizontalBarricade(x, y);
 							if (!GameController.checkbfs(
 									GameController.getTurn() % 2 == 1 ? GameController.getPlayer1()
 											: GameController.getPlayer2(),
@@ -174,7 +174,7 @@ class Application {
 				GameController.setIsWin(true);
 			}
 
-			if (GameController.getIs_win()) {
+			if (GameController.getIsWin()) {
 				System.out.println(result);
 				break;
 			}

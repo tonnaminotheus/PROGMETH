@@ -37,7 +37,7 @@ public class GameController {
 		gameMap.removeEntity(16, 8);
 		gameMap.addEntity(player1, 0, 8);
 		gameMap.addEntity(player2, 16, 8);
-		//System.out.println("Finish Initialize");
+		// System.out.println("Finish Initialize");
 
 	}
 
@@ -62,7 +62,7 @@ public class GameController {
 		isWin = stat;
 	}
 
-	public static boolean getIs_win() {
+	public static boolean getIsWin() {
 		return isWin;
 	}
 
@@ -73,22 +73,40 @@ public class GameController {
 	public static void spawnSpecialTile() {
 		int randomX = (int) (Math.random() * 16);
 		int randomY = (int) (Math.random() * 16);
-		if (getCurrentMap().getEntity(randomX, randomY).is_BlackTile()) {
+		try {
+			if (getCurrentMap().getEntity(randomX, randomY).isBlackTile()) {
 
-			int[] dirX = { 0, 2, 0, -2 };
-			int[] dirY = { 2, 0, -2, 0 };
-			boolean check = true;
-			for (int i = 0; i < 4; i++) {
-				if (!GameController.getCurrentMap().getEntity(randomX + dirX[i], randomY + dirY[i]).is_BlackTile()) {
-					check = false;
+				int[] dirX = { 0, 2, 0, -2 };
+				int[] dirY = { 2, 0, -2, 0 };
+				boolean check = true;
+				for (int i = 0; i < 4; i++) {
+					if (!GameController.getCurrentMap().getEntity(randomX + dirX[i], randomY + dirY[i]).isBlackTile()) {
+						check = false;
+					}
+				}
+				if (check) {
+					System.out.println("spawnSuccess");
+					getCurrentMap().removeEntity(randomX, randomY);
+					getCurrentMap().addEntity(new SpecialTile(randomX, randomY), randomX, randomY);
 				}
 			}
-			if (check) {
-				System.out.println("spawnSuccess");
-				getCurrentMap().removeEntity(randomX, randomY);
-				getCurrentMap().addEntity(new SpecialTile(randomX, randomY), randomX, randomY);
+		} catch (Exception e) {
+		}
+	}
+
+	public static boolean checkHaveBarricadeOnMap() {
+		for (int i = 0; i < 17; i++) {
+			for (int j = 0; j < 17; j++) {
+				if (GameController.getCurrentMap().getEntity(i, j).isBarricadeTile()) {
+					return true;
+				}
 			}
 		}
+		return false;
+	}
+
+	public static boolean checkIsPossitionOnBoard(int x, int y) {
+		return (x < 17 && x >= 0) && (y < 17 && y >= 0);
 	}
 
 	public static void move(Player player, int posx, int posy, int x, int y) throws moveFail {
@@ -97,13 +115,14 @@ public class GameController {
 		// this.setX(x); +2
 		// this.setY(y); +2
 		// check white tile
-		try {
-			boolean isWhite = GameController.getCurrentMap().getEntity((posx + x) / 2, (posy + y) / 2).is_WhiteTile();
-			boolean isBlack = GameController.getCurrentMap().getEntity(posx, posy).is_BlackTile();
-			boolean isSpecial = GameController.getCurrentMap().getEntity(posx, posy).is_SpecialTile();
-			boolean t4 = (Math.abs(posx - x) <= 2 ? true : false) && (Math.abs(posy - y) <= 2 ? true : false)
+		if (checkIsPossitionOnBoard(x, y) && checkIsPossitionOnBoard(posx, posy)) {
+			System.out.println("check pos out of board");
+			boolean isWhite = GameController.getCurrentMap().getEntity((posx + x) / 2, (posy + y) / 2).isWhiteTile();
+			boolean isBlack = GameController.getCurrentMap().getEntity(posx, posy).isBlackTile();
+			boolean isSpecial = GameController.getCurrentMap().getEntity(posx, posy).isSpecialTile();
+			boolean isInRange = (Math.abs(posx - x) <= 2 ? true : false) && (Math.abs(posy - y) <= 2 ? true : false)
 					&& (posx == x || posy == y);
-			if (isWhite && (isBlack || isSpecial) && t4) {
+			if (isWhite && (isBlack || isSpecial) && isInRange) {
 				// change variable name
 				int playerX = player.getX();
 				int playerY = player.getY();
@@ -114,7 +133,7 @@ public class GameController {
 				getCurrentMap().removeEntity(playerX, playerY);
 				getCurrentMap().addEntity(player, posx, posy);
 				getCurrentMap().addEntity(new BlackTile(playerX, playerY), playerX, playerY);
-				if (now.is_SpecialTile()) {
+				if (now.isSpecialTile()) {
 					SpecialTile.getAction(player);
 				}
 			} else {
@@ -126,16 +145,18 @@ public class GameController {
 					throw new moveFail("The position is out of movable range");
 
 			}
-		} catch (moveFail e) {
+		} else {
+			// System.out.println("check pos out of board");
 			throw new moveFail("The position is out of the board");
 		}
 	}
 
 	public static void removeBarricade(int x, int y) throws removeBarricadeFail {
-		try {
-			if (GameController.getCurrentMap().getEntity(x, y).is_BarricadeTile()) {
+		if (checkIsPossitionOnBoard(x, y)) {
+			if (GameController.getCurrentMap().getEntity(x, y).isBarricadeTile()) {
 				BarricadeTile bar1 = (BarricadeTile) getCurrentMap().getEntity(x, y);
-				BarricadeTile bar2 = (BarricadeTile) getCurrentMap().getEntity(bar1.otherx, bar1.othery);
+				BarricadeTile bar2 = (BarricadeTile) getCurrentMap().getEntity(bar1.getOther().getX(),
+						bar1.getOther().getY());
 				int x1 = bar1.getX();
 				int y1 = bar1.getY();
 				int x2 = bar2.getX();
@@ -147,41 +168,41 @@ public class GameController {
 			} else {
 				throw new removeBarricadeFail("The choosen possition is not BarricadeTile");
 			}
-		} catch (Exception e) {
+		} else {
 			throw new removeBarricadeFail("The possition is out of the map");
 		}
 	}
 
 	public static void addVerticalBarricade(int x, int y) throws addBarricadeFail {
-		try {
-			Entity e1 = getCurrentMap().getEntity(x, y - 1);
-			Entity e2 = getCurrentMap().getEntity(x, y + 1);
-			if (e1.getClass() == WhiteTile.class && e2.getClass() == WhiteTile.class) {
-				getCurrentMap().removeEntity(e1.getX(), e1.getY());
-				getCurrentMap().removeEntity(e2.getX(), e2.getY());
+		if (checkIsPossitionOnBoard(x, y)) {
+			Entity upEntity = getCurrentMap().getEntity(x, y - 1);
+			Entity downEntity = getCurrentMap().getEntity(x, y + 1);
+			if (upEntity.getClass() == WhiteTile.class && downEntity.getClass() == WhiteTile.class) {
+				getCurrentMap().removeEntity(upEntity.getX(), upEntity.getY());
+				getCurrentMap().removeEntity(downEntity.getX(), downEntity.getY());
 				getCurrentMap().addEntity(new BarricadeTile(x, y - 1, x, y + 1), x, y - 1);
 				getCurrentMap().addEntity(new BarricadeTile(x, y + 1, x, y - 1), x, y + 1);
 			} else {
 				throw new addBarricadeFail("There is barricade on that tile");
 			}
-		} catch (Exception e) {
+		} else {
 			throw new addBarricadeFail("The position is out of the map");
 		}
 	}
 
-	public static void addHorisontalBarricade(int x, int y) throws addBarricadeFail {
-		try {
-			Entity e1 = getCurrentMap().getEntity(x - 1, y);
-			Entity e2 = getCurrentMap().getEntity(x + 1, y);
-			if (e1.getClass() == WhiteTile.class && e2.getClass() == WhiteTile.class) {
-				getCurrentMap().removeEntity(e1.getX(), e1.getY());
-				getCurrentMap().removeEntity(e2.getX(), e2.getY());
+	public static void addHorizontalBarricade(int x, int y) throws addBarricadeFail {
+		if (checkIsPossitionOnBoard(x, y)) {
+			Entity leftEntity = getCurrentMap().getEntity(x - 1, y);
+			Entity rightEntity = getCurrentMap().getEntity(x + 1, y);
+			if (leftEntity.getClass() == WhiteTile.class && rightEntity.getClass() == WhiteTile.class) {
+				getCurrentMap().removeEntity(leftEntity.getX(), leftEntity.getY());
+				getCurrentMap().removeEntity(rightEntity.getX(), rightEntity.getY());
 				getCurrentMap().addEntity(new BarricadeTile(x - 1, y, x + 1, y), x - 1, y);
 				getCurrentMap().addEntity(new BarricadeTile(x + 1, y, x - 1, y), x + 1, y);
 			} else {
 				throw new addBarricadeFail("There is barricade on that tile");
 			}
-		} catch (Exception e) {
+		} else {
 			throw new addBarricadeFail("The position is out of the map");
 		}
 	}
@@ -194,22 +215,23 @@ public class GameController {
 		visit[playerX][playerY] = true;
 		q.add(new Coordinate(playerX, playerY));
 		while (!q.isEmpty()) {
-			Coordinate aa = q.get(0);
+			Coordinate topQueue = q.get(0);
 			int[] dirx = { 0, 2, 0, -2 };
 			int[] diry = { 2, 0, -2, 0 };
-			if (aa.getX() == finish) {
+			if (topQueue.getX() == finish) {
 				return true;
 			}
 			for (int i = 0; i < 4; i++) {
-				if (0 <= aa.getX() + dirx[i] && aa.getX() + dirx[i] < 17 && 0 <= aa.getY() + diry[i]
-						&& aa.getY() + diry[i] < 17) {
-					boolean t1 = getCurrentMap().getEntity(aa.getX() + dirx[i], aa.getY() + diry[i]).is_BlackTile();
-					boolean t2 = getCurrentMap().getEntity(aa.getX() + dirx[i], aa.getY() + diry[i]).is_SpecialTile();
-					boolean t3 = getCurrentMap().getEntity(aa.getX() + dirx[i] / 2, aa.getY() + diry[i] / 2)
-							.is_WhiteTile();
-					if (!visit[aa.getX() + dirx[i]][aa.getY() + diry[i]] && (t3 && (t1 || t2))) {
-						q.add(new Coordinate(aa.getX() + dirx[i], aa.getY() + diry[i]));
-						visit[aa.getX() + dirx[i]][aa.getY() + diry[i]] = true;
+				if (checkIsPossitionOnBoard(topQueue.getX() + dirx[i],topQueue.getY() + diry[i])) {
+					boolean isBlackTile = getCurrentMap().getEntity(topQueue.getX() + dirx[i], topQueue.getY() + diry[i])
+							.isBlackTile();
+					boolean isSpecialTile = getCurrentMap().getEntity(topQueue.getX() + dirx[i], topQueue.getY() + diry[i])
+							.isSpecialTile();
+					boolean isWhiteTile = getCurrentMap().getEntity(topQueue.getX() + dirx[i] / 2, topQueue.getY() + diry[i] / 2)
+							.isWhiteTile();
+					if (!visit[topQueue.getX() + dirx[i]][topQueue.getY() + diry[i]] && (isWhiteTile && (isBlackTile || isSpecialTile))) {
+						q.add(new Coordinate(topQueue.getX() + dirx[i], topQueue.getY() + diry[i]));
+						visit[topQueue.getX() + dirx[i]][topQueue.getY() + diry[i]] = true;
 					}
 				}
 			}
@@ -218,29 +240,19 @@ public class GameController {
 		return false;
 
 	}
-	
-	public static void printmapcheck()
-	{
+
+	public static void printmapcheck() {
 		for (int j = 16; j >= 0; j--) {
 			for (int i = 0; i < 17; i++) {
-				if(getCurrentMap().getEntity(i, j).is_BarricadeTile())
-				{
+				if (getCurrentMap().getEntity(i, j).isBarricadeTile()) {
 					System.out.print("B");
-				}
-				else if(getCurrentMap().getEntity(i, j).is_BlackTile())
-				{
+				} else if (getCurrentMap().getEntity(i, j).isBlackTile()) {
 					System.out.print("_");
-				}
-				else if(getCurrentMap().getEntity(i, j).is_Player())
-				{
+				} else if (getCurrentMap().getEntity(i, j).isPlayer()) {
 					System.out.print("P");
-				}
-				else if(getCurrentMap().getEntity(i, j).is_WhiteTile())
-				{
+				} else if (getCurrentMap().getEntity(i, j).isWhiteTile()) {
 					System.out.print(" ");
-				}
-				else
-				{
+				} else {
 					System.out.print("S");
 				}
 			}
