@@ -49,13 +49,13 @@ public class SpecialTile extends Tile {
 			int x = scanner.nextInt();
 			int y = scanner.nextInt();
 			System.out.println(x+" "+y);
-			if(GameController.getCurrentMap().getEntity(x,y).isBlackTile()) {
+			if(GameController.checkIsPossitionOnBoard(x, y)&&GameController.getCurrentMap().getEntity(x,y).isBlackTile()) {
 				GameController.getCurrentMap().removeEntity(x, y);
 				GameController.getCurrentMap().addEntity(new ExplodingTile(x,y), x, y);
 			}
 			else
 			{
-				System.out.println("Fuckkkkkkkkk");
+				System.out.println("you can noy place there");
 			}
 				
 		}

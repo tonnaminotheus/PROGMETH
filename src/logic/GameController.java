@@ -115,6 +115,7 @@ public class GameController {
 		// this.setX(x); +2
 		// this.setY(y); +2
 		// check white tile
+		System.out.println(x+" "+y+" "+posx+" "+posy);
 		if (checkIsPossitionOnBoard(x, y) && checkIsPossitionOnBoard(posx, posy)) {
 			// System.out.println("check pos out of board");
 			boolean isWhite = GameController.getCurrentMap().getEntity((posx + x) / 2, (posy + y) / 2).isWhiteTile();
@@ -123,6 +124,7 @@ public class GameController {
 			boolean isSpecial = GameController.getCurrentMap().getEntity(posx, posy).isSpecialTile();
 			boolean isInRange = (Math.abs(posx - x) <= 2 ? true : false) && (Math.abs(posy - y) <= 2 ? true : false)
 					&& (posx == x || posy == y);
+	
 			if (isWhite && (isBlack || isSpecial||isExplodingTile) && isInRange) {
 				// change variable name
 				int playerX = player.getX();
