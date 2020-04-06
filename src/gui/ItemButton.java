@@ -41,7 +41,7 @@ public class ItemButton extends Button{
 			@Override
 			public void handle(MouseEvent e) {
 				ItemPane.resetButtonsBackGroundColor();
-				Main.gameActionNow=1;
+				Main.gameActionNow=2;
 				ItemButton now = (ItemButton)e.getSource();
 				now.highlight();
 			}
@@ -51,7 +51,7 @@ public class ItemButton extends Button{
 			@Override
 			public void handle(MouseEvent e) {
 				ItemPane.resetButtonsBackGroundColor();
-				Main.gameActionNow=2;
+				Main.gameActionNow=1;
 				ItemButton now = (ItemButton)e.getSource();
 				now.highlight();
 			}

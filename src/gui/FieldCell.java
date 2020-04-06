@@ -116,9 +116,13 @@ public class FieldCell extends Button {
 								}
 							} catch (Exception ee) {
 								System.out.println("can not place barricade there");
+								String playermessage = "Can not place barricade there";
+								ControlPane.noti = playermessage;
 							}
 						} else {
 							System.out.println("That is not WhiteTile");
+							String playermessage = "That is not WhiteTile";
+							ControlPane.noti = playermessage;
 						}
 					}
 
@@ -149,9 +153,13 @@ public class FieldCell extends Button {
 								}
 							} catch (Exception ee) {
 								System.out.println("can not place barricade there");
+								String playermessage = "Can not place barricade there";
+								ControlPane.noti = playermessage;
 							}
 						} else {
 							System.out.println("That is not WhiteTile");
+							String playermessage = "That is not WhiteTile";
+							ControlPane.noti = playermessage;
 						}
 					}
 				} else if (Main.gameActionNow == 3) {
@@ -168,6 +176,8 @@ public class FieldCell extends Button {
 								ControlPane.noti = playermessage;
 							} catch (Exception ee) {
 								System.out.println("can not move there");
+								String playermessage = "Can not move there";
+								ControlPane.noti = playermessage;
 							}
 						} else {
 							try {
@@ -179,10 +189,14 @@ public class FieldCell extends Button {
 								ControlPane.noti = playermessage;
 							} catch (Exception ee) {
 								System.out.println("can not move there");
+								String playermessage = "Can not move there";
+								ControlPane.noti = playermessage;
 							}
 						}
 					} else {
-						System.out.println("That is not BlackTile or SpecialTile");
+						System.out.println("That is not BlackTile or SpecialTile or Bomb");
+						String playermessage = "Can not move there";
+						ControlPane.noti = playermessage;
 					}
 				} else if (Main.gameActionNow == 4) {
 					int haveBomb = GameController.getTurn() % 2 == 1 ? GameController.getPlayer1().getHaveExploding()
@@ -200,6 +214,8 @@ public class FieldCell extends Button {
 								GameController.getPlayer2().setHaveExploding(haveBomb - 1);
 						} catch (Exception e1) {
 							e1.printStackTrace();
+							String playermessage = "Can not place bomb there";
+							ControlPane.noti = playermessage;
 						}
 					}
 				} else if (Main.gameActionNow == 5) {
@@ -219,6 +235,8 @@ public class FieldCell extends Button {
 								GameController.getPlayer2().setHaveRemoveBarricade(haveRemoveBarricade - 1);
 						} catch (Exception e1) {
 							e1.printStackTrace();
+							String playermessage = "That tile is not barricade";
+							ControlPane.noti = playermessage;
 						}
 					}
 				}

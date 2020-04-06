@@ -8,7 +8,7 @@ public class Item {
 	
 	Item(String itemName){
 		switch(itemName) {
-			case "HorizontalBarricade" :		url = "file:res/HorrizontalBarricade.png";break;
+			case "HorizontalBarricade" :		url = "file:res/HorizontalBarricade.png";break;
 			case "VerticalBarricade" : 	url = "file:res/VerticalBarricade.png";break;
 			case "Cancel" : 	url = "file:res/Cancel.png"; 	break;
 			case "Home" : url = "file:res/Home.png"; break;
