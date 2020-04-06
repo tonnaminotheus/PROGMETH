@@ -296,9 +296,9 @@ public class FieldCell extends Pane {
 						int x=now.myEntity.getX();
 						int y=now.myEntity.getY();
 						if(Main.gameActionNow==1) {
-							((Region) Main.fieldPane.getChildren().get(x*17+y-1)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y-17)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 							((Region) Main.fieldPane.getChildren().get(x*17+y)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-							((Region) Main.fieldPane.getChildren().get(x*17+y+1)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y+17)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 						}else {
 							((Region) Main.fieldPane.getChildren().get(x*17+y-1)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 							((Region) Main.fieldPane.getChildren().get(x*17+y)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -378,9 +378,9 @@ public class FieldCell extends Pane {
 						int x=now.myEntity.getX();
 						int y=now.myEntity.getY();
 						if(Main.gameActionNow==1) {
-							((Region) Main.fieldPane.getChildren().get(x*17+y-1)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y-17)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 							((Region) Main.fieldPane.getChildren().get(x*17+y)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-							((Region) Main.fieldPane.getChildren().get(x*17+y+1)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y+17)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 						}else {
 							((Region) Main.fieldPane.getChildren().get(x*17+y-1)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 							((Region) Main.fieldPane.getChildren().get(x*17+y)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
