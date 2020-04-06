@@ -246,6 +246,7 @@ public class FieldCell extends Button {
 		this.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
+				
 				FieldCell now = (FieldCell) e.getSource();
 				Image image;
 				// System.out.println(entity.getClass());
