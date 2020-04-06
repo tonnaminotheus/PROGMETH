@@ -29,18 +29,18 @@ import logic.GameController;
 public class Main extends Application {
 
 	public static Scene scene1, scene2, scene3, scene4, scene5;
-	public static Button playB, nextB, backB;
-	public static Button exitButton, exitButton2, exitButton3;
+	public static Pane playB, nextB, backB;
+	public static Pane exitButton, exitButton2, exitButton3;
 	public static ControlPane controlPane;
 	public static FieldPane fieldPane;
 	public static Stage primary;
 	public static int gameActionNow = 0;
 	public static int player1Index = 4;
 	public static int player2Index = 4;
-	public static Button left1, right1, left2, right2;
+	public static Pane left1, right1, left2, right2;
 	public static int xposlr = 120;
 	public static int yposlr = 500;
-	public static Button P1, P2;
+	public static Pane P1, P2;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -63,12 +63,9 @@ public class Main extends Application {
 		iv1.setFitHeight(100);
 		iv1.setFitWidth(300);
 
-		playB = new Button("", iv1);
+		playB = new Pane(iv1);
 		playB.setLayoutX(440);
 		playB.setLayoutY(360);
-		playB.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		playB.setBorder(new Border(
-				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		playB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -83,7 +80,9 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				playB.setGraphic(iv1);
+				//playB.setGraphic(iv1);
+				playB.getChildren().clear();
+				playB.getChildren().add(iv1);
 			}
 		});
 		playB.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
@@ -93,7 +92,8 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				playB.setGraphic(iv1);
+				playB.getChildren().clear();
+				playB.getChildren().add(iv1);
 			}
 
 		});
@@ -104,12 +104,9 @@ public class Main extends Application {
 		ImageView iv2 = new ImageView(exitI);
 		iv2.setFitHeight(100);
 		iv2.setFitWidth(300);
-		exitButton = new Button("", iv2);
+		exitButton = new Pane(iv2);
 		exitButton.setLayoutX(440);
 		exitButton.setLayoutY(490);
-		exitButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		exitButton.setBorder(new Border(
-				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		exitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -124,7 +121,8 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton.setGraphic(iv1);
+				exitButton.getChildren().clear();
+				exitButton.getChildren().add(iv1);
 			}
 
 		});
@@ -135,7 +133,8 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton.setGraphic(iv1);
+				exitButton.getChildren().clear();
+				exitButton.getChildren().add(iv1);
 			}
 
 		});
@@ -173,12 +172,9 @@ public class Main extends Application {
 		ImageView iv22 = new ImageView(exitII);
 		iv22.setFitHeight(100);
 		iv22.setFitWidth(300);
-		exitButton2 = new Button("", iv22);
+		exitButton2 = new Pane(iv22);
 		exitButton2.setLayoutX(440);
 		exitButton2.setLayoutY(490);
-		exitButton2.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		exitButton2.setBorder(new Border(
-				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		exitButton2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -193,7 +189,8 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton2.setGraphic(iv1);
+				exitButton2.getChildren().clear();
+				exitButton2.getChildren().add(iv1);
 			}
 
 		});
@@ -204,7 +201,8 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton2.setGraphic(iv1);
+				exitButton2.getChildren().clear();
+				exitButton2.getChildren().add(iv1);
 			}
 
 		});
@@ -224,12 +222,9 @@ public class Main extends Application {
 		ImageView iv222 = new ImageView(exitIII);
 		iv222.setFitHeight(100);
 		iv222.setFitWidth(300);
-		exitButton3 = new Button("", iv222);
+		exitButton3 = new Pane(iv222);
 		exitButton3.setLayoutX(440);
 		exitButton3.setLayoutY(490);
-		exitButton3.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		exitButton3.setBorder(new Border(
-				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		exitButton3.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -244,7 +239,8 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton3.setGraphic(iv1);
+				exitButton3.getChildren().clear();
+				exitButton3.getChildren().add(iv1);
 			}
 
 		});
@@ -255,7 +251,8 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton3.setGraphic(iv1);
+				exitButton3.getChildren().clear();
+				exitButton3.getChildren().add(iv1);
 			}
 
 		});
@@ -281,12 +278,9 @@ public class Main extends Application {
 		ivN.setFitHeight(100);
 		ivN.setFitWidth(300);
 
-		nextB = new Button("", ivN);
+		nextB = new Pane(ivN);
 		nextB.setLayoutX(900);
 		nextB.setLayoutY(600);
-		nextB.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		nextB.setBorder(new Border(
-				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		nextB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -302,7 +296,8 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				nextB.setGraphic(iv1);
+				nextB.getChildren().clear();
+				nextB.getChildren().add(iv1);
 			}
 		});
 		nextB.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
@@ -312,7 +307,8 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				nextB.setGraphic(iv1);
+				nextB.getChildren().clear();
+				nextB.getChildren().add(iv1);
 			}
 
 		});
@@ -324,12 +320,9 @@ public class Main extends Application {
 		ivB.setFitHeight(100);
 		ivB.setFitWidth(300);
 
-		backB = new Button("", ivB);
+		backB = new Pane(ivB);
 		backB.setLayoutX(100);
 		backB.setLayoutY(600);
-		backB.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		backB.setBorder(new Border(
-				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		backB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -344,7 +337,8 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				backB.setGraphic(iv1);
+				backB.getChildren().clear();
+				backB.getChildren().add(iv1);
 			}
 		});
 		backB.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
@@ -354,7 +348,8 @@ public class Main extends Application {
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				backB.setGraphic(iv1);
+				backB.getChildren().clear();
+				backB.getChildren().add(iv1);
 			}
 
 		});
@@ -364,12 +359,9 @@ public class Main extends Application {
 		Image leftI = new Image("file:res/left.png");
 		ImageView ivL = new ImageView(leftI);
 
-		left1 = new Button("", ivL);
+		left1 = new Pane(ivL);
 		left1.setLayoutX(xposlr + 100);
 		left1.setLayoutY(yposlr);
-		left1.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		left1.setBorder(new Border(
-				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		left1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -401,12 +393,9 @@ public class Main extends Application {
 		Image leftII = new Image("file:res/left.png");
 		ImageView ivLL = new ImageView(leftII);
 
-		left2 = new Button("", ivLL);
+		left2 = new Pane(ivLL);
 		left2.setLayoutX(xposlr + 730);
 		left2.setLayoutY(yposlr);
-		left2.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		left2.setBorder(new Border(
-				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		left2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -438,12 +427,10 @@ public class Main extends Application {
 		Image rightI = new Image("file:res/right.png");
 		ImageView ivR = new ImageView(rightI);
 
-		right1 = new Button("", ivR);
+		right1 = new Pane(ivR);
 		right1.setLayoutX(xposlr + 200);
 		right1.setLayoutY(yposlr);
 		right1.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		right1.setBorder(new Border(
-				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		right1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -475,12 +462,9 @@ public class Main extends Application {
 		Image rightII = new Image("file:res/right.png");
 		ImageView ivRR = new ImageView(rightII);
 
-		right2 = new Button("", ivRR);
+		right2 = new Pane(ivRR);
 		right2.setLayoutX(xposlr + 830);
 		right2.setLayoutY(yposlr);
-		right2.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		right2.setBorder(new Border(
-				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		right2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -508,8 +492,8 @@ public class Main extends Application {
 		});
 		root5.getChildren().add(right2);
 
-		P1 = new Button();
-		P2 = new Button();
+		P1 = new Pane();
+		P2 = new Pane();
 		P1.setLayoutX(xposlr + 150); /////////////////////////////////////////////////////////////
 		P1.setLayoutY(yposlr - 100);
 		P2.setLayoutX(xposlr + 780);
@@ -563,60 +547,74 @@ public class Main extends Application {
 		if (player1Index == 1) {
 			Image PI = new Image("file:res/Token1.png");
 			ImageView iv = new ImageView(PI);
-			P1.setGraphic(iv);
+			P1.getChildren().clear();
+			P1.getChildren().add(iv);
 		} else if (player1Index == 2) {
 			Image PI = new Image("file:res/Token2.png");
 			ImageView iv = new ImageView(PI);
-			P1.setGraphic(iv);
+			P1.getChildren().clear();
+			P1.getChildren().add(iv);
 		} else if (player1Index == 3) {
 			Image PI = new Image("file:res/Token3.png");
 			ImageView iv = new ImageView(PI);
-			P1.setGraphic(iv);
+			P1.getChildren().clear();
+			P1.getChildren().add(iv);
 		} else if (player1Index == 4) {
 			Image PI = new Image("file:res/Token4.png");
 			ImageView iv = new ImageView(PI);
-			P1.setGraphic(iv);
+			P1.getChildren().clear();
+			P1.getChildren().add(iv);
 		} else if (player1Index == 5) {
 			Image PI = new Image("file:res/Token5.png");
 			ImageView iv = new ImageView(PI);
-			P1.setGraphic(iv);
+			P1.getChildren().clear();
+			P1.getChildren().add(iv);
 		} else if (player1Index == 6) {
 			Image PI = new Image("file:res/Token6.png");
 			ImageView iv = new ImageView(PI);
-			P1.setGraphic(iv);
+			P1.getChildren().clear();
+			P1.getChildren().add(iv);
 		} else {
 			Image PI = new Image("file:res/Token7.png");
 			ImageView iv = new ImageView(PI);
-			P1.setGraphic(iv);
+			P1.getChildren().clear();
+			P1.getChildren().add(iv);
 		}
 		if (player2Index == 1) {
 			Image PI = new Image("file:res/Token1.png");
 			ImageView iv = new ImageView(PI);
-			P2.setGraphic(iv);
+			P2.getChildren().clear();
+			P2.getChildren().add(iv);
 		} else if (player2Index == 2) {
 			Image PI = new Image("file:res/Token2.png");
 			ImageView iv = new ImageView(PI);
-			P2.setGraphic(iv);
+			P2.getChildren().clear();
+			P2.getChildren().add(iv);
 		} else if (player2Index == 3) {
 			Image PI = new Image("file:res/Token3.png");
 			ImageView iv = new ImageView(PI);
-			P2.setGraphic(iv);
+			P2.getChildren().clear();
+			P2.getChildren().add(iv);
 		} else if (player2Index == 4) {
 			Image PI = new Image("file:res/Token4.png");
 			ImageView iv = new ImageView(PI);
-			P2.setGraphic(iv);
+			P2.getChildren().clear();
+			P2.getChildren().add(iv);
 		} else if (player2Index == 5) {
 			Image PI = new Image("file:res/Token5.png");
 			ImageView iv = new ImageView(PI);
-			P2.setGraphic(iv);
+			P2.getChildren().clear();
+			P2.getChildren().add(iv);
 		} else if (player2Index == 6) {
 			Image PI = new Image("file:res/Token6.png");
 			ImageView iv = new ImageView(PI);
-			P2.setGraphic(iv);
+			P2.getChildren().clear();
+			P2.getChildren().add(iv);
 		} else {
 			Image PI = new Image("file:res/Token7.png");
 			ImageView iv = new ImageView(PI);
-			P2.setGraphic(iv);
+			P2.getChildren().clear();
+			P2.getChildren().add(iv);
 		}
 		GameController.getPlayer1().setIndex(player1Index);
 		GameController.getPlayer2().setIndex(player2Index);

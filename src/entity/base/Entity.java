@@ -6,7 +6,7 @@ import interact.ExplodingTile;
 import interact.Player;
 import interact.SpecialTile;
 import interact.WhiteTile;
-import logic.GameController;
+
 
 public abstract class Entity {
 	private int x;

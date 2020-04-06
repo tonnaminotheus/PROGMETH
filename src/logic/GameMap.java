@@ -2,10 +2,7 @@ package logic;
 
 import java.util.ArrayList;
 
-import interact.BarricadeTile;
 import interact.BlackTile;
-import interact.SpecialTile;
-import interact.Tile;
 import interact.WhiteTile;
 import entity.base.Entity;
 

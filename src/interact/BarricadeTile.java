@@ -1,11 +1,7 @@
 package interact;
 
 import logic.Sprites;
-import logic.addBarricadeFail;
-import logic.removeBarricadeFail;
 import entity.base.Coordinate;
-import entity.base.Entity;
-import logic.GameController;
 
 public class BarricadeTile extends Tile {
 

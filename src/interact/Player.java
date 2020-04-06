@@ -2,7 +2,6 @@ package interact;
 
 import entity.base.Coordinate;
 import entity.base.Entity;
-import logic.GameController;
 import logic.Sprites;
 
 public class Player extends Entity {

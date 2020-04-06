@@ -1,59 +1,55 @@
 package gui;
 
-import javafx.scene.control.Button;
 
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import logic.moveFail;
 import logic.GameController;
 import entity.base.Entity;
-import interact.BlackTile;
-import interact.WhiteTile;
-import interact.SpecialTile;
 import interact.Player;
-import interact.ExplodingTile;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import entity.base.Entity;
 import application.Main;
 import gui.ControlPane;
 
 //You might need to do something to the following line
-public class FieldCell extends Button {
+public class FieldCell extends Pane {
 
 	private Entity myEntity;
 	private boolean isEmpty;
+	ImageView iv;
 
 	public FieldCell(Entity entity) {
 
-		this.setPrefWidth(40);
-		this.setPrefHeight(40);
-		this.setMinWidth(40);
-		this.setMaxHeight(40);
-		this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		this.setBorder(new Border(
-				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		this.setPrefWidth(35);
+		this.setPrefHeight(35);
+		//this.setMinWidth(40);
+		//this.setMaxHeight(40);
+		//this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		//this.setBorder(new Border(
+		//		new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		Image image = null;
 		System.out.println(entity.getClass());
 		if (entity.isBlackTile())
 			image = new Image("file:res/BlackTile35.png");
-		else if (entity.isWhiteTile())
-			image = new Image("file:res/WhiteTile35.png");
+		else if (entity.isWhiteTile()) {
+			this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));	
+			int x=entity.getX();
+			int y=entity.getY();
+			if(x%2==0&&y%2==1) {
+				this.setPrefWidth(10);
+			}else if(y%2==0&&x%2==1) {
+				this.setPrefHeight(10);
+			}else {
+				this.setPrefWidth(10);
+				this.setPrefHeight(10);
+			}
+		}
 		else if (entity.isExplodingTile())
 			image = new Image("file:res/BombTile35.png");
 		else if (entity.isPlayer()) {
@@ -75,11 +71,21 @@ public class FieldCell extends Button {
 		} else if (entity.isSpecialTile()) {
 			image = new Image("file:res/SpecialTile35.png");
 		} else {
-			image = new Image("file:res/BarricadeTile35.png");
+			this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));	
+			int x=entity.getX();
+			int y=entity.getY();
+			if(x%2==0&&y%2==1) {
+				this.setPrefWidth(10);
+			}else if(y%2==0&&x%2==1) {
+				this.setPrefHeight(10);
+			}else {
+				this.setPrefWidth(10);
+				this.setPrefHeight(10);
+			}
 		}
-		ImageView iv = new ImageView();
+		iv = new ImageView();
 		iv.setImage(image);
-		this.setGraphic(iv);
+		this.getChildren().add(iv);
 		isEmpty = false;
 		myEntity = entity;
 
@@ -269,51 +275,79 @@ public class FieldCell extends Button {
 			@Override
 			public void handle(MouseEvent e) {
 				FieldCell now = (FieldCell) e.getSource();
-				Image select = new Image("file:res/SelectedTile.png");
-				ImageView iv1 = new ImageView(select);
-				now.setGraphic(iv1);
-				ControlPane.labelUpdate();
+				if(!(now.myEntity.isWhiteTile()||now.myEntity.isBarricadeTile())) {
+					Image select = new Image("file:res/SelectedTile.png");
+					//ImageView iv1 = new ImageView(select);
+					now.iv.setImage(select);
+					ControlPane.labelUpdate();
+				}else if(now.myEntity.isWhiteTile()&&now.myEntity.getX()%2==1&&now.myEntity.getY()%2==1) {
+					now.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+				}
 			}
 		});
 
 		this.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				
 				FieldCell now = (FieldCell) e.getSource();
-				Image image;
-				// System.out.println(entity.getClass());
-				if (now.myEntity.isBlackTile())
-					image = new Image("file:res/BlackTile35.png");
-				else if (now.myEntity.isWhiteTile())
-					image = new Image("file:res/WhiteTile35.png");
-				else if (now.myEntity.isExplodingTile())
-					image = new Image("file:res/BombTile35.png");
-				else if (now.myEntity.isPlayer()) {
-					int index = ((Player) entity).getIndex();
-					if (index == 1)
-						image = new Image("file:res/Player1Tile35.png");
-					else if (index == 2)
-						image = new Image("file:res/Player2Tile35.png");
-					else if (index == 3)
-						image = new Image("file:res/Player3Tile35.png");
-					else if (index == 4)
-						image = new Image("file:res/Player4Tile35.png");
-					else if (index == 5)
-						image = new Image("file:res/Player5Tile35.png");
-					else if (index == 6)
-						image = new Image("file:res/Player6Tile35.png");
-					else
-						image = new Image("file:res/Player7Tile35.png");
-				} else if (now.myEntity.isSpecialTile()) {
-					image = new Image("file:res/SpecialTile35.png");
-				} else {
-					image = new Image("file:res/BarricadeTile35.png");
+				if(!(now.myEntity.isWhiteTile()||now.myEntity.isBarricadeTile())) {
+					Image image=null;
+					// System.out.println(entity.getClass());
+					if (now.myEntity.isBlackTile())
+						image = new Image("file:res/BlackTile35.png");
+					else if (now.myEntity.isWhiteTile()) {
+						now.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));	
+						int x=entity.getX();
+						int y=entity.getY();
+						if(x%2==0&&y%2==1) {
+							now.setPrefWidth(10);
+						}else if(y%2==0&&x%2==1) {
+							now.setPrefHeight(10);
+						}else {
+							now.setPrefWidth(10);
+							now.setPrefHeight(10);
+						}
+					}
+					else if (now.myEntity.isExplodingTile())
+						image = new Image("file:res/BombTile35.png");
+					else if (now.myEntity.isPlayer()) {
+						int index = ((Player) entity).getIndex();
+						if (index == 1)
+							image = new Image("file:res/Player1Tile35.png");
+						else if (index == 2)
+							image = new Image("file:res/Player2Tile35.png");
+						else if (index == 3)
+							image = new Image("file:res/Player3Tile35.png");
+						else if (index == 4)
+							image = new Image("file:res/Player4Tile35.png");
+						else if (index == 5)
+							image = new Image("file:res/Player5Tile35.png");
+						else if (index == 6)
+							image = new Image("file:res/Player6Tile35.png");
+						else
+							image = new Image("file:res/Player7Tile35.png");
+					} else if (now.myEntity.isSpecialTile()) {
+						image = new Image("file:res/SpecialTile35.png");
+					} else {
+						now.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));	
+						int x=entity.getX();
+						int y=entity.getY();
+						if(x%2==0&&y%2==1) {
+							now.setPrefWidth(10);
+						}else if(y%2==0&&x%2==1) {
+							now.setPrefHeight(10);
+						}else {
+							now.setPrefWidth(10);
+							now.setPrefHeight(10);
+						}
+					}
+					//ImageView iv = new ImageView();
+					//iv.setImage(image);
+					now.iv.setImage(image);
+					ControlPane.labelUpdate();
+				}else if(now.myEntity.isWhiteTile()&&now.myEntity.getX()%2==1&&now.myEntity.getY()%2==1) {
+					now.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 				}
-				ImageView iv = new ImageView();
-				iv.setImage(image);
-				now.setGraphic(iv);
-				ControlPane.labelUpdate();
 			}
 		});
 	}

@@ -2,7 +2,6 @@ package interact;
 
 import entity.base.Entity;
 
-import logic.Sprites;
 
 public class Tile extends Entity {
 

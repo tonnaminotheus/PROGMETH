@@ -7,11 +7,9 @@ import interact.Player;
 import interact.SpecialTile;
 import interact.WhiteTile;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Test;
 
 import entity.base.Coordinate;
 import entity.base.Entity;
@@ -81,8 +79,6 @@ public class GameController {
 		if (checkIsPossitionOnBoard(randomX, randomY)) {
 			if (getCurrentMap().getEntity(randomX, randomY).isBlackTile()) {
 
-				int[] dirX = { 0, 2, 0, -2 };
-				int[] dirY = { 2, 0, -2, 0 };
 				/*
 				 * boolean check = true; for (int i = 0; i < 4; i++) {
 				 * if(!GameController.checkIsPossitionOnBoard(randomX + dirX[i], randomY +

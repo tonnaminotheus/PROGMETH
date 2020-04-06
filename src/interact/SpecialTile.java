@@ -2,14 +2,10 @@ package interact;
 
 import logic.Sprites;
 import logic.moveFail;
-import logic.removeBarricadeFail;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 
 import interact.Player;
 import logic.GameController;
-import interact.ExplodingTile;
 
 public class SpecialTile extends Tile {
 
