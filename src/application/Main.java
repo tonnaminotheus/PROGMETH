@@ -156,7 +156,7 @@ public class Main extends Application {
 
 		controlPane = new ControlPane();
 		fieldPane = new FieldPane();
-		root2.setBackground(new Background(new BackgroundFill(Color.ORANGE, CornerRadii.EMPTY, Insets.EMPTY)));
+		root2.setBackground(new Background(new BackgroundFill(Color.SANDYBROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 		root2.getChildren().add(controlPane);
 		root2.getChildren().add(fieldPane);
 
@@ -365,7 +365,7 @@ public class Main extends Application {
 		ImageView ivL = new ImageView(leftI);
 
 		left1 = new Button("", ivL);
-		left1.setLayoutX(xposlr);
+		left1.setLayoutX(xposlr + 100);
 		left1.setLayoutY(yposlr);
 		left1.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		left1.setBorder(new Border(
@@ -402,7 +402,7 @@ public class Main extends Application {
 		ImageView ivLL = new ImageView(leftII);
 
 		left2 = new Button("", ivLL);
-		left2.setLayoutX(xposlr + 800);
+		left2.setLayoutX(xposlr + 730);
 		left2.setLayoutY(yposlr);
 		left2.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		left2.setBorder(new Border(
@@ -439,7 +439,7 @@ public class Main extends Application {
 		ImageView ivR = new ImageView(rightI);
 
 		right1 = new Button("", ivR);
-		right1.setLayoutX(xposlr + 100);
+		right1.setLayoutX(xposlr + 200);
 		right1.setLayoutY(yposlr);
 		right1.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		right1.setBorder(new Border(
@@ -476,7 +476,7 @@ public class Main extends Application {
 		ImageView ivRR = new ImageView(rightII);
 
 		right2 = new Button("", ivRR);
-		right2.setLayoutX(xposlr + 900);
+		right2.setLayoutX(xposlr + 830);
 		right2.setLayoutY(yposlr);
 		right2.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		right2.setBorder(new Border(
@@ -510,9 +510,9 @@ public class Main extends Application {
 
 		P1 = new Button();
 		P2 = new Button();
-		P1.setLayoutX(xposlr + 50);
+		P1.setLayoutX(xposlr + 150); /////////////////////////////////////////////////////////////
 		P1.setLayoutY(yposlr - 100);
-		P2.setLayoutX(xposlr + 850);
+		P2.setLayoutX(xposlr + 780);
 		P2.setLayoutY(yposlr - 100);
 		root5.getChildren().add(P1);
 		root5.getChildren().add(P2);

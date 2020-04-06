@@ -28,9 +28,10 @@ import interact.Player;
 import interact.ExplodingTile;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-
+import javafx.scene.control.Label;
 import entity.base.Entity;
 import application.Main;
+import gui.ControlPane;
 
 //You might need to do something to the following line
 public class FieldCell extends Button {
@@ -100,8 +101,12 @@ public class FieldCell extends Button {
 								boolean ch2 = GameController.checkbfs(GameController.getPlayer2(), 0);
 								System.out.println("----end-----");
 								System.out.println(ch1 + " " + ch2);
+								
 								if (ch1 && ch2) {
 									pass = true;
+									String playermessage = GameController.getTurn()%2 == 1? "Player 1 placed a barricade":"Player 2 placed a barricade";
+									ControlPane.noti = playermessage;
+					
 									if (GameController.getTurn() % 2 == 1)
 										GameController.getPlayer1().setBarricade(haveBarricade - 1);
 									else
@@ -133,6 +138,8 @@ public class FieldCell extends Button {
 								boolean ch2 = GameController.checkbfs(GameController.getPlayer2(), 0);
 								if (ch1 && ch2) {
 									pass = true;
+									String playermessage = GameController.getTurn()%2 == 1? "Player 1 placed a barricade":"Player 2 placed a barricade";
+									ControlPane.noti = playermessage;
 									if (GameController.getTurn() % 2 == 1)
 										GameController.getPlayer1().setBarricade(haveBarricade - 1);
 									else
@@ -157,6 +164,8 @@ public class FieldCell extends Button {
 										now.getEntity().getY(), GameController.getPlayer1().getX(),
 										GameController.getPlayer1().getY());
 								pass = true;
+								String playermessage = GameController.getTurn()%2 == 1? "Player 1 moved":"Player 2 moved";
+								ControlPane.noti = playermessage;
 							} catch (Exception ee) {
 								System.out.println("can not move there");
 							}
@@ -166,6 +175,8 @@ public class FieldCell extends Button {
 										now.getEntity().getY(), GameController.getPlayer2().getX(),
 										GameController.getPlayer2().getY());
 								pass = true;
+								String playermessage = GameController.getTurn()%2 == 1? "Player 1 moved":"Player 2 moved";
+								ControlPane.noti = playermessage;
 							} catch (Exception ee) {
 								System.out.println("can not move there");
 							}
@@ -181,6 +192,8 @@ public class FieldCell extends Button {
 						try {
 							GameController.placeBomb(now.getEntity().getX(), now.getEntity().getY());
 							pass = true;
+							String playermessage = GameController.getTurn()%2 == 1? "Player 1 placed a bomb":"Player 2 placed a bomb";
+							ControlPane.noti = playermessage;
 							if (GameController.getTurn() % 2 == 1)
 								GameController.getPlayer1().setHaveExploding(haveBomb - 1);
 							else
@@ -198,6 +211,8 @@ public class FieldCell extends Button {
 						try {
 							GameController.removeBarricade(now.getEntity().getX(), now.getEntity().getY());
 							pass = true;
+							String playermessage = GameController.getTurn()%2 == 1? "Player 1 removed a barricade":"Player 2 removed a barricade";
+							ControlPane.noti = playermessage;
 							if (GameController.getTurn() % 2 == 1)
 								GameController.getPlayer1().setHaveRemoveBarricade(haveRemoveBarricade - 1);
 							else

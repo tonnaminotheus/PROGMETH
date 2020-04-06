@@ -16,6 +16,7 @@ import logic.GameController;
 
 public class ControlPane extends VBox {
 
+	
 	private ItemPane itemPane;
 	private static Label turn = new Label();
 	private static Label playerTurn = new Label();
@@ -23,6 +24,8 @@ public class ControlPane extends VBox {
 	private static Label lp = new Label();
 	private static Label bomb = new Label();
 	private static Label removeBarricade = new Label();
+	public static Label notification = new Label();
+	protected static String noti = new String();
 	
 	public ControlPane() {
 		super();
@@ -39,14 +42,14 @@ public class ControlPane extends VBox {
 		label.setFont(new Font(14));
 		labelUpdate();
 
-		this.getChildren().addAll(turn, playerTurn, haveBarricade, lp, bomb,removeBarricade, label, itemPane);
+		this.getChildren().addAll(notification, turn, playerTurn, haveBarricade, lp, bomb,removeBarricade, label, itemPane);
 	}
 
 	public static void labelUpdate() {
-		turn.textProperty().setValue("Turn: " + GameController.getTurn());
+		turn.textProperty().setValue("\n\nTurn: " + GameController.getTurn());
 		turn.setFont(Font.font("Turn: " + GameController.getTurn(), FontPosture.ITALIC, 20));
-		playerTurn.textProperty().setValue(GameController.getTurn() % 2 == 1 ? "Player 1" : "Player 2");
-		playerTurn.setFont(new Font(14));
+		playerTurn.textProperty().setValue(GameController.getTurn() % 2 == 1 ? "Player 1 Turn" : "Player 2 Turn");
+		playerTurn.setFont(new Font(20));
 		haveBarricade.textProperty().setValue(
 				"Barricade: " + (GameController.getTurn() % 2 == 1 ? GameController.getPlayer1().getHaveBaricade()
 						: GameController.getPlayer2().getHaveBaricade()));
@@ -60,9 +63,11 @@ public class ControlPane extends VBox {
 						: GameController.getPlayer2().getHaveExploding()));
 		bomb.setFont(new Font(14));
 		removeBarricade.textProperty().setValue(
-				"Current RemoveBarricade: " + (GameController.getTurn() % 2 == 1 ? GameController.getPlayer1().getHaveRemoveBarricade()
+				"Current Barricade removal: " + (GameController.getTurn() % 2 == 1 ? GameController.getPlayer1().getHaveRemoveBarricade()
 						: GameController.getPlayer2().getHaveRemoveBarricade()));
 		removeBarricade.setFont(new Font(14));
+		notification.textProperty().setValue(noti);
+		notification.setFont(new Font(22));
 	}
 
 	public ItemPane getItemPane() {
