@@ -22,17 +22,25 @@ class Application {
 		while (true) {
 			System.out.println("-----------Turn " + GameController.getTurn() + " -------------");
 			GameController.printmapcheck();
+			System.out.println(GameController.getTurn()%2 == 1?"Player 1 your turn": "Player2 your turn");
 			if (GameController.getTurn() % 2 == 0) {
+				
 				// System.out.println("spawn Activate");
 				GameController.spawnSpecialTile();
 			}
+<<<<<<< HEAD
+=======
+			System.out.println("Your remaining life: " + (GameController.getTurn()%2 == 1? GameController.getPlayer1().getLp(): GameController.getPlayer2().getLp()));
+			System.out.println("Your remaining barricade: " + (GameController.getTurn()%2 == 1? GameController.getPlayer1().getHaveBaricade() : GameController.getPlayer2().getHaveBaricade()));
+			System.out.println("Your remaining bomb: " + (GameController.getTurn()%2 == 1? GameController.getPlayer1().getHaveExploding():GameController.getPlayer2().getHaveExploding()));
+>>>>>>> a313ce1937351e27f917aee5414d6c77918d28d5
 			
 			System.out.println("Please choose the action");
 			System.out.println("(1) move");
 			System.out.println("(2) place barricade");
 			System.out.println("(3) remove barricade");
 			System.out.println("(4) pass the turn");
-			System.out.println("(5) place ExplodingTile");
+			System.out.println("(5) place bomb");
 			System.out.println("(999) Exit");
 			String choice = scanner.nextLine();
 			String result = "";
@@ -94,7 +102,6 @@ class Application {
 
 				System.out.println("(1) place horizontally");
 				System.out.println("(2) place vertically");
-				System.out.println("(9999) place vertically");
 				while (true) {
 					String ch = scanner.nextLine();
 					System.out.println("input x y");
