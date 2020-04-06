@@ -1,6 +1,5 @@
 package gui;
 
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -8,6 +7,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import logic.GameController;
 import entity.base.Entity;
@@ -28,29 +28,30 @@ public class FieldCell extends Pane {
 
 		this.setPrefWidth(35);
 		this.setPrefHeight(35);
-		//this.setMinWidth(40);
-		//this.setMaxHeight(40);
-		//this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		//this.setBorder(new Border(
-		//		new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		// this.setMinWidth(40);
+		// this.setMaxHeight(40);
+		// this.setBackground(new Background(new BackgroundFill(Color.WHITE,
+		// CornerRadii.EMPTY, Insets.EMPTY)));
+		// this.setBorder(new Border(
+		// new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
+		// BorderWidths.DEFAULT)));
 		Image image = null;
 		System.out.println(entity.getClass());
 		if (entity.isBlackTile())
 			image = new Image("file:res/BlackTile35.png");
 		else if (entity.isWhiteTile()) {
-			this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));	
-			int x=entity.getX();
-			int y=entity.getY();
-			if(x%2==0&&y%2==1) {
+			this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+			int x = entity.getX();
+			int y = entity.getY();
+			if (x % 2 == 0 && y % 2 == 1) {
 				this.setPrefWidth(10);
-			}else if(y%2==0&&x%2==1) {
+			} else if (y % 2 == 0 && x % 2 == 1) {
 				this.setPrefHeight(10);
-			}else {
+			} else {
 				this.setPrefWidth(10);
 				this.setPrefHeight(10);
 			}
-		}
-		else if (entity.isExplodingTile())
+		} else if (entity.isExplodingTile())
 			image = new Image("file:res/BombTile35.png");
 		else if (entity.isPlayer()) {
 			int index = ((Player) entity).getIndex();
@@ -71,14 +72,14 @@ public class FieldCell extends Pane {
 		} else if (entity.isSpecialTile()) {
 			image = new Image("file:res/SpecialTile35.png");
 		} else {
-			this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));	
-			int x=entity.getX();
-			int y=entity.getY();
-			if(x%2==0&&y%2==1) {
+			this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+			int x = entity.getX();
+			int y = entity.getY();
+			if (x % 2 == 0 && y % 2 == 1) {
 				this.setPrefWidth(10);
-			}else if(y%2==0&&x%2==1) {
+			} else if (y % 2 == 0 && x % 2 == 1) {
 				this.setPrefHeight(10);
-			}else {
+			} else {
 				this.setPrefWidth(10);
 				this.setPrefHeight(10);
 			}
@@ -107,12 +108,14 @@ public class FieldCell extends Pane {
 								boolean ch2 = GameController.checkbfs(GameController.getPlayer2(), 0);
 								System.out.println("----end-----");
 								System.out.println(ch1 + " " + ch2);
-								
+
 								if (ch1 && ch2) {
 									pass = true;
-									String playermessage = GameController.getTurn()%2 == 1? "Player 1 placed a barricade":"Player 2 placed a barricade";
+									String playermessage = GameController.getTurn() % 2 == 1
+											? "Player 1 placed a barricade"
+											: "Player 2 placed a barricade";
 									ControlPane.noti = playermessage;
-					
+
 									if (GameController.getTurn() % 2 == 1)
 										GameController.getPlayer1().setBarricade(haveBarricade - 1);
 									else
@@ -148,7 +151,9 @@ public class FieldCell extends Pane {
 								boolean ch2 = GameController.checkbfs(GameController.getPlayer2(), 0);
 								if (ch1 && ch2) {
 									pass = true;
-									String playermessage = GameController.getTurn()%2 == 1? "Player 1 placed a barricade":"Player 2 placed a barricade";
+									String playermessage = GameController.getTurn() % 2 == 1
+											? "Player 1 placed a barricade"
+											: "Player 2 placed a barricade";
 									ControlPane.noti = playermessage;
 									if (GameController.getTurn() % 2 == 1)
 										GameController.getPlayer1().setBarricade(haveBarricade - 1);
@@ -178,7 +183,8 @@ public class FieldCell extends Pane {
 										now.getEntity().getY(), GameController.getPlayer1().getX(),
 										GameController.getPlayer1().getY());
 								pass = true;
-								String playermessage = GameController.getTurn()%2 == 1? "Player 1 moved":"Player 2 moved";
+								String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 moved"
+										: "Player 2 moved";
 								ControlPane.noti = playermessage;
 							} catch (Exception ee) {
 								System.out.println("can not move there");
@@ -191,7 +197,8 @@ public class FieldCell extends Pane {
 										now.getEntity().getY(), GameController.getPlayer2().getX(),
 										GameController.getPlayer2().getY());
 								pass = true;
-								String playermessage = GameController.getTurn()%2 == 1? "Player 1 moved":"Player 2 moved";
+								String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 moved"
+										: "Player 2 moved";
 								ControlPane.noti = playermessage;
 							} catch (Exception ee) {
 								System.out.println("can not move there");
@@ -212,7 +219,8 @@ public class FieldCell extends Pane {
 						try {
 							GameController.placeBomb(now.getEntity().getX(), now.getEntity().getY());
 							pass = true;
-							String playermessage = GameController.getTurn()%2 == 1? "Player 1 placed a bomb":"Player 2 placed a bomb";
+							String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 placed a bomb"
+									: "Player 2 placed a bomb";
 							ControlPane.noti = playermessage;
 							if (GameController.getTurn() % 2 == 1)
 								GameController.getPlayer1().setHaveExploding(haveBomb - 1);
@@ -233,7 +241,8 @@ public class FieldCell extends Pane {
 						try {
 							GameController.removeBarricade(now.getEntity().getX(), now.getEntity().getY());
 							pass = true;
-							String playermessage = GameController.getTurn()%2 == 1? "Player 1 removed a barricade":"Player 2 removed a barricade";
+							String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 removed a barricade"
+									: "Player 2 removed a barricade";
 							ControlPane.noti = playermessage;
 							if (GameController.getTurn() % 2 == 1)
 								GameController.getPlayer1().setHaveRemoveBarricade(haveRemoveBarricade - 1);
@@ -275,13 +284,29 @@ public class FieldCell extends Pane {
 			@Override
 			public void handle(MouseEvent e) {
 				FieldCell now = (FieldCell) e.getSource();
-				if(!(now.myEntity.isWhiteTile()||now.myEntity.isBarricadeTile())) {
-					Image select = new Image("file:res/SelectedTile.png");
-					//ImageView iv1 = new ImageView(select);
-					now.iv.setImage(select);
-					ControlPane.labelUpdate();
-				}else if(now.myEntity.isWhiteTile()&&now.myEntity.getX()%2==1&&now.myEntity.getY()%2==1) {
-					now.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
+					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile())) {
+						Image select = new Image("file:res/SelectedTile.png");
+						// ImageView iv1 = new ImageView(select);
+						now.iv.setImage(select);
+						ControlPane.labelUpdate();
+					}
+				} else if (Main.gameActionNow == 1 || Main.gameActionNow == 2) {
+					if (now.myEntity.isWhiteTile() && now.myEntity.getX() % 2 == 1 && now.myEntity.getY() % 2 == 1) {
+						int x=now.myEntity.getX();
+						int y=now.myEntity.getY();
+						if(Main.gameActionNow==1) {
+							((Region) Main.fieldPane.getChildren().get(x*17+y-1)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y+1)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+						}else {
+							((Region) Main.fieldPane.getChildren().get(x*17+y-1)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y+1)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+						}
+								//now.setBackground(
+								//new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+					}
 				}
 			}
 		});
@@ -290,63 +315,79 @@ public class FieldCell extends Pane {
 			@Override
 			public void handle(MouseEvent e) {
 				FieldCell now = (FieldCell) e.getSource();
-				if(!(now.myEntity.isWhiteTile()||now.myEntity.isBarricadeTile())) {
-					Image image=null;
-					// System.out.println(entity.getClass());
-					if (now.myEntity.isBlackTile())
-						image = new Image("file:res/BlackTile35.png");
-					else if (now.myEntity.isWhiteTile()) {
-						now.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));	
-						int x=entity.getX();
-						int y=entity.getY();
-						if(x%2==0&&y%2==1) {
-							now.setPrefWidth(10);
-						}else if(y%2==0&&x%2==1) {
-							now.setPrefHeight(10);
+				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
+					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile())) {
+						Image image = null;
+						// System.out.println(entity.getClass());
+						if (now.myEntity.isBlackTile())
+							image = new Image("file:res/BlackTile35.png");
+						else if (now.myEntity.isWhiteTile()) {
+							now.setBackground(
+									new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+							int x = entity.getX();
+							int y = entity.getY();
+							if (x % 2 == 0 && y % 2 == 1) {
+								now.setPrefWidth(10);
+							} else if (y % 2 == 0 && x % 2 == 1) {
+								now.setPrefHeight(10);
+							} else {
+								now.setPrefWidth(10);
+								now.setPrefHeight(10);
+							}
+						} else if (now.myEntity.isExplodingTile())
+							image = new Image("file:res/BombTile35.png");
+						else if (now.myEntity.isPlayer()) {
+							int index = ((Player) entity).getIndex();
+							if (index == 1)
+								image = new Image("file:res/Player1Tile35.png");
+							else if (index == 2)
+								image = new Image("file:res/Player2Tile35.png");
+							else if (index == 3)
+								image = new Image("file:res/Player3Tile35.png");
+							else if (index == 4)
+								image = new Image("file:res/Player4Tile35.png");
+							else if (index == 5)
+								image = new Image("file:res/Player5Tile35.png");
+							else if (index == 6)
+								image = new Image("file:res/Player6Tile35.png");
+							else
+								image = new Image("file:res/Player7Tile35.png");
+						} else if (now.myEntity.isSpecialTile()) {
+							image = new Image("file:res/SpecialTile35.png");
+						} else {
+							now.setBackground(
+									new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+							int x = entity.getX();
+							int y = entity.getY();
+							if (x % 2 == 0 && y % 2 == 1) {
+								now.setPrefWidth(10);
+							} else if (y % 2 == 0 && x % 2 == 1) {
+								now.setPrefHeight(10);
+							} else {
+								now.setPrefWidth(10);
+								now.setPrefHeight(10);
+							}
+						}
+						// ImageView iv = new ImageView();
+						// iv.setImage(image);
+						now.iv.setImage(image);
+						ControlPane.labelUpdate();
+					}
+				} else if (Main.gameActionNow == 1 || Main.gameActionNow == 2) {
+					if (now.myEntity.isWhiteTile() && now.myEntity.getX() % 2 == 1 && now.myEntity.getY() % 2 == 1) {
+						int x=now.myEntity.getX();
+						int y=now.myEntity.getY();
+						if(Main.gameActionNow==1) {
+							((Region) Main.fieldPane.getChildren().get(x*17+y-1)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y+1)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 						}else {
-							now.setPrefWidth(10);
-							now.setPrefHeight(10);
+							((Region) Main.fieldPane.getChildren().get(x*17+y-1)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+							((Region) Main.fieldPane.getChildren().get(x*17+y+1)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 						}
 					}
-					else if (now.myEntity.isExplodingTile())
-						image = new Image("file:res/BombTile35.png");
-					else if (now.myEntity.isPlayer()) {
-						int index = ((Player) entity).getIndex();
-						if (index == 1)
-							image = new Image("file:res/Player1Tile35.png");
-						else if (index == 2)
-							image = new Image("file:res/Player2Tile35.png");
-						else if (index == 3)
-							image = new Image("file:res/Player3Tile35.png");
-						else if (index == 4)
-							image = new Image("file:res/Player4Tile35.png");
-						else if (index == 5)
-							image = new Image("file:res/Player5Tile35.png");
-						else if (index == 6)
-							image = new Image("file:res/Player6Tile35.png");
-						else
-							image = new Image("file:res/Player7Tile35.png");
-					} else if (now.myEntity.isSpecialTile()) {
-						image = new Image("file:res/SpecialTile35.png");
-					} else {
-						now.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));	
-						int x=entity.getX();
-						int y=entity.getY();
-						if(x%2==0&&y%2==1) {
-							now.setPrefWidth(10);
-						}else if(y%2==0&&x%2==1) {
-							now.setPrefHeight(10);
-						}else {
-							now.setPrefWidth(10);
-							now.setPrefHeight(10);
-						}
-					}
-					//ImageView iv = new ImageView();
-					//iv.setImage(image);
-					now.iv.setImage(image);
-					ControlPane.labelUpdate();
-				}else if(now.myEntity.isWhiteTile()&&now.myEntity.getX()%2==1&&now.myEntity.getY()%2==1) {
-					now.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		
 				}
 			}
 		});
