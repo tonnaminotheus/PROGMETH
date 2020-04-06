@@ -2,6 +2,7 @@ package logic;
 
 import interact.BarricadeTile;
 import interact.BlackTile;
+import interact.ExplodingTile;
 import interact.Player;
 import interact.SpecialTile;
 import interact.WhiteTile;
@@ -21,15 +22,13 @@ public class GameController {
 
 	private static Player player1;
 	private static Player player2;
-	private static int player1index;
-	private static int player2index;
 	private static int turn = 1;
 	private static boolean isWin;
 
-	public static void IntializeMap() {
+	public static void IntializeMap(int player1index, int player2index) {
 		setIsWin(false);
 		player1 = new Player(0, 8, player1index,new Coordinate(0,8),1,16);
-		player2 = new Player(16, 8, player2index,new Coordinate(0,8),2,16);
+		player2 = new Player(16, 8, player2index,new Coordinate(16,8),2,16);
 		player1.setOtherPlayer(player2);
 		player2.setOtherPlayer(player1);
 		gameMap = new GameMap();
@@ -69,6 +68,10 @@ public class GameController {
 	public static void setTurn(int t) {
 		turn = t;
 	}
+	
+	public static void increaseTurn() {
+		GameController.setTurn(GameController.getTurn()+1);
+	}
 
 	public static void spawnSpecialTile() {
 		ArrayList<BlackTile> spawnTile = gameMap.getSpawnTile();
@@ -91,6 +94,15 @@ public class GameController {
 				// System.out.println("spawnSuccess");
 				// }
 			}
+		}
+	}
+	
+	public static void placeBomb(int x,int y) throws Exception{
+		if(GameController.getCurrentMap().getEntity(x, y).isBlackTile()&&x!=16&&x!=0) {
+			GameController.getCurrentMap().removeEntity(x, y);
+			GameController.getCurrentMap().addEntity(new ExplodingTile(x,y), x, y);
+		}else {
+			throw new Exception("can not place bomb there");
 		}
 	}
 
@@ -251,13 +263,16 @@ public class GameController {
 		boolean ch2=false;
 		while (!q.isEmpty()) {
 			Coordinate topQueue = q.get(0);
+			System.out.println(topQueue.getX()+" "+topQueue.getY()+" "+finish);
 			int[] dirx = { 0, 2, 0, -2 };
 			int[] diry = { 2, 0, -2, 0 };
 			if (topQueue.getX() == finish) {
 				ch1=true;
+				System.out.println("ok1");
 			}
 			if (topQueue.getX() == player.getSpawn().getX()&&topQueue.getY()==player.getSpawn().getY()) {
 				ch2=true;
+				System.out.println("ok2");
 			}
 			for (int i = 0; i < 4; i++) {
 				if (checkIsPossitionOnBoard(topQueue.getX() + dirx[i], topQueue.getY() + diry[i])) {
@@ -265,10 +280,13 @@ public class GameController {
 							.getEntity(topQueue.getX() + dirx[i], topQueue.getY() + diry[i]).isBlackTile();
 					boolean isSpecialTile = getCurrentMap()
 							.getEntity(topQueue.getX() + dirx[i], topQueue.getY() + diry[i]).isSpecialTile();
+					boolean isExplodingTile = getCurrentMap()
+							.getEntity(topQueue.getX() + dirx[i], topQueue.getY() + diry[i]).isExplodingTile();
 					boolean isWhiteTile = getCurrentMap()
 							.getEntity(topQueue.getX() + dirx[i] / 2, topQueue.getY() + diry[i] / 2).isWhiteTile();
+					
 					if (!visit[topQueue.getX() + dirx[i]][topQueue.getY() + diry[i]]
-							&& (isWhiteTile && (isBlackTile || isSpecialTile))) {
+							&& (isWhiteTile && (isBlackTile || isSpecialTile||isExplodingTile))) {
 						q.add(new Coordinate(topQueue.getX() + dirx[i], topQueue.getY() + diry[i]));
 						visit[topQueue.getX() + dirx[i]][topQueue.getY() + diry[i]] = true;
 					}

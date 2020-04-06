@@ -26,7 +26,7 @@ class Application {
 				// System.out.println("spawn Activate");
 				GameController.spawnSpecialTile();
 			}
-
+			
 			System.out.println("Please choose the action");
 			System.out.println("(1) move");
 			System.out.println("(2) place barricade");

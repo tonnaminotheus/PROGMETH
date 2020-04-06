@@ -19,7 +19,7 @@ public class SpecialTile extends Tile {
 	}
 
 	public static void getAction(Player e) throws moveFail {
-		int random = (int) (Math.random() * 100)%6;
+		int random = (int) (Math.random() * 100)%8;
 		if (random==0) {
 			move1(e);
 		} else if (random ==1) {
@@ -27,13 +27,17 @@ public class SpecialTile extends Tile {
 		} else if (random == 2)
 			move1(e.getOtherPlayer());
 		else if(random ==3){
-			removeBarricade();
+			removeBarricade(e);
 		}
 		else if(random ==4){
 			deleteAllSpecialTile();
 		}
-		else {
+		else if(random==5){
 			deleteAllBarricade();
+		}else if(random==6){
+			heal(e);
+		}else {
+			placeBomb(e);
 		}
 	}
 	
@@ -41,28 +45,8 @@ public class SpecialTile extends Tile {
 		e.heal();
 	}
 	
-	public static void placeBomb() {
-		ArrayList<BlackTile> placeBombTile=GameController.getCurrentMap().getSpawnTile();
-		if(!placeBombTile.isEmpty()){
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("input x y");
-			int x = scanner.nextInt();
-			int y = scanner.nextInt();
-			System.out.println(x+" "+y);
-			if(GameController.checkIsPossitionOnBoard(x, y)&&GameController.getCurrentMap().getEntity(x,y).isBlackTile()) {
-				GameController.getCurrentMap().removeEntity(x, y);
-				GameController.getCurrentMap().addEntity(new ExplodingTile(x,y), x, y);
-			}
-			else
-			{
-				System.out.println("you can noy place there");
-			}
-				
-		}
-		else {
-			System.out.print("sory you can not place ExplodingTile at any Tiles on the map");
-		}
-	
+	public static void placeBomb(Player e) {
+		e.setHaveExploding(e.getHaveExploding()+1);
 	}
 	
 	public static void deleteAllSpecialTile()
@@ -104,34 +88,11 @@ public class SpecialTile extends Tile {
 	}
 
 	public static void addBarricade(Player e) {
-		System.out.println("--Congratulation! You get one barricade--");
 		e.setBarricade(e.getHaveBaricade() + 1);
 	}
 
-	public static void removeBarricade() {
-		// check have barricade in map
-		// get input click on barricade tile
-		// remove both BarricadeTile that have same index
-				// change that position to white barricade
-		System.out.println("--Remove one barricade--");
-		if(!GameController.checkHaveBarricadeOnMap())
-		{
-			System.out.println("sorry there is no barricade on the map");
-			return;
-		}
-		Scanner scanner = new Scanner(System.in);
-		while (true) {
-			System.out.println("input x y");
-			int x = scanner.nextInt();
-			int y = scanner.nextInt();
-			// scanner.nextLine();
-			try {
-				GameController.removeBarricade(x, y);
-				break;
-			} catch (removeBarricadeFail e) {
-				System.out.println("please try again: " + e.message);
-			}
-		}
+	public static void removeBarricade(Player e) {
+		e.setHaveRemoveBarricade(e.getHaveRemoveBarricade()+1);
 	}
 
 	public int getSymbol() {

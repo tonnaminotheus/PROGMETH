@@ -1,6 +1,8 @@
 package gui;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -15,18 +17,17 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import application.Main;
 
 public class ItemButton extends Button{
 	private Item item;
-
 	ItemButton(String itemName){
 		// TODO complete the constructor
 		super();
 		this.setPadding(new Insets(5));
 		this.item=new Item(itemName);
-		System.out.println("7");
 		Image image=new Image(this.item.getUrl());
-		System.out.println("8");
 		ImageView imageView = new ImageView(image);
 		imageView.setFitHeight(48);
 		imageView.setFitWidth(48);
@@ -35,19 +36,88 @@ public class ItemButton extends Button{
 		this.setBorder(new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, 
 				CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		this.setTooltip();
+		switch(itemName) {
+		case "HorizontalBarricade" : this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				ItemPane.resetButtonsBackGroundColor();
+				Main.gameActionNow=1;
+				ItemButton now = (ItemButton)e.getSource();
+				now.highlight();
+			}
+
+		});break;
+		case "VerticalBarricade" : this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				ItemPane.resetButtonsBackGroundColor();
+				Main.gameActionNow=2;
+				ItemButton now = (ItemButton)e.getSource();
+				now.highlight();
+			}
+			
+		});break;
+		case "Cancel" : this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				ItemPane.resetButtonsBackGroundColor();
+				Main.gameActionNow=0;
+				ItemPane.resetButtonsBackGroundColor();
+			}
+			
+		}); break;
+		case "Home" :	this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				ItemPane.resetButtonsBackGroundColor();
+				Main.setScene(Main.primary,Main.scene1);
+				ItemButton now = (ItemButton)e.getSource();
+				now.highlight();
+			}
+			
+		}); break;
+		case "Bomb" : 	this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				ItemPane.resetButtonsBackGroundColor();
+				Main.gameActionNow=4;
+				ItemButton now = (ItemButton)e.getSource();
+				now.highlight();
+			}
+			
+		});break;
+		case "Move" : 	this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				ItemPane.resetButtonsBackGroundColor();
+				Main.gameActionNow=3;
+				ItemButton now = (ItemButton)e.getSource();
+				now.highlight();
+			}
+			
+		});break;
+		case "RemoveBarricade" : 	this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				ItemPane.resetButtonsBackGroundColor();
+				Main.gameActionNow=5;
+				ItemButton now = (ItemButton)e.getSource();
+				now.highlight();
+			}
+			
+		});break;
+		
+	}
 	}
 
 	public void highlight() {
-		// TODO 
 		this.setBackground(new Background(new BackgroundFill(Color.LIMEGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
 	
 	public void unhighlight() {
-		// TODO
 		this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
 	
-	// TODO GETTER
 	public Item getItem() {
 		return item;
 	}

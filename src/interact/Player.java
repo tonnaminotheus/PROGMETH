@@ -9,6 +9,7 @@ public class Player extends Entity {
 	private int index;
 	private int haveBarricade;
 	private int haveExploding;
+	private int haveRemoveBarricade;
 	private Player otherPlayer;
 	private Coordinate spawn;
 	private int side;
@@ -20,11 +21,19 @@ public class Player extends Entity {
 		this.setIndex(index);
 		this.setBarricade(10);
 		this.setLp(3);
-		this.setHaveExploding(5);
+		this.setHaveExploding(3);
+		this.setHaveRemoveBarricade(5);
 		this.spawn=spawn;
 		this.setSide(side);
 		this.setFinish(finish);
-		// TODO Auto-generated constructor stub
+	}
+	
+	public int getHaveRemoveBarricade() {
+		return haveRemoveBarricade;
+	}
+	
+	public void setHaveRemoveBarricade(int haveRemoveBarricade) {
+		this.haveRemoveBarricade = haveRemoveBarricade;
 	}
 	
 	public void setFinish(int finish) {
