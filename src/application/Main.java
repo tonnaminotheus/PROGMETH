@@ -5,12 +5,17 @@ import java.io.File;
 import gui.ControlPane;
 import gui.FieldPane;
 import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -23,6 +28,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import logic.GameController;
 
 public class Main extends Application {
@@ -40,7 +46,7 @@ public class Main extends Application {
 	public static int xposlr = 120;
 	public static int yposlr = 500;
 	public static Pane P1, P2;
-	MediaPlayer mediaplayer;
+	public static MediaPlayer mediaplayer;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -52,7 +58,7 @@ public class Main extends Application {
 		mediaplayer = new MediaPlayer(musicFile);
 		mediaplayer.setAutoPlay(true);
 		mediaplayer.setCycleCount(Animation.INDEFINITE);
-		mediaplayer.setVolume(0.05);
+		mediaplayer.setVolume(0.02);
 		// setScene1
 
 		Group root = new Group();
@@ -68,7 +74,7 @@ public class Main extends Application {
 		ImageView iv1 = new ImageView(playI);
 		iv1.setFitHeight(100);
 		iv1.setFitWidth(300);
-
+		
 		playB = new Pane(iv1);
 		playB.setLayoutX(440);
 		playB.setLayoutY(360);
@@ -103,6 +109,14 @@ public class Main extends Application {
 			}
 
 		});
+		FadeTransition playBAction = new FadeTransition();
+		playBAction.setNode(playB);
+		playBAction.setFromValue(1);
+		playBAction.setToValue(0.2);
+		playBAction.setCycleCount(Animation.INDEFINITE);
+		playBAction.setDuration(Duration.millis(500));
+		playBAction.setAutoReverse(true);
+		playBAction.play();
 		root.getChildren().add(playB);
 
 		// ExitButton
@@ -144,6 +158,14 @@ public class Main extends Application {
 			}
 
 		});
+		FadeTransition exitBAction = new FadeTransition();
+		exitBAction.setNode(exitButton);
+		exitBAction.setFromValue(1);
+		exitBAction.setToValue(0.2);
+		exitBAction.setCycleCount(Animation.INDEFINITE);
+		exitBAction.setDuration(Duration.millis(500));
+		exitBAction.setAutoReverse(true);
+		exitBAction.play();
 		root.getChildren().add(exitButton);
 
 		scene1 = new Scene(root, 1280, 720);
@@ -164,7 +186,11 @@ public class Main extends Application {
 		root2.setBackground(new Background(new BackgroundFill(Color.SANDYBROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 		root2.getChildren().add(controlPane);
 		root2.getChildren().add(fieldPane);
-
+		
+		
+		
+		//Label timer =new Label(""+System.currentTimeMillis());
+		//root2.getChildren().add(time);
 		scene2 = new Scene(root2);
 		// end setScene2
 
@@ -212,6 +238,14 @@ public class Main extends Application {
 			}
 
 		});
+		FadeTransition exitB2Action = new FadeTransition();
+		exitB2Action.setNode(exitButton2);
+		exitB2Action.setFromValue(1);
+		exitB2Action.setToValue(0.2);
+		exitB2Action.setCycleCount(Animation.INDEFINITE);
+		exitB2Action.setDuration(Duration.millis(500));
+		exitB2Action.setAutoReverse(true);
+		exitB2Action.play();
 		root3.getChildren().add(exitButton2);
 		root3.getChildren().add(ivP1W);
 
@@ -262,6 +296,14 @@ public class Main extends Application {
 			}
 
 		});
+		FadeTransition exitB3Action = new FadeTransition();
+		exitB3Action.setNode(exitButton3);
+		exitB3Action.setFromValue(1);
+		exitB3Action.setToValue(0.2);
+		exitB3Action.setCycleCount(Animation.INDEFINITE);
+		exitB3Action.setDuration(Duration.millis(500));
+		exitB3Action.setAutoReverse(true);
+		exitB3Action.play();
 		root4.getChildren().add(exitButton3);
 		root4.getChildren().add(ivP2W);
 
@@ -318,6 +360,14 @@ public class Main extends Application {
 			}
 
 		});
+		FadeTransition nextBAction = new FadeTransition();
+		nextBAction.setNode(nextB);
+		nextBAction.setFromValue(1);
+		nextBAction.setToValue(0.2);
+		nextBAction.setCycleCount(Animation.INDEFINITE);
+		nextBAction.setDuration(Duration.millis(500));
+		nextBAction.setAutoReverse(true);
+		nextBAction.play();
 		root5.getChildren().add(nextB);
 
 		// BackButton
@@ -359,6 +409,14 @@ public class Main extends Application {
 			}
 
 		});
+		FadeTransition backBAction = new FadeTransition();
+		backBAction.setNode(backB);
+		backBAction.setFromValue(1);
+		backBAction.setToValue(0.2);
+		backBAction.setCycleCount(Animation.INDEFINITE);
+		backBAction.setDuration(Duration.millis(500));
+		backBAction.setAutoReverse(true);
+		backBAction.play();
 		root5.getChildren().add(backB);
 
 		// left1
