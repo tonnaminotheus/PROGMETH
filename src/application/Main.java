@@ -4,6 +4,7 @@ import java.io.File;
 
 import gui.ControlPane;
 import gui.FieldPane;
+import javafx.animation.Animation;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -50,7 +51,8 @@ public class Main extends Application {
 		Media musicFile=new Media(new File(path).toURI().toString());
 		mediaplayer = new MediaPlayer(musicFile);
 		mediaplayer.setAutoPlay(true);
-		mediaplayer.setVolume(0.03);
+		mediaplayer.setCycleCount(Animation.INDEFINITE);
+		mediaplayer.setVolume(0.05);
 		// setScene1
 
 		Group root = new Group();
