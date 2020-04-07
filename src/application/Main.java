@@ -1,5 +1,7 @@
 package application;
 
+import java.io.File;
+
 import gui.ControlPane;
 import gui.FieldPane;
 import javafx.application.Application;
@@ -8,20 +10,16 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import logic.GameController;
@@ -41,12 +39,18 @@ public class Main extends Application {
 	public static int xposlr = 120;
 	public static int yposlr = 500;
 	public static Pane P1, P2;
+	MediaPlayer mediaplayer;
 
 	@Override
 	public void start(Stage primaryStage) {
 
 		primary = primaryStage;
-
+		//setMusic
+		String path = new File("src/media/musicTheme.mp3").getAbsolutePath();
+		Media musicFile=new Media(new File(path).toURI().toString());
+		mediaplayer = new MediaPlayer(musicFile);
+		mediaplayer.setAutoPlay(true);
+		mediaplayer.setVolume(0.03);
 		// setScene1
 
 		Group root = new Group();
