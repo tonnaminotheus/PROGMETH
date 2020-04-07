@@ -125,12 +125,12 @@ public class FieldCell extends Pane {
 								}
 							} catch (Exception ee) {
 								System.out.println("can not place barricade there");
-								String playermessage = "Can not place barricade there";
+								String playermessage = "You cannot place a barricade there";
 								ControlPane.noti = playermessage;
 							}
 						} else {
-							System.out.println("That is not WhiteTile");
-							String playermessage = "That is not WhiteTile";
+							System.out.println("That is not white tile");
+							String playermessage = "That is not a white tile";
 							ControlPane.noti = playermessage;
 						}
 					}
@@ -164,12 +164,12 @@ public class FieldCell extends Pane {
 								}
 							} catch (Exception ee) {
 								System.out.println("can not place barricade there");
-								String playermessage = "Can not place barricade there";
+								String playermessage = "You cannot place barricade there";
 								ControlPane.noti = playermessage;
 							}
 						} else {
-							System.out.println("That is not WhiteTile");
-							String playermessage = "That is not WhiteTile";
+							System.out.println("That is not a white tile");
+							String playermessage = "That is not a white tile";
 							ControlPane.noti = playermessage;
 						}
 					}
@@ -188,7 +188,7 @@ public class FieldCell extends Pane {
 								ControlPane.noti = playermessage;
 							} catch (Exception ee) {
 								System.out.println("can not move there");
-								String playermessage = "Can not move there";
+								String playermessage = "You cannot move there";
 								ControlPane.noti = playermessage;
 							}
 						} else {
@@ -202,13 +202,13 @@ public class FieldCell extends Pane {
 								ControlPane.noti = playermessage;
 							} catch (Exception ee) {
 								System.out.println("can not move there");
-								String playermessage = "Can not move there";
+								String playermessage = "You cannot move there";
 								ControlPane.noti = playermessage;
 							}
 						}
 					} else {
-						System.out.println("That is not BlackTile or SpecialTile or Bomb");
-						String playermessage = "Can not move there";
+						System.out.println("That is a white tile");
+						String playermessage = "You cannot move there";
 						ControlPane.noti = playermessage;
 					}
 				} else if (Main.gameActionNow == 4) {
@@ -228,7 +228,7 @@ public class FieldCell extends Pane {
 								GameController.getPlayer2().setHaveExploding(haveBomb - 1);
 						} catch (Exception e1) {
 							e1.printStackTrace();
-							String playermessage = "Can not place bomb there";
+							String playermessage = "You cannot place a bomb there";
 							ControlPane.noti = playermessage;
 						}
 					}

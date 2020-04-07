@@ -6,8 +6,11 @@ public class Improvement {
 	 * 
 	 *
 	 * 
-	 * 
+	 * Correct word
 	 *
+	 * 
+	 * Rework exit in Victory Page to main menu
+	 * 
 	 * 
 	 * 
 	 * 
