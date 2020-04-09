@@ -50,7 +50,7 @@ public class Main extends Application {
 		Media musicFile=new Media(new File(path).toURI().toString());
 		mediaplayer = new MediaPlayer(musicFile);
 		mediaplayer.setAutoPlay(true);
-		mediaplayer.setVolume(0.03);
+		mediaplayer.setVolume(0.10);
 		// setScene1
 
 		Group root = new Group();
