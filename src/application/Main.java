@@ -58,7 +58,7 @@ public class Main extends Application {
 		mediaplayer = new MediaPlayer(musicFile);
 		mediaplayer.setAutoPlay(true);
 		mediaplayer.setCycleCount(Animation.INDEFINITE);
-		mediaplayer.setVolume(0.02);
+		mediaplayer.setVolume(0.01);
 		// setScene1
 
 		Group root = new Group();
