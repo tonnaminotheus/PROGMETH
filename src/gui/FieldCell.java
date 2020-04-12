@@ -30,20 +30,8 @@ public class FieldCell extends Pane {
 	
 	public FieldCell(Entity entity) {
 		this.fade.setNode(this);
-		//this.fade.setFromValue(1);
-		//this.fade.setToValue(0.2);
-		//this.fade.setCycleCount(Animation.INDEFINITE);
-		//this.fade.setDuration(Duration.millis(500));
-		//fade.setAutoReverse(true);
-		this.setPrefWidth(50);
-		this.setPrefHeight(50);
-		// this.setMinWidth(40);
-		// this.setMaxHeight(40);
-		// this.setBackground(new Background(new BackgroundFill(Color.WHITE,
-		// CornerRadii.EMPTY, Insets.EMPTY)));
-		// this.setBorder(new Border(
-		// new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-		// BorderWidths.DEFAULT)));
+		this.setPrefWidth(60);
+		this.setPrefHeight(60);
 		Image image = null;
 		System.out.println(entity.getClass());
 		if (entity.isBlackTile()) {
@@ -285,6 +273,7 @@ public class FieldCell extends Pane {
 					Main.gameActionNow = 0;
 					System.out.println("label start");
 					ControlPane.labelUpdate();
+					ControlPane2.labelUpdate();
 				}
 
 			}
@@ -295,7 +284,7 @@ public class FieldCell extends Pane {
 			public void handle(MouseEvent e) {
 				FieldCell now = (FieldCell) e.getSource();
 				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
-					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile())) {
+					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile()||now.myEntity.isPlayer())) {
 						Image select = new Image("file:res/Selected.png");
 						// ImageView iv1 = new ImageView(select);
 						now.iv.setImage(select);
@@ -348,7 +337,7 @@ public class FieldCell extends Pane {
 			public void handle(MouseEvent e) {
 				FieldCell now = (FieldCell) e.getSource();
 				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
-					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile())) {
+					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile()||now.myEntity.isPlayer())) {
 						now.fade.stop();
 						now.fade.setFromValue(1);
 						now.fade.setToValue(0.2);
@@ -434,7 +423,7 @@ public class FieldCell extends Pane {
 			public void handle(MouseEvent e) {
 				FieldCell now = (FieldCell) e.getSource();
 				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
-					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile())) {
+					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile()||now.myEntity.isPlayer())) {
 						now.fade.stop();
 						now.fade.setFromValue(0.2);
 						now.fade.setToValue(1);
@@ -517,20 +506,9 @@ public class FieldCell extends Pane {
 			public void handle(MouseEvent e) {
 				FieldCell now = (FieldCell) e.getSource();
 				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
-					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile())) {
+					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile()||now.myEntity.isPlayer())) {
 						Image image = null;
 						ControlPane.labelUpdate();
-						//now.fade.setNode(now);
-						//now.fade.setFromValue(1);
-						//now.fade.setToValue(1);
-						//now.fade.setCycleCount(1);
-						//now.fade.setDuration(Duration.millis(500));
-						//now.fade.setAutoReverse(true);
-						//now.fade.wait(Duration.millis(500));
-						//now.fade.stop();
-						//FieldPane.setFieldPane(Main.fieldPane);
-						//now.fade.jumpTo(Duration.millis(100));
-						//((FieldCell)now).fade.play();
 						 System.out.println(entity.getClass());
 						if (now.myEntity.isBlackTile())
 							now.setBackground(new Background(

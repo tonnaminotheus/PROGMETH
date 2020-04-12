@@ -3,6 +3,7 @@ package application;
 import java.io.File;
 
 import gui.ControlPane;
+import gui.ControlPane2;
 import gui.FieldPane;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
@@ -37,6 +38,7 @@ public class Main extends Application {
 	public static Pane playB, nextB, backB;
 	public static Pane exitButton, exitButton2, exitButton3;
 	public static ControlPane controlPane;
+	public static ControlPane2 controlPane2;
 	public static FieldPane fieldPane;
 	public static Stage primary;
 	public static int gameActionNow = 0;
@@ -184,9 +186,11 @@ public class Main extends Application {
 
 		controlPane = new ControlPane();
 		fieldPane = new FieldPane();
+		controlPane2 = new ControlPane2();
 		root2.setBackground(new Background(new BackgroundFill(Color.SANDYBROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 		root2.getChildren().add(controlPane);
 		root2.getChildren().add(fieldPane);
+		root2.getChildren().add(controlPane2);
 		
 		
 		
@@ -607,6 +611,11 @@ public class Main extends Application {
 		} else {
 			left2.setVisible(true);
 			right2.setVisible(true);
+		}
+		if(player1Index==player2Index) {
+			nextB.setVisible(false);
+		}else {
+			nextB.setVisible(true);
 		}
 
 		if (player1Index == 1) {
