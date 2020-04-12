@@ -9,9 +9,12 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import logic.GameController;
 import entity.base.Entity;
 import interact.Player;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import application.Main;
@@ -23,9 +26,15 @@ public class FieldCell extends Pane {
 	private Entity myEntity;
 	private boolean isEmpty;
 	ImageView iv;
-
+	public FadeTransition fade=new FadeTransition();
+	
 	public FieldCell(Entity entity) {
-
+		this.fade.setNode(this);
+		//this.fade.setFromValue(1);
+		//this.fade.setToValue(0.2);
+		//this.fade.setCycleCount(Animation.INDEFINITE);
+		//this.fade.setDuration(Duration.millis(500));
+		//fade.setAutoReverse(true);
 		this.setPrefWidth(50);
 		this.setPrefHeight(50);
 		// this.setMinWidth(40);
@@ -37,9 +46,9 @@ public class FieldCell extends Pane {
 		// BorderWidths.DEFAULT)));
 		Image image = null;
 		System.out.println(entity.getClass());
-		if (entity.isBlackTile())
-			image = new Image("file:res/BlackTile.png");
-		else if (entity.isWhiteTile()) {
+		if (entity.isBlackTile()) {
+			this.setBackground(new Background(new BackgroundFill(Color.DARKGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+		} else if (entity.isWhiteTile()) {
 			this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 			int x = entity.getX();
 			int y = entity.getY();
@@ -254,8 +263,9 @@ public class FieldCell extends Pane {
 							ControlPane.noti = playermessage;
 						}
 					}
+					
 				}
-
+				//FieldPane.setFieldPane(Main.fieldPane);
 				if (pass) {
 					if (GameController.getTurn() % 2 == 0) {
 						GameController.spawnSpecialTile();
@@ -290,6 +300,7 @@ public class FieldCell extends Pane {
 						// ImageView iv1 = new ImageView(select);
 						now.iv.setImage(select);
 						ControlPane.labelUpdate();
+						
 					}
 				} else if (Main.gameActionNow == 1 || Main.gameActionNow == 2) {
 					if (now.myEntity.isWhiteTile() && now.myEntity.getX() % 2 == 1 && now.myEntity.getY() % 2 == 1) {
@@ -301,25 +312,201 @@ public class FieldCell extends Pane {
 									&& GameController.getCurrentMap().getEntity(x + 1, y).isWhiteTile()) {
 								((Region) Main.fieldPane.getChildren().get(x * 17 + y - 17))
 										.setBackground(new Background(
-												new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+												new BackgroundFill(Color.DARKRED, CornerRadii.EMPTY, Insets.EMPTY)));
 								((Region) Main.fieldPane.getChildren().get(x * 17 + y)).setBackground(new Background(
-										new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+										new BackgroundFill(Color.DARKRED, CornerRadii.EMPTY, Insets.EMPTY)));
 								((Region) Main.fieldPane.getChildren().get(x * 17 + y + 17))
 										.setBackground(new Background(
-												new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+												new BackgroundFill(Color.DARKRED, CornerRadii.EMPTY, Insets.EMPTY)));
 							}
 						} else {
-							if (GameController.getCurrentMap().getEntity(x , y-1).isWhiteTile()
+							if (GameController.getCurrentMap().getEntity(x, y - 1).isWhiteTile()
 									&& GameController.getCurrentMap().getEntity(x, y).isWhiteTile()
-									&& GameController.getCurrentMap().getEntity(x , y+1).isWhiteTile()) {
-								((Region) Main.fieldPane.getChildren().get(x*17+y-1)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-								((Region) Main.fieldPane.getChildren().get(x*17+y)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-								((Region) Main.fieldPane.getChildren().get(x*17+y+1)).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+									&& GameController.getCurrentMap().getEntity(x, y + 1).isWhiteTile()) {
+								((Region) Main.fieldPane.getChildren().get(x * 17 + y - 1))
+										.setBackground(new Background(
+												new BackgroundFill(Color.DARKRED, CornerRadii.EMPTY, Insets.EMPTY)));
+								((Region) Main.fieldPane.getChildren().get(x * 17 + y)).setBackground(new Background(
+										new BackgroundFill(Color.DARKRED, CornerRadii.EMPTY, Insets.EMPTY)));
+								((Region) Main.fieldPane.getChildren().get(x * 17 + y + 1))
+										.setBackground(new Background(
+												new BackgroundFill(Color.DARKRED, CornerRadii.EMPTY, Insets.EMPTY)));
 							}
 						}
 						// now.setBackground(
 						// new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY,
 						// Insets.EMPTY)));
+					}
+				}
+			}
+		});
+		
+		
+		//Fade Transition
+		this.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				FieldCell now = (FieldCell) e.getSource();
+				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
+					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile())) {
+						now.fade.stop();
+						now.fade.setFromValue(1);
+						now.fade.setToValue(0.2);
+						now.fade.setCycleCount(Animation.INDEFINITE);
+						now.fade.setDuration(Duration.millis(500));
+						now.fade.setAutoReverse(true);
+						now.fade.play();
+						
+					}
+				}else if (Main.gameActionNow == 1 || Main.gameActionNow == 2) {
+					if (now.myEntity.isWhiteTile() && now.myEntity.getX() % 2 == 1 && now.myEntity.getY() % 2 == 1) {
+						int x = now.myEntity.getX();
+						int y = now.myEntity.getY();
+						FieldCell now1,now2,now3;
+						if (Main.gameActionNow == 1) {
+							if (GameController.getCurrentMap().getEntity(x - 1, y).isWhiteTile()
+									&& GameController.getCurrentMap().getEntity(x, y).isWhiteTile()
+									&& GameController.getCurrentMap().getEntity(x + 1, y).isWhiteTile()) {
+								now1=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y - 17));
+								now2=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y));
+								now3=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y+17));
+								now1.fade.stop();
+								now1.fade.setFromValue(1);
+								now1.fade.setToValue(0.2);
+								now1.fade.setCycleCount(Animation.INDEFINITE);
+								now1.fade.setDuration(Duration.millis(500));
+								now1.fade.setAutoReverse(true);
+								now1.fade.play();
+								now2.fade.stop();
+								now2.fade.setFromValue(1);
+								now2.fade.setToValue(0.2);
+								now2.fade.setCycleCount(Animation.INDEFINITE);
+								now2.fade.setDuration(Duration.millis(500));
+								now2.fade.setAutoReverse(true);
+								now2.fade.play();
+								now3.fade.stop();
+								now3.fade.setFromValue(1);
+								now3.fade.setToValue(0.2);
+								now3.fade.setCycleCount(Animation.INDEFINITE);
+								now3.fade.setDuration(Duration.millis(500));
+								now3.fade.setAutoReverse(true);
+								now3.fade.play();
+							}
+						} else {
+							if (GameController.getCurrentMap().getEntity(x, y - 1).isWhiteTile()
+									&& GameController.getCurrentMap().getEntity(x, y).isWhiteTile()
+									&& GameController.getCurrentMap().getEntity(x, y + 1).isWhiteTile()) {
+								now1=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y - 1));
+								now2=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y));
+								now3=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y+1));
+								now1.fade.stop();
+								now1.fade.setFromValue(1);
+								now1.fade.setToValue(0.2);
+								now1.fade.setCycleCount(Animation.INDEFINITE);
+								now1.fade.setDuration(Duration.millis(500));
+								now1.fade.setAutoReverse(true);
+								now1.fade.play();
+								now2.fade.stop();
+								now2.fade.setFromValue(1);
+								now2.fade.setToValue(0.2);
+								now2.fade.setCycleCount(Animation.INDEFINITE);
+								now2.fade.setDuration(Duration.millis(500));
+								now2.fade.setAutoReverse(true);
+								now2.fade.play();
+								now3.fade.stop();
+								now3.fade.setFromValue(1);
+								now3.fade.setToValue(0.2);
+								now3.fade.setCycleCount(Animation.INDEFINITE);
+								now3.fade.setDuration(Duration.millis(500));
+								now3.fade.setAutoReverse(true);
+								now3.fade.play();
+							}
+						}
+						// now.setBackground(
+						// new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY,
+						// Insets.EMPTY)));
+					}
+				}
+			}
+		});
+		this.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				FieldCell now = (FieldCell) e.getSource();
+				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
+					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile())) {
+						now.fade.stop();
+						now.fade.setFromValue(0.2);
+						now.fade.setToValue(1);
+						now.fade.setCycleCount(1);
+						now.fade.setDuration(Duration.millis(500));
+						now.fade.setAutoReverse(false);
+						now.fade.play();
+					}
+				}else if (Main.gameActionNow == 1 || Main.gameActionNow == 2) {
+					if (now.myEntity.isWhiteTile() && now.myEntity.getX() % 2 == 1 && now.myEntity.getY() % 2 == 1) {
+						int x = now.myEntity.getX();
+						int y = now.myEntity.getY();
+						FieldCell now1,now2,now3;
+						if (Main.gameActionNow == 1) {
+							if (GameController.getCurrentMap().getEntity(x - 1, y).isWhiteTile()
+									&& GameController.getCurrentMap().getEntity(x, y).isWhiteTile()
+									&& GameController.getCurrentMap().getEntity(x + 1, y).isWhiteTile()) {
+								now1=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y - 17));
+								now2=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y));
+								now3=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y+17));
+								now1.fade.stop();
+								now1.fade.setFromValue(0.2);
+								now1.fade.setToValue(1);
+								now1.fade.setCycleCount(1);
+								now1.fade.setDuration(Duration.millis(500));
+								now1.fade.setAutoReverse(false);
+								now1.fade.play();
+								now2.fade.stop();
+								now2.fade.setFromValue(0.2);
+								now2.fade.setToValue(1);
+								now2.fade.setCycleCount(1);
+								now2.fade.setDuration(Duration.millis(500));
+								now2.fade.setAutoReverse(false);
+								now2.fade.play();
+								now3.fade.stop();
+								now3.fade.setFromValue(0.2);
+								now3.fade.setToValue(1);
+								now3.fade.setCycleCount(1);
+								now3.fade.setDuration(Duration.millis(500));
+								now3.fade.setAutoReverse(false);
+								now3.fade.play();
+							}
+						} else {
+							if (GameController.getCurrentMap().getEntity(x, y - 1).isWhiteTile()
+									&& GameController.getCurrentMap().getEntity(x, y).isWhiteTile()
+									&& GameController.getCurrentMap().getEntity(x, y + 1).isWhiteTile()) {
+								now1=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y - 1));
+								now2=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y));
+								now3=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y+1));
+								now1.fade.stop();
+								now1.fade.setFromValue(0.2);
+								now1.fade.setToValue(1);
+								now1.fade.setCycleCount(1);
+								now1.fade.setDuration(Duration.millis(500));
+								now1.fade.setAutoReverse(false);
+								now1.fade.play();
+								now2.fade.stop();
+								now2.fade.setFromValue(0.2);
+								now2.fade.setToValue(1);
+								now2.fade.setCycleCount(1);
+								now2.fade.setDuration(Duration.millis(500));
+								now2.fade.setAutoReverse(false);
+								now2.fade.play();
+								now3.fade.stop();
+								now3.fade.setFromValue(0.2);
+								now3.fade.setToValue(1);
+								now3.fade.setCycleCount(1);
+								now3.fade.setDuration(Duration.millis(500));
+								now3.fade.setAutoReverse(false);
+								now3.fade.play();
+							}
+						}
 					}
 				}
 			}
@@ -332,9 +519,22 @@ public class FieldCell extends Pane {
 				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
 					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile())) {
 						Image image = null;
-						// System.out.println(entity.getClass());
+						ControlPane.labelUpdate();
+						//now.fade.setNode(now);
+						//now.fade.setFromValue(1);
+						//now.fade.setToValue(1);
+						//now.fade.setCycleCount(1);
+						//now.fade.setDuration(Duration.millis(500));
+						//now.fade.setAutoReverse(true);
+						//now.fade.wait(Duration.millis(500));
+						//now.fade.stop();
+						//FieldPane.setFieldPane(Main.fieldPane);
+						//now.fade.jumpTo(Duration.millis(100));
+						//((FieldCell)now).fade.play();
+						 System.out.println(entity.getClass());
 						if (now.myEntity.isBlackTile())
-							image = new Image("file:res/BlackTile.png");
+							now.setBackground(new Background(
+									new BackgroundFill(Color.DARKGREY, CornerRadii.EMPTY, Insets.EMPTY)));
 						else if (now.myEntity.isWhiteTile()) {
 							now.setBackground(
 									new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -405,12 +605,17 @@ public class FieldCell extends Pane {
 												new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 							}
 						} else {
-							if (GameController.getCurrentMap().getEntity(x , y-1).isWhiteTile()
+							if (GameController.getCurrentMap().getEntity(x, y - 1).isWhiteTile()
 									&& GameController.getCurrentMap().getEntity(x, y).isWhiteTile()
-									&& GameController.getCurrentMap().getEntity(x , y+1).isWhiteTile()) {
-								((Region) Main.fieldPane.getChildren().get(x*17+y-1)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-								((Region) Main.fieldPane.getChildren().get(x*17+y)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-								((Region) Main.fieldPane.getChildren().get(x*17+y+1)).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+									&& GameController.getCurrentMap().getEntity(x, y + 1).isWhiteTile()) {
+								((Region) Main.fieldPane.getChildren().get(x * 17 + y - 1))
+										.setBackground(new Background(
+												new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+								((Region) Main.fieldPane.getChildren().get(x * 17 + y)).setBackground(new Background(
+										new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+								((Region) Main.fieldPane.getChildren().get(x * 17 + y + 1))
+										.setBackground(new Background(
+												new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 							}
 						}
 					}

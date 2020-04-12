@@ -53,12 +53,13 @@ public class Main extends Application {
 
 		primary = primaryStage;
 		//setMusic
-		String path = new File("src/media/musicTheme.mp3").getAbsolutePath();
+		String path = new File("src/media/musicTheme (2).mp3").getAbsolutePath();
 		Media musicFile=new Media(new File(path).toURI().toString());
 		mediaplayer = new MediaPlayer(musicFile);
 		mediaplayer.setAutoPlay(true);
+		mediaplayer.setVolume(0.10);
 		mediaplayer.setCycleCount(Animation.INDEFINITE);
-		mediaplayer.setVolume(0.01);
+		mediaplayer.setVolume(0.05);
 		// setScene1
 
 		Group root = new Group();
@@ -191,7 +192,7 @@ public class Main extends Application {
 		
 		//Label timer =new Label(""+System.currentTimeMillis());
 		//root2.getChildren().add(time);
-		scene2 = new Scene(root2);
+		scene2 = new Scene(root2,1280,720);
 		// end setScene2
 
 		// setScene3
@@ -249,7 +250,7 @@ public class Main extends Application {
 		root3.getChildren().add(exitButton2);
 		root3.getChildren().add(ivP1W);
 
-		scene3 = new Scene(root3);
+		scene3 = new Scene(root3,1280,720);
 		// end setScene3
 
 		// setScene3
@@ -307,7 +308,7 @@ public class Main extends Application {
 		root4.getChildren().add(exitButton3);
 		root4.getChildren().add(ivP2W);
 
-		scene4 = new Scene(root4);
+		scene4 = new Scene(root4,1280,720);
 		// end setScene3
 
 		// setScene5
