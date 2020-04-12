@@ -70,7 +70,8 @@ public class ItemButton extends Button{
 				ItemPane.resetButtonsBackGroundColor();
 				Main.setScene(Main.primary,Main.scene1);
 				ItemButton now = (ItemButton)e.getSource();
-				now.highlight();
+				Main.restart();
+				//now.highlight();
 			}
 			
 		}); break;

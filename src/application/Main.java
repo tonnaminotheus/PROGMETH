@@ -175,28 +175,7 @@ public class Main extends Application {
 		// end setScene1
 
 		// setScene2
-		// GameController
-		GameController.IntializeMap(player1Index,player2Index);
-		//System.out.println("player1"+player1Index);
-		//System.out.println("player2"+player1Index);
-		HBox root2 = new HBox();
-		root2.setPadding(new Insets(10));
-		root2.setSpacing(10);
-		root2.setPrefHeight(400);
-
-		controlPane = new ControlPane();
-		fieldPane = new FieldPane();
-		controlPane2 = new ControlPane2();
-		root2.setBackground(new Background(new BackgroundFill(Color.SANDYBROWN, CornerRadii.EMPTY, Insets.EMPTY)));
-		root2.getChildren().add(controlPane);
-		root2.getChildren().add(fieldPane);
-		root2.getChildren().add(controlPane2);
-		
-		
-		
-		//Label timer =new Label(""+System.currentTimeMillis());
-		//root2.getChildren().add(time);
-		scene2 = new Scene(root2,1280,720);
+		restart();
 		// end setScene2
 
 		// setScene3
@@ -700,6 +679,23 @@ public class Main extends Application {
 			// System.out.println("done");
 			setScene(primary, scene5);
 		}
+	}
+	public static void restart() {
+		GameController.IntializeMap(player1Index,player2Index);
+		HBox root2 = new HBox();
+		root2.setPadding(new Insets(10));
+		root2.setSpacing(10);
+		root2.setPrefHeight(400);
+
+		controlPane = new ControlPane();
+		fieldPane = new FieldPane();
+		controlPane2 = new ControlPane2();
+		root2.setBackground(new Background(new BackgroundFill(Color.SANDYBROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+		root2.getChildren().add(controlPane);
+		root2.getChildren().add(fieldPane);
+		root2.getChildren().add(controlPane2);
+		
+		scene2 = new Scene(root2,1280,720);
 	}
 
 }
