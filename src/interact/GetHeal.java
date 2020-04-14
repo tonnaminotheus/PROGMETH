@@ -1,6 +1,7 @@
 package interact;
 
 import gui.ControlPane;
+import gui.ControlPane2;
 import logic.GameController;
 
 public class GetHeal extends SpecialTile{
@@ -14,5 +15,7 @@ public class GetHeal extends SpecialTile{
 				? "Player 1 Special heal"
 				: "Player 2 Special heal";
 		ControlPane.setNoti(playermessage);
+		ControlPane.labelUpdate();
+		ControlPane2.labelUpdate();
 	}
 }

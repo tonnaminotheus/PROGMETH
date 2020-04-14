@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Border;
@@ -11,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.util.Duration;
 import logic.GameController;
 
 public class ControlPane2 extends VBox {
@@ -26,6 +29,8 @@ public class ControlPane2 extends VBox {
 	private static Label removeBarricade2 = new Label();
 	protected static Label player1=new Label("Player1");
 	protected static Label player2=new Label("Player2");
+	private static FadeTransition fade1 = new FadeTransition();
+	private static FadeTransition fade2 = new FadeTransition();
 	
 	public ControlPane2() {
 		super();
@@ -35,6 +40,9 @@ public class ControlPane2 extends VBox {
 		this.setPrefWidth(300);
 		this.setSpacing(15);
 		this.setFillWidth(true);
+		
+		fade1.setNode(player1);
+		fade2.setNode(player2);
 
 		this.setBorder(new Border(
 				new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -68,6 +76,37 @@ public class ControlPane2 extends VBox {
 		removeBarricade2.textProperty().setValue(
 				"Current Barricade removal: " + GameController.getPlayer1().getHaveRemoveBarricade());
 		removeBarricade2.setFont(new Font(14));
+		if(GameController.getTurn() % 2 == 1) {
+			fade1.stop();
+			fade1.setFromValue(1);
+	        fade1.setToValue(0.2);
+	        fade1.setCycleCount(Animation.INDEFINITE);
+	        fade1.setDuration(Duration.millis(500));
+	        fade1.setAutoReverse(true);
+	        fade1.play();
+	        fade2.stop();
+			fade2.setFromValue(0.2);
+	        fade2.setToValue(1);
+	        fade2.setCycleCount(1);
+	        fade2.setDuration(Duration.millis(1));
+	        fade2.setAutoReverse(false);
+	        fade2.play();
+		}else {
+			fade2.stop();
+			fade2.setFromValue(1);
+	        fade2.setToValue(0.2);
+	        fade2.setCycleCount(Animation.INDEFINITE);
+	        fade2.setDuration(Duration.millis(500));
+	        fade2.setAutoReverse(true);
+	        fade2.play();
+	        fade1.stop();
+			fade1.setFromValue(0.2);
+	        fade1.setToValue(1);
+	        fade1.setCycleCount(1);
+	        fade1.setDuration(Duration.millis(1));
+	        fade1.setAutoReverse(false);
+	        fade1.play();
+		}
 		
 	}
 

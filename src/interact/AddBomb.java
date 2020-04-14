@@ -1,6 +1,7 @@
 package interact;
 
 import gui.ControlPane;
+import gui.ControlPane2;
 import logic.GameController;
 
 public class AddBomb extends SpecialTile{
@@ -14,5 +15,7 @@ public class AddBomb extends SpecialTile{
 				? "Player 1 Special get bomb"
 				: "Player 2 Special get bomb";
 		ControlPane.setNoti(playermessage);
+		ControlPane.labelUpdate();
+		ControlPane2.labelUpdate();
 	}
 }

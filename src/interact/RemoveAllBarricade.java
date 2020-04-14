@@ -1,6 +1,7 @@
 package interact;
 
 import gui.ControlPane;
+import gui.ControlPane2;
 import logic.GameController;
 import logic.moveFail;
 
@@ -24,6 +25,8 @@ public class RemoveAllBarricade extends SpecialTile{
 		}
 		String playermessage ="remove all barricade tile";
 		ControlPane.setNoti(playermessage);
+		ControlPane.labelUpdate();
+		ControlPane2.labelUpdate();
 	}
 	
 

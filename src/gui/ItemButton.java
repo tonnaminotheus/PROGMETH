@@ -16,6 +16,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import logic.GameController;
 import application.Main;
 
 public class ItemButton extends Button{
@@ -42,6 +43,11 @@ public class ItemButton extends Button{
 				Main.gameActionNow=2;
 				ItemButton now = (ItemButton)e.getSource();
 				now.highlight();
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 action place barricade"
+						: "Player 2 action place barricade";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 			}
 
 		});break;
@@ -52,6 +58,11 @@ public class ItemButton extends Button{
 				Main.gameActionNow=1;
 				ItemButton now = (ItemButton)e.getSource();
 				now.highlight();
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 action place barricade"
+						: "Player 2 action place barricade";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 			}
 			
 		});break;
@@ -61,6 +72,11 @@ public class ItemButton extends Button{
 				ItemPane.resetButtonsBackGroundColor();
 				Main.gameActionNow=0;
 				ItemPane.resetButtonsBackGroundColor();
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 action cancel"
+						: "Player 2 action cancel";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 			}
 			
 		}); break;
@@ -71,6 +87,10 @@ public class ItemButton extends Button{
 				Main.setScene(Main.primary,Main.scene1);
 				ItemButton now = (ItemButton)e.getSource();
 				Main.restart();
+				String playermessage ="";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 				//now.highlight();
 			}
 			
@@ -82,6 +102,11 @@ public class ItemButton extends Button{
 				Main.gameActionNow=4;
 				ItemButton now = (ItemButton)e.getSource();
 				now.highlight();
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 action place bomb"
+						: "Player 2 action place bomb";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 			}
 			
 		});break;
@@ -92,6 +117,11 @@ public class ItemButton extends Button{
 				Main.gameActionNow=3;
 				ItemButton now = (ItemButton)e.getSource();
 				now.highlight();
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 action move"
+						: "Player 2 action move";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 			}
 			
 		});break;
@@ -102,6 +132,11 @@ public class ItemButton extends Button{
 				Main.gameActionNow=5;
 				ItemButton now = (ItemButton)e.getSource();
 				now.highlight();
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 action remove barricade"
+						: "Player 2 action remove barricade";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 			}
 			
 		});break;

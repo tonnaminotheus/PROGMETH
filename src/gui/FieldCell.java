@@ -144,15 +144,20 @@ public class FieldCell extends Pane {
 										GameController.getPlayer2().setBarricade(haveBarricade - 1);
 								} else {
 									GameController.removeBarricade(now.getEntity().getX(), now.getEntity().getY());
+									System.out.println("can not place barricade there");
+									String playermessage = "You cannot place a barricade there";
+									ControlPane.setNoti(playermessage);
+									ControlPane.labelUpdate();
+									ControlPane2.labelUpdate();
 								}
 							} catch (Exception ee) {
-								System.out.println("can not place barricade there");
-								/*String playermessage = "You cannot place a barricade there";
+								/*System.out.println("can not place barricade there");
+								String playermessage = "You cannot place a barricade there";
 								ControlPane.setNoti(playermessage);*/
 							}
 						} else {
-							System.out.println("That is not white tile");
-							/*String playermessage = "That is not a white tile";
+							/*System.out.println("can not place barricade there");
+							String playermessage = "That is not a white tile";
 							ControlPane.setNoti(playermessage);*/
 						}
 					}
@@ -183,15 +188,20 @@ public class FieldCell extends Pane {
 										GameController.getPlayer2().setBarricade(haveBarricade - 1);
 								} else {
 									GameController.removeBarricade(now.getEntity().getX(), now.getEntity().getY());
+									System.out.println("can not place barricade there");
+									String playermessage = "You cannot place a barricade there";
+									ControlPane.setNoti(playermessage);
+									ControlPane.labelUpdate();
+									ControlPane2.labelUpdate();
 								}
 							} catch (Exception ee) {
-								System.out.println("can not place barricade there");
-								/*String playermessage = "You cannot place barricade there";
+								/*System.out.println("can not place barricade there");
+								String playermessage = "You cannot place barricade there";
 								ControlPane.setNoti(playermessage);*/
 							}
 						} else {
-							System.out.println("That is not a white tile");
-							/*String playermessage = "That is not a white tile";
+							/*System.out.println("can not place barricade there");
+							String playermessage = "That is not a white tile";
 							ControlPane.setNoti(playermessage);*/
 						}
 					}
@@ -313,7 +323,6 @@ public class FieldCell extends Pane {
 						Image select = new Image("file:res/Selected.png");
 						// ImageView iv1 = new ImageView(select);
 						now.iv.setImage(select);
-						ControlPane.labelUpdate();
 						
 					}
 				} else if (Main.gameActionNow == 1 || Main.gameActionNow == 2) {

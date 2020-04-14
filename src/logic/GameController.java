@@ -253,20 +253,20 @@ public class GameController {
 				getCurrentMap().addEntity(new BarricadeTile(x, y - 1, x, y + 1, x, y), x, y - 1);
 				getCurrentMap().addEntity(new BarricadeTile(x, y + 1, x, y - 1, x, y), x, y + 1);
 				getCurrentMap().addEntity(new BarricadeTile(x, y, x, y - 1, x, y + 1), x, y);
-				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 add barricade"
-						: "Player 2 add barricade";
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 place barricade"
+						: "Player 2 place barricade";
 				ControlPane.setNoti(playermessage);
 				ControlPane.labelUpdate();
 				ControlPane2.labelUpdate();
 			} else {
-				String playermessage = "can not add barricade there";
+				String playermessage = "can not place barricade there";
 				ControlPane.setNoti(playermessage);
 				ControlPane.labelUpdate();
 				ControlPane2.labelUpdate();
 				throw new addBarricadeFail("There is barricade on that tile");
 			}
 		} else {
-			String playermessage = "can not add barricade there";
+			String playermessage = "can not place barricade there";
 			ControlPane.setNoti(playermessage);
 			ControlPane.labelUpdate();
 			ControlPane2.labelUpdate();
@@ -287,20 +287,20 @@ public class GameController {
 				getCurrentMap().addEntity(new BarricadeTile(x - 1, y, x + 1, y, x, y), x - 1, y);
 				getCurrentMap().addEntity(new BarricadeTile(x + 1, y, x - 1, y, x, y), x + 1, y);
 				getCurrentMap().addEntity(new BarricadeTile(x, y, x - 1, y, x + 1, y), x, y);
-				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 add barricade"
-						: "Player 2 add barricade";
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 place barricade"
+						: "Player 2 place barricade";
 				ControlPane.setNoti(playermessage);
 				ControlPane.labelUpdate();
 				ControlPane2.labelUpdate();
 			} else {
-				String playermessage = "can not add barricade there";
+				String playermessage = "can not place barricade there";
 				ControlPane.setNoti(playermessage);
 				ControlPane.labelUpdate();
 				ControlPane2.labelUpdate();
 				throw new addBarricadeFail("There is barricade on that tile");
 			}
 		} else {
-			String playermessage = "can not add barricade there";
+			String playermessage = "can not place barricade there";
 			ControlPane.setNoti(playermessage);
 			ControlPane.labelUpdate();
 			ControlPane2.labelUpdate();

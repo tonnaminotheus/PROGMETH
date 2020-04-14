@@ -29,8 +29,7 @@ public class ControlPane extends VBox {
 	public ControlPane() {
 		super();
 		this.setAlignment(Pos.CENTER);
-		this.setPrefWidth(300);
-		;
+		this.setPrefWidth(400);
 		this.setSpacing(15);
 		this.setFillWidth(true);
 

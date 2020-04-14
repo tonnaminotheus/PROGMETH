@@ -1,6 +1,7 @@
 package interact;
 
 import gui.ControlPane;
+import gui.ControlPane2;
 import logic.GameController;
 import logic.moveFail;
 
@@ -15,6 +16,8 @@ public class MoveOtherPlayer extends SpecialTile{
 			? "Player 1 Special move Player2"
 			: "Player 2 Special move Player1";
 		ControlPane.setNoti(playermessage);
+		ControlPane.labelUpdate();
+		ControlPane2.labelUpdate();
 	}
 	
 	public static void moveRandom(Player e) throws moveFail {

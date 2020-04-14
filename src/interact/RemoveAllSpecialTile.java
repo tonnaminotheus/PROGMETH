@@ -1,6 +1,7 @@
 package interact;
 
 import gui.ControlPane;
+import gui.ControlPane2;
 import logic.GameController;
 
 public class RemoveAllSpecialTile extends SpecialTile{
@@ -24,6 +25,8 @@ public class RemoveAllSpecialTile extends SpecialTile{
 		}
 		String playermessage ="remove all special tile";
 		ControlPane.setNoti(playermessage);
+		ControlPane.labelUpdate();
+		ControlPane2.labelUpdate();
 	}
 
 }
