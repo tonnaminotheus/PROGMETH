@@ -1,9 +1,17 @@
 package entity.base;
 
+import interact.AddBomb;
 import interact.BarricadeTile;
 import interact.BlackTile;
 import interact.ExplodingTile;
+import interact.GetBarricade;
+import interact.GetHeal;
+import interact.MoveOtherPlayer;
+import interact.MovePlayer;
 import interact.Player;
+import interact.RandomTile;
+import interact.RemoveAllBarricade;
+import interact.RemoveAllSpecialTile;
 import interact.SpecialTile;
 import interact.WhiteTile;
 
@@ -16,8 +24,6 @@ public abstract class Entity {
 		this.setX(x);
 		this.setY(y);
 	}
-
-	public abstract int getSymbol();
 
 	public void setX(int x) {
 		this.x = x;
@@ -52,7 +58,15 @@ public abstract class Entity {
 	}
 
 	public boolean isSpecialTile() {
-		return this.getClass() == SpecialTile.class;
+		return (this.getClass() == SpecialTile.class)
+				||(this.getClass()==RandomTile.class)
+				||(this.getClass()==RemoveAllBarricade.class)
+				||(this.getClass()==RemoveAllSpecialTile.class)
+				||(this.getClass()==AddBomb.class)
+				||(this.getClass()==GetBarricade.class)
+				||(this.getClass()==GetHeal.class)
+				||(this.getClass()==MovePlayer.class)
+				||(this.getClass()==MoveOtherPlayer.class);
 	}
 	
 	public boolean isExplodingTile() {

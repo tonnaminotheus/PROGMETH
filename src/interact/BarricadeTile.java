@@ -26,8 +26,4 @@ public class BarricadeTile extends Tile {
 	{
 		return this.other2;
 	}
-
-	public int getSymbol() {
-		return Sprites.Barricade;
-	}
 }

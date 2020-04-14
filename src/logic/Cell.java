@@ -34,11 +34,5 @@ public class Cell {
 		isEmpty = true;
 	}
 	
-	public int getSymbol() {
-		if(isEmpty) {
-			return -1;
-		}
-		return myEntity.getSymbol();
-	}
 	
 }

@@ -1,0 +1,29 @@
+package interact;
+
+import gui.ControlPane;
+import logic.GameController;
+
+public class RemoveAllSpecialTile extends SpecialTile{
+
+	
+	public RemoveAllSpecialTile(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
+	public void getAction(Player e){
+		for(int i=0;i<17;i++)
+		{
+			for(int j=0;j<17;j++)
+			{
+				if(GameController.getCurrentMap().getEntity(i, j).isSpecialTile())
+				{
+					GameController.getCurrentMap().removeEntity(i, j);
+					GameController.getCurrentMap().addEntity(new BlackTile(i,j),i,j);
+				}
+			}
+		}
+		String playermessage ="remove all special tile";
+		ControlPane.setNoti(playermessage);
+	}
+
+}

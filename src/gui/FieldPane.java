@@ -26,7 +26,7 @@ public class FieldPane extends GridPane {
 		this.setAlignment(Pos.CENTER);
 		this.setPrefWidth(17*40);
 		this.setPrefHeight(17*40);
-		this.setBackground(new Background(new BackgroundFill(Color.DARKORANGE, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setBackground(new Background(new BackgroundFill(Color.DARKSALMON, CornerRadii.EMPTY, Insets.EMPTY)));
 		//this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.DASHED, 
 		//		CornerRadii.EMPTY, BorderWidths.FULL)));
 		//this.setVgap(5);

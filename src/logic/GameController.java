@@ -1,9 +1,17 @@
 package logic;
 
+import interact.AddBomb;
 import interact.BarricadeTile;
 import interact.BlackTile;
 import interact.ExplodingTile;
+import interact.GetBarricade;
+import interact.GetHeal;
+import interact.MoveOtherPlayer;
+import interact.MovePlayer;
 import interact.Player;
+import interact.RandomTile;
+import interact.RemoveAllBarricade;
+import interact.RemoveAllSpecialTile;
 import interact.SpecialTile;
 import interact.WhiteTile;
 
@@ -13,6 +21,8 @@ import java.util.ArrayList;
 
 import entity.base.Coordinate;
 import entity.base.Entity;
+import gui.ControlPane;
+import gui.ControlPane2;
 
 public class GameController {
 
@@ -76,6 +86,7 @@ public class GameController {
 		int random = (int) (Math.random() * 100) % spawnTile.size();
 		int randomX = spawnTile.get(random).getX();
 		int randomY = spawnTile.get(random).getY();
+		int ran = (int) (Math.random() * 100) % 8;
 		if (checkIsPossitionOnBoard(randomX, randomY)) {
 			if (getCurrentMap().getEntity(randomX, randomY).isBlackTile()) {
 
@@ -86,7 +97,22 @@ public class GameController {
 				 * dirX[i], randomY + dirY[i]).isBlackTile()) { check = false; } } if (check) {
 				 */
 				getCurrentMap().removeEntity(randomX, randomY);
-				getCurrentMap().addEntity(new SpecialTile(randomX, randomY), randomX, randomY);
+				if(ran==0)
+					getCurrentMap().addEntity(new RandomTile(randomX, randomY), randomX, randomY);
+				else if(ran==1)
+					getCurrentMap().addEntity(new RemoveAllBarricade(randomX, randomY), randomX, randomY);
+				else if(ran==2)
+					getCurrentMap().addEntity(new RemoveAllSpecialTile(randomX, randomY), randomX, randomY);
+				else if(ran==3)
+					getCurrentMap().addEntity(new AddBomb(randomX, randomY), randomX, randomY);
+				else if(ran==4)
+					getCurrentMap().addEntity(new GetBarricade(randomX, randomY), randomX, randomY);
+				else if(ran==5)
+					getCurrentMap().addEntity(new GetHeal(randomX, randomY), randomX, randomY);
+				else if(ran==6)
+					getCurrentMap().addEntity(new MovePlayer(randomX, randomY), randomX, randomY);
+				else if(ran==7)
+					getCurrentMap().addEntity(new MoveOtherPlayer(randomX, randomY), randomX, randomY);
 				// System.out.println("spawnSuccess");
 				// }
 			}
@@ -97,7 +123,16 @@ public class GameController {
 		if(GameController.getCurrentMap().getEntity(x, y).isBlackTile()&&x!=16&&x!=0) {
 			GameController.getCurrentMap().removeEntity(x, y);
 			GameController.getCurrentMap().addEntity(new ExplodingTile(x,y), x, y);
+			String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 placed bomb"
+					: "Player 2 placed bomb";
+			ControlPane.setNoti(playermessage);
+			ControlPane.labelUpdate();
+			ControlPane2.labelUpdate();
 		}else {
+			String playermessage = "can not place bomb there";
+			ControlPane.setNoti(playermessage);
+			ControlPane.labelUpdate();
+			ControlPane2.labelUpdate();
 			throw new Exception("can not place bomb there");
 		}
 	}
@@ -144,32 +179,22 @@ public class GameController {
 				getCurrentMap().removeEntity(playerX, playerY);
 				getCurrentMap().addEntity(player, posx, posy);
 				getCurrentMap().addEntity(new BlackTile(playerX, playerY), playerX, playerY);
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 moved"
+						: "Player 2 moved";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 				if (now.isSpecialTile()) {
-					SpecialTile.getAction(player);
+					((SpecialTile)now).getAction(player);
 				}
 				else if(now.isExplodingTile()){
-					playerX=player.getX();
-					playerY=player.getY();
-					getCurrentMap().removeEntity(playerX, playerY);
-					if(player.getSide()==1) {
-						getCurrentMap().removeEntity(0,8);
-						getCurrentMap().addEntity(new BlackTile(playerX,playerY),playerX,playerY);
-						player.setX(0);
-						player.setY(8);
-						player.damaged();
-						getCurrentMap().addEntity(player,0,8);
-					}
-					else {
-						getCurrentMap().removeEntity(16,8);
-						getCurrentMap().addEntity(new BlackTile(playerX,playerY),playerX,playerY);
-						player.setX(16);
-						player.setY(8);
-						player.damaged();
-						getCurrentMap().addEntity(player,16,8);
-					}
-					
+					((ExplodingTile)now).getAction(player);
 				}
 			} else {
+				String playermessage = "you cannot move there";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 				throw new moveFail("you cannot move there");
 			}
 		} else {
@@ -198,7 +223,16 @@ public class GameController {
 				getCurrentMap().addEntity(new WhiteTile(x1, y1), x1, y1);
 				getCurrentMap().addEntity(new WhiteTile(x2, y2), x2, y2);
 				getCurrentMap().addEntity(new WhiteTile(x3, y3), x3, y3);
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 removed barricade"
+						: "Player 2 removed barricade";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 			} else {
+				String playermessage = "The chosen position is not BarricadeTile";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 				throw new removeBarricadeFail("The chosen position is not BarricadeTile");
 			}
 		} else {
@@ -219,10 +253,23 @@ public class GameController {
 				getCurrentMap().addEntity(new BarricadeTile(x, y - 1, x, y + 1, x, y), x, y - 1);
 				getCurrentMap().addEntity(new BarricadeTile(x, y + 1, x, y - 1, x, y), x, y + 1);
 				getCurrentMap().addEntity(new BarricadeTile(x, y, x, y - 1, x, y + 1), x, y);
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 add barricade"
+						: "Player 2 add barricade";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 			} else {
+				String playermessage = "can not add barricade there";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 				throw new addBarricadeFail("There is barricade on that tile");
 			}
 		} else {
+			String playermessage = "can not add barricade there";
+			ControlPane.setNoti(playermessage);
+			ControlPane.labelUpdate();
+			ControlPane2.labelUpdate();
 			throw new addBarricadeFail("The position is out of the map");
 		}
 	}
@@ -240,10 +287,23 @@ public class GameController {
 				getCurrentMap().addEntity(new BarricadeTile(x - 1, y, x + 1, y, x, y), x - 1, y);
 				getCurrentMap().addEntity(new BarricadeTile(x + 1, y, x - 1, y, x, y), x + 1, y);
 				getCurrentMap().addEntity(new BarricadeTile(x, y, x - 1, y, x + 1, y), x, y);
+				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 add barricade"
+						: "Player 2 add barricade";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 			} else {
+				String playermessage = "can not add barricade there";
+				ControlPane.setNoti(playermessage);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 				throw new addBarricadeFail("There is barricade on that tile");
 			}
 		} else {
+			String playermessage = "can not add barricade there";
+			ControlPane.setNoti(playermessage);
+			ControlPane.labelUpdate();
+			ControlPane2.labelUpdate();
 			throw new addBarricadeFail("The position is out of the map");
 		}
 	}
@@ -291,7 +351,6 @@ public class GameController {
 			q.remove(0);
 		}
 		return ch1&&ch2;
-
 	}
 
 	public static void printmapcheck() {

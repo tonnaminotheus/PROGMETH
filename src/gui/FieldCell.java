@@ -12,7 +12,15 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import logic.GameController;
 import entity.base.Entity;
+import interact.AddBomb;
+import interact.GetBarricade;
+import interact.GetHeal;
+import interact.MoveOtherPlayer;
+import interact.MovePlayer;
 import interact.Player;
+import interact.RandomTile;
+import interact.RemoveAllBarricade;
+import interact.RemoveAllSpecialTile;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
@@ -20,9 +28,10 @@ import javafx.geometry.Insets;
 import application.Main;
 import gui.ControlPane;
 
+
+
 //You might need to do something to the following line
 public class FieldCell extends Pane {
-
 	private Entity myEntity;
 	private boolean isEmpty;
 	ImageView iv;
@@ -35,9 +44,9 @@ public class FieldCell extends Pane {
 		Image image = null;
 		System.out.println(entity.getClass());
 		if (entity.isBlackTile()) {
-			this.setBackground(new Background(new BackgroundFill(Color.DARKGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+			this.setBackground(new Background(new BackgroundFill(Color.rgb(230, 230, 230), CornerRadii.EMPTY, Insets.EMPTY)));
 		} else if (entity.isWhiteTile()) {
-			this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+			this.setBackground(new Background(new BackgroundFill(Color.CORNSILK, CornerRadii.EMPTY, Insets.EMPTY)));
 			int x = entity.getX();
 			int y = entity.getY();
 			if (x % 2 == 0 && y % 2 == 1) {
@@ -67,9 +76,25 @@ public class FieldCell extends Pane {
 			else
 				image = new Image("file:res/Token7.png");
 		} else if (entity.isSpecialTile()) {
-			image = new Image("file:res/SpecialTile.png");
+			if(entity.getClass()==RandomTile.class)
+				image = new Image("file:res/SpecialTile.png");
+			else if(entity.getClass()==RemoveAllBarricade.class)
+				this.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+			else if(entity.getClass()==RemoveAllSpecialTile.class)
+				this.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+			else if(entity.getClass()==AddBomb.class)
+				this.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+			else if(entity.getClass()==GetBarricade.class)
+				this.setBackground(new Background(new BackgroundFill(Color.PURPLE, CornerRadii.EMPTY, Insets.EMPTY)));
+			else if(entity.getClass()==GetHeal.class)
+				this.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+			else if(entity.getClass()==MovePlayer.class)
+				this.setBackground(new Background(new BackgroundFill(Color.PINK, CornerRadii.EMPTY, Insets.EMPTY)));
+			else if(entity.getClass()==MoveOtherPlayer.class)
+				this.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
+			
 		} else {
-			this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+			this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 			int x = entity.getX();
 			int y = entity.getY();
 			if (x % 2 == 0 && y % 2 == 1) {
@@ -108,10 +133,10 @@ public class FieldCell extends Pane {
 
 								if (ch1 && ch2) {
 									pass = true;
-									String playermessage = GameController.getTurn() % 2 == 1
+									/*String playermessage = GameController.getTurn() % 2 == 1
 											? "Player 1 placed a barricade"
 											: "Player 2 placed a barricade";
-									ControlPane.noti = playermessage;
+									ControlPane.setNoti(playermessage);*/
 
 									if (GameController.getTurn() % 2 == 1)
 										GameController.getPlayer1().setBarricade(haveBarricade - 1);
@@ -122,13 +147,13 @@ public class FieldCell extends Pane {
 								}
 							} catch (Exception ee) {
 								System.out.println("can not place barricade there");
-								String playermessage = "You cannot place a barricade there";
-								ControlPane.noti = playermessage;
+								/*String playermessage = "You cannot place a barricade there";
+								ControlPane.setNoti(playermessage);*/
 							}
 						} else {
 							System.out.println("That is not white tile");
-							String playermessage = "That is not a white tile";
-							ControlPane.noti = playermessage;
+							/*String playermessage = "That is not a white tile";
+							ControlPane.setNoti(playermessage);*/
 						}
 					}
 
@@ -148,10 +173,10 @@ public class FieldCell extends Pane {
 								boolean ch2 = GameController.checkbfs(GameController.getPlayer2(), 0);
 								if (ch1 && ch2) {
 									pass = true;
-									String playermessage = GameController.getTurn() % 2 == 1
+									/*String playermessage = GameController.getTurn() % 2 == 1
 											? "Player 1 placed a barricade"
 											: "Player 2 placed a barricade";
-									ControlPane.noti = playermessage;
+									ControlPane.setNoti(playermessage);*/
 									if (GameController.getTurn() % 2 == 1)
 										GameController.getPlayer1().setBarricade(haveBarricade - 1);
 									else
@@ -161,13 +186,13 @@ public class FieldCell extends Pane {
 								}
 							} catch (Exception ee) {
 								System.out.println("can not place barricade there");
-								String playermessage = "You cannot place barricade there";
-								ControlPane.noti = playermessage;
+								/*String playermessage = "You cannot place barricade there";
+								ControlPane.setNoti(playermessage);*/
 							}
 						} else {
 							System.out.println("That is not a white tile");
-							String playermessage = "That is not a white tile";
-							ControlPane.noti = playermessage;
+							/*String playermessage = "That is not a white tile";
+							ControlPane.setNoti(playermessage);*/
 						}
 					}
 				} else if (Main.gameActionNow == 3) {
@@ -180,13 +205,13 @@ public class FieldCell extends Pane {
 										now.getEntity().getY(), GameController.getPlayer1().getX(),
 										GameController.getPlayer1().getY());
 								pass = true;
-								String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 moved"
+								/*String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 moved"
 										: "Player 2 moved";
-								ControlPane.noti = playermessage;
+								ControlPane.setNoti(playermessage);*/
 							} catch (Exception ee) {
 								System.out.println("can not move there");
-								String playermessage = "You cannot move there";
-								ControlPane.noti = playermessage;
+								/*String playermessage = "You cannot move there";
+								ControlPane.setNoti(playermessage);*/
 							}
 						} else {
 							try {
@@ -194,19 +219,19 @@ public class FieldCell extends Pane {
 										now.getEntity().getY(), GameController.getPlayer2().getX(),
 										GameController.getPlayer2().getY());
 								pass = true;
-								String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 moved"
+								/*String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 moved"
 										: "Player 2 moved";
-								ControlPane.noti = playermessage;
+								ControlPane.setNoti(playermessage);*/
 							} catch (Exception ee) {
 								System.out.println("can not move there");
-								String playermessage = "You cannot move there";
-								ControlPane.noti = playermessage;
+								/*String playermessage = "You cannot move there";
+								ControlPane.setNoti(playermessage);*/
 							}
 						}
 					} else {
 						System.out.println("That is a white tile");
-						String playermessage = "You cannot move there";
-						ControlPane.noti = playermessage;
+						/*String playermessage = "You cannot move there";
+						ControlPane.setNoti(playermessage);*/
 					}
 				} else if (Main.gameActionNow == 4) {
 					int haveBomb = GameController.getTurn() % 2 == 1 ? GameController.getPlayer1().getHaveExploding()
@@ -216,17 +241,17 @@ public class FieldCell extends Pane {
 						try {
 							GameController.placeBomb(now.getEntity().getX(), now.getEntity().getY());
 							pass = true;
-							String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 placed a bomb"
+							/*String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 placed a bomb"
 									: "Player 2 placed a bomb";
-							ControlPane.noti = playermessage;
+							ControlPane.setNoti(playermessage);*/
 							if (GameController.getTurn() % 2 == 1)
 								GameController.getPlayer1().setHaveExploding(haveBomb - 1);
 							else
 								GameController.getPlayer2().setHaveExploding(haveBomb - 1);
 						} catch (Exception e1) {
 							e1.printStackTrace();
-							String playermessage = "You cannot place a bomb there";
-							ControlPane.noti = playermessage;
+							/*String playermessage = "You cannot place a bomb there";
+							ControlPane.setNoti(playermessage);*/
 						}
 					}
 				} else if (Main.gameActionNow == 5) {
@@ -238,17 +263,17 @@ public class FieldCell extends Pane {
 						try {
 							GameController.removeBarricade(now.getEntity().getX(), now.getEntity().getY());
 							pass = true;
-							String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 removed a barricade"
+							/*String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 removed a barricade"
 									: "Player 2 removed a barricade";
-							ControlPane.noti = playermessage;
+							ControlPane.setNoti(playermessage);*/
 							if (GameController.getTurn() % 2 == 1)
 								GameController.getPlayer1().setHaveRemoveBarricade(haveRemoveBarricade - 1);
 							else
 								GameController.getPlayer2().setHaveRemoveBarricade(haveRemoveBarricade - 1);
 						} catch (Exception e1) {
 							e1.printStackTrace();
-							String playermessage = "That tile is not barricade";
-							ControlPane.noti = playermessage;
+							/*String playermessage = "That tile is not barricade";
+							ControlPane.setNoti(playermessage);*/
 						}
 					}
 					
@@ -512,10 +537,10 @@ public class FieldCell extends Pane {
 						 System.out.println(entity.getClass());
 						if (now.myEntity.isBlackTile())
 							now.setBackground(new Background(
-									new BackgroundFill(Color.DARKGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+									new BackgroundFill(Color.rgb(230, 230, 230), CornerRadii.EMPTY, Insets.EMPTY)));
 						else if (now.myEntity.isWhiteTile()) {
 							now.setBackground(
-									new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+									new Background(new BackgroundFill(Color.CORNSILK, CornerRadii.EMPTY, Insets.EMPTY)));
 							int x = entity.getX();
 							int y = entity.getY();
 							if (x % 2 == 0 && y % 2 == 1) {
@@ -545,10 +570,25 @@ public class FieldCell extends Pane {
 							else
 								image = new Image("file:res/Token7.png");
 						} else if (now.myEntity.isSpecialTile()) {
-							image = new Image("file:res/SpecialTile.png");
+							if(entity.getClass()==RandomTile.class)
+								image = new Image("file:res/SpecialTile.png");
+							else if(entity.getClass()==RemoveAllBarricade.class)
+								now.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+							else if(entity.getClass()==RemoveAllSpecialTile.class)
+								now.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+							else if(entity.getClass()==AddBomb.class)
+								now.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+							else if(entity.getClass()==GetBarricade.class)
+								now.setBackground(new Background(new BackgroundFill(Color.PURPLE, CornerRadii.EMPTY, Insets.EMPTY)));
+							else if(entity.getClass()==GetHeal.class)
+								now.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+							else if(entity.getClass()==MovePlayer.class)
+								now.setBackground(new Background(new BackgroundFill(Color.PINK, CornerRadii.EMPTY, Insets.EMPTY)));
+							else if(entity.getClass()==MoveOtherPlayer.class)
+								now.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
 						} else {
 							now.setBackground(
-									new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+									new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 							int x = entity.getX();
 							int y = entity.getY();
 							if (x % 2 == 0 && y % 2 == 1) {
@@ -575,12 +615,12 @@ public class FieldCell extends Pane {
 									&& GameController.getCurrentMap().getEntity(x + 1, y).isWhiteTile()) {
 								((Region) Main.fieldPane.getChildren().get(x * 17 + y - 17))
 										.setBackground(new Background(
-												new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+												new BackgroundFill(Color.CORNSILK, CornerRadii.EMPTY, Insets.EMPTY)));
 								((Region) Main.fieldPane.getChildren().get(x * 17 + y)).setBackground(new Background(
-										new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+										new BackgroundFill(Color.CORNSILK, CornerRadii.EMPTY, Insets.EMPTY)));
 								((Region) Main.fieldPane.getChildren().get(x * 17 + y + 17))
 										.setBackground(new Background(
-												new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+												new BackgroundFill(Color.CORNSILK, CornerRadii.EMPTY, Insets.EMPTY)));
 							}
 						} else {
 							if (GameController.getCurrentMap().getEntity(x, y - 1).isWhiteTile()
@@ -588,12 +628,12 @@ public class FieldCell extends Pane {
 									&& GameController.getCurrentMap().getEntity(x, y + 1).isWhiteTile()) {
 								((Region) Main.fieldPane.getChildren().get(x * 17 + y - 1))
 										.setBackground(new Background(
-												new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+												new BackgroundFill(Color.CORNSILK, CornerRadii.EMPTY, Insets.EMPTY)));
 								((Region) Main.fieldPane.getChildren().get(x * 17 + y)).setBackground(new Background(
-										new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+										new BackgroundFill(Color.CORNSILK, CornerRadii.EMPTY, Insets.EMPTY)));
 								((Region) Main.fieldPane.getChildren().get(x * 17 + y + 1))
 										.setBackground(new Background(
-												new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+												new BackgroundFill(Color.CORNSILK, CornerRadii.EMPTY, Insets.EMPTY)));
 							}
 						}
 					}
@@ -625,13 +665,6 @@ public class FieldCell extends Pane {
 	public void removeEntity() {
 		myEntity = null;
 		isEmpty = true;
-	}
-
-	public int getSymbol() {
-		if (isEmpty) {
-			return -1;
-		}
-		return myEntity.getSymbol();
 	}
 
 }

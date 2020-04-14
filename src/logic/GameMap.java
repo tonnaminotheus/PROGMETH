@@ -51,16 +51,6 @@ public class GameMap {
 		}
 
 	}
-
-	public void printMap() {
-		for (Cell[] row : cellmap) {
-			String rowstring = "";
-			for (Cell c : row) {
-				rowstring += c.getSymbol() + " ";
-			}
-			System.out.println(rowstring);
-		}
-	}
 	
 	public ArrayList<BlackTile> getSpawnTile(){
 		ArrayList<BlackTile> ans=new ArrayList<BlackTile>();

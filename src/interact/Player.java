@@ -51,7 +51,6 @@ public class Player extends Entity {
 		return side;
 	}
 	
-	
 	public void setSpawn(Coordinate spawn) {
 		this.spawn = spawn;
 	}
@@ -106,25 +105,6 @@ public class Player extends Entity {
 
 	public void damaged() {
 		this.lp = this.lp - 1;
-	}
-
-	@Override
-	public int getSymbol() {
-		// TODO Auto-generated method stub
-		if (this.getIndex() == 1)
-			return Sprites.Player1;
-		else if (this.getIndex() == 2)
-			return Sprites.Player2;
-		else if (this.getIndex() == 3)
-			return Sprites.Player3;
-		else if (this.getIndex() == 4)
-			return Sprites.Player4;
-		else if (this.getIndex() == 5)
-			return Sprites.Player5;
-		else if (this.getIndex() == 6)
-			return Sprites.Player6;
-		else
-			return Sprites.Player7;
 	}
 
 }

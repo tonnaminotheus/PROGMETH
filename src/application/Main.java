@@ -690,7 +690,7 @@ public class Main extends Application {
 		controlPane = new ControlPane();
 		fieldPane = new FieldPane();
 		controlPane2 = new ControlPane2();
-		root2.setBackground(new Background(new BackgroundFill(Color.SANDYBROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+		root2.setBackground(new Background(new BackgroundFill(Color.CORNSILK, CornerRadii.EMPTY, Insets.EMPTY)));
 		root2.getChildren().add(controlPane);
 		root2.getChildren().add(fieldPane);
 		root2.getChildren().add(controlPane2);

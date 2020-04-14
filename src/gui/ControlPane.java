@@ -24,7 +24,7 @@ public class ControlPane extends VBox {
 	private static Label bomb = new Label();
 	private static Label removeBarricade = new Label();
 	public static Label notification = new Label();
-	protected static String noti = new String();
+	private static String noti = new String();
 	
 	public ControlPane() {
 		super();
@@ -65,12 +65,20 @@ public class ControlPane extends VBox {
 				"Current Barricade removal: " + (GameController.getTurn() % 2 == 1 ? GameController.getPlayer1().getHaveRemoveBarricade()
 						: GameController.getPlayer2().getHaveRemoveBarricade()));
 		removeBarricade.setFont(new Font(14));
-		notification.textProperty().setValue(noti);
+		notification.textProperty().setValue(getNoti());
 		notification.setFont(new Font(22));
 	}
 
 	public ItemPane getItemPane() {
 		return itemPane;
+	}
+
+	public static String getNoti() {
+		return noti;
+	}
+
+	public static void setNoti(String noti) {
+		ControlPane.noti = noti;
 	}
 
 }
