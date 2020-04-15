@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import entity.base.Coordinate;
 import interact.Player;
 import logic.GameController;
-import logic.Sprites;
 
 public class PlayerTest {
 	Player test1;
@@ -23,10 +22,4 @@ public class PlayerTest {
 	}
 	
 	
-	
-	@Test
-	void testGetSymbol() {
-		assertEquals(Sprites.Player1,test1.getSymbol());
-		assertEquals(Sprites.Player2,test2.getSymbol());
-	}
 }

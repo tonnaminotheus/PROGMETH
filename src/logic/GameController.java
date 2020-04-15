@@ -14,7 +14,10 @@ import interact.RemoveAllBarricade;
 import interact.RemoveAllSpecialTile;
 import interact.SpecialTile;
 import interact.WhiteTile;
-
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.ArrayList;
 
@@ -44,8 +47,6 @@ public class GameController {
 		gameMap.removeEntity(16, 8);
 		gameMap.addEntity(player1, 0, 8);
 		gameMap.addEntity(player2, 16, 8);
-		// System.out.println("Finish Initialize");
-
 	}
 
 	public static Player getPlayer1() {
@@ -61,7 +62,6 @@ public class GameController {
 	}
 
 	public static GameMap getCurrentMap() {
-		// TODO Auto-generated method stub
 		return gameMap;
 	}
 
@@ -89,13 +89,6 @@ public class GameController {
 		int ran = (int) (Math.random() * 100) % 8;
 		if (checkIsPossitionOnBoard(randomX, randomY)) {
 			if (getCurrentMap().getEntity(randomX, randomY).isBlackTile()) {
-
-				/*
-				 * boolean check = true; for (int i = 0; i < 4; i++) {
-				 * if(!GameController.checkIsPossitionOnBoard(randomX + dirX[i], randomY +
-				 * dirY[i])) continue; if (!GameController.getCurrentMap().getEntity(randomX +
-				 * dirX[i], randomY + dirY[i]).isBlackTile()) { check = false; } } if (check) {
-				 */
 				getCurrentMap().removeEntity(randomX, randomY);
 				if(ran==0)
 					getCurrentMap().addEntity(new RandomTile(randomX, randomY), randomX, randomY);
@@ -113,8 +106,6 @@ public class GameController {
 					getCurrentMap().addEntity(new MovePlayer(randomX, randomY), randomX, randomY);
 				else if(ran==7)
 					getCurrentMap().addEntity(new MoveOtherPlayer(randomX, randomY), randomX, randomY);
-				// System.out.println("spawnSuccess");
-				// }
 			}
 		}
 	}
@@ -128,6 +119,11 @@ public class GameController {
 			ControlPane.setNoti(playermessage);
 			ControlPane.labelUpdate();
 			ControlPane2.labelUpdate();
+			MediaPlayer operate;
+			Media musicFile=new Media(ClassLoader.getSystemResource("FuzzyBeep.mp3").toString());
+			operate = new MediaPlayer(musicFile);
+			operate.setVolume(0.05);
+			operate.setAutoPlay(true);
 		}else {
 			String playermessage = "can not place bomb there";
 			ControlPane.setNoti(playermessage);
@@ -153,21 +149,13 @@ public class GameController {
 	}
 
 	public static void move(Player player, int posx, int posy, int x, int y) throws moveFail {
-		// dir 0 up 1 right 2 down 3 left
-		// check class is blackTile check barricade tile
-		// this.setX(x); +2
-		// this.setY(y); +2
-		// check white tile
-		System.out.println(x+" "+y+" "+posx+" "+posy);
 		if (checkIsPossitionOnBoard(x, y) && checkIsPossitionOnBoard(posx, posy)) {
-			// System.out.println("check pos out of board");
 			boolean isWhite = GameController.getCurrentMap().getEntity((posx + x) / 2, (posy + y) / 2).isWhiteTile();
 			boolean isBlack = GameController.getCurrentMap().getEntity(posx, posy).isBlackTile();
 			boolean isExplodingTile = GameController.getCurrentMap().getEntity(posx, posy).isExplodingTile();
 			boolean isSpecial = GameController.getCurrentMap().getEntity(posx, posy).isSpecialTile();
 			boolean isInRange = (Math.abs(posx - x) <= 2 ? true : false) && (Math.abs(posy - y) <= 2 ? true : false)
 					&& (posx == x || posy == y);
-			System.out.println(posx +" " +posy);
 			if (isWhite && (isBlack || isSpecial||isExplodingTile) && isInRange) {
 				// change variable name
 				int playerX = player.getX();
@@ -185,10 +173,26 @@ public class GameController {
 				ControlPane.labelUpdate();
 				ControlPane2.labelUpdate();
 				if (now.isSpecialTile()) {
+					MediaPlayer operate;
+					Media musicFile=new Media(ClassLoader.getSystemResource("PinDrop.mp3").toString());
+					operate = new MediaPlayer(musicFile);
+					operate.setVolume(0.3);
+					operate.setAutoPlay(true);
 					((SpecialTile)now).getAction(player);
 				}
 				else if(now.isExplodingTile()){
+					MediaPlayer operate;
+					Media musicFile=new Media(ClassLoader.getSystemResource("Bomb.mp3").toString());
+					operate = new MediaPlayer(musicFile);
+					operate.setVolume(0.05);
+					operate.setAutoPlay(true);
 					((ExplodingTile)now).getAction(player);
+				}else {
+					MediaPlayer operate;
+					Media musicFile=new Media(ClassLoader.getSystemResource("ButtonPush.mp3").toString());
+					operate = new MediaPlayer(musicFile);
+					operate.setVolume(0.05);
+					operate.setAutoPlay(true);
 				}
 			} else {
 				String playermessage = "you cannot move there";
@@ -198,7 +202,6 @@ public class GameController {
 				throw new moveFail("you cannot move there");
 			}
 		} else {
-			// System.out.println("check pos out of board");
 			throw new moveFail("The position is out of the board");
 		}
 	}
@@ -258,6 +261,11 @@ public class GameController {
 				ControlPane.setNoti(playermessage);
 				ControlPane.labelUpdate();
 				ControlPane2.labelUpdate();
+				MediaPlayer operate;
+				Media musicFile=new Media(ClassLoader.getSystemResource("DoorClose.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.05);
+				operate.setAutoPlay(true);
 			} else {
 				String playermessage = "can not place barricade there";
 				ControlPane.setNoti(playermessage);
@@ -292,6 +300,11 @@ public class GameController {
 				ControlPane.setNoti(playermessage);
 				ControlPane.labelUpdate();
 				ControlPane2.labelUpdate();
+				MediaPlayer operate;
+				Media musicFile=new Media(ClassLoader.getSystemResource("DoorClose.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.05);
+				operate.setAutoPlay(true);
 			} else {
 				String playermessage = "can not place barricade there";
 				ControlPane.setNoti(playermessage);
@@ -319,16 +332,13 @@ public class GameController {
 		boolean ch2=false;
 		while (!q.isEmpty()) {
 			Coordinate topQueue = q.get(0);
-			System.out.println(topQueue.getX()+" "+topQueue.getY()+" "+finish);
 			int[] dirx = { 0, 2, 0, -2 };
 			int[] diry = { 2, 0, -2, 0 };
 			if (topQueue.getX() == finish) {
 				ch1=true;
-				System.out.println("ok1");
 			}
 			if (topQueue.getX() == player.getSpawn().getX()&&topQueue.getY()==player.getSpawn().getY()) {
 				ch2=true;
-				System.out.println("ok2");
 			}
 			for (int i = 0; i < 4; i++) {
 				if (checkIsPossitionOnBoard(topQueue.getX() + dirx[i], topQueue.getY() + diry[i])) {

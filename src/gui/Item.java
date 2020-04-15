@@ -8,13 +8,13 @@ public class Item {
 	
 	Item(String itemName){
 		switch(itemName) {
-			case "HorizontalBarricade" :		url = "file:res/HorizontalBarricade.png";break;
-			case "VerticalBarricade" : 	url = "file:res/VerticalBarricade.png";break;
-			case "Cancel" : 	url = "file:res/Cancel.png"; 	break;
-			case "Home" : url = "file:res/Home.png"; break;
-			case "Bomb" : 	url = "file:res/Bomb.png"; break;
-			case "Move" : 	url = "file:res/Move.png"; break;
-			case "RemoveBarricade" : 	url = "file:res/RemoveBarricade.png"; break;
+			case "HorizontalBarricade" :		url = "HorizontalBarricade.png";break;
+			case "VerticalBarricade" : 	url = "VerticalBarricade.png";break;
+			case "Cancel" : 	url = "Cancel.png"; 	break;
+			case "Home" : url = "Home.png"; break;
+			case "Bomb" : 	url = "Bomb.png"; break;
+			case "Move" : 	url = "Move.png"; break;
+			case "RemoveBarricade" : 	url = "RemoveBarricade.png"; break;
 		}
 		this.itemName = itemName;
 	}

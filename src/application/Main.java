@@ -49,14 +49,19 @@ public class Main extends Application {
 	public static int yposlr = 500;
 	public static Pane P1, P2;
 	public static MediaPlayer mediaplayer;
-
+	public static MediaPlayer operate;
+	
 	@Override
 	public void start(Stage primaryStage) {
+		
+		
+		
+		
+		
 
 		primary = primaryStage;
 		//setMusic
-		String path = new File("src/media/musicTheme (2).mp3").getAbsolutePath();
-		Media musicFile=new Media(new File(path).toURI().toString());
+		Media musicFile=new Media(ClassLoader.getSystemResource("gameSong.mp3").toString());
 		mediaplayer = new MediaPlayer(musicFile);
 		mediaplayer.setAutoPlay(true);
 		mediaplayer.setVolume(0.10);
@@ -67,13 +72,13 @@ public class Main extends Application {
 		Group root = new Group();
 
 		// background
-		Image image = new Image("file:res/testMenu.png");
+		Image image = new Image(ClassLoader.getSystemResource("testMenu.png").toString());
 		ImageView iv = new ImageView();
 		iv.setImage(image);
 		root.getChildren().add(iv);
 
 		// StartButton
-		Image playI = new Image("file:res/Play.png");
+		Image playI = new Image(ClassLoader.getSystemResource("Play.png").toString());
 		ImageView iv1 = new ImageView(playI);
 		iv1.setFitHeight(100);
 		iv1.setFitWidth(300);
@@ -91,7 +96,7 @@ public class Main extends Application {
 		playB.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/PlayTouch.png");
+				Image playI = new Image(ClassLoader.getSystemResource("PlayTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -103,7 +108,7 @@ public class Main extends Application {
 		playB.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/Play.png");
+				Image playI = new Image(ClassLoader.getSystemResource("Play.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -123,7 +128,7 @@ public class Main extends Application {
 		root.getChildren().add(playB);
 
 		// ExitButton
-		Image exitI = new Image("file:res/Exit.png");
+		Image exitI = new Image(ClassLoader.getSystemResource("Exit.png").toString());
 		ImageView iv2 = new ImageView(exitI);
 		iv2.setFitHeight(100);
 		iv2.setFitWidth(300);
@@ -140,7 +145,7 @@ public class Main extends Application {
 		exitButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/ExitTouch.png");
+				Image playI = new Image(ClassLoader.getSystemResource("ExitTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -152,7 +157,7 @@ public class Main extends Application {
 		exitButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/Exit.png");
+				Image playI = new Image(ClassLoader.getSystemResource("Exit.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -179,12 +184,12 @@ public class Main extends Application {
 		// end setScene2
 
 		// setScene3
-		Image player1Win = new Image("file:res/player1win.png");
+		Image player1Win = new Image(ClassLoader.getSystemResource("player1win.png").toString());
 		ImageView ivP1W = new ImageView(player1Win);
 		Group root3 = new Group();
 
 		// ExitButton
-		Image exitII = new Image("file:res/Exit.png");
+		Image exitII = new Image(ClassLoader.getSystemResource("Exit.png").toString());
 		ImageView iv22 = new ImageView(exitII);
 		iv22.setFitHeight(100);
 		iv22.setFitWidth(300);
@@ -201,7 +206,7 @@ public class Main extends Application {
 		exitButton2.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/ExitTouch.png");
+				Image playI = new Image(ClassLoader.getSystemResource("ExitTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -213,7 +218,7 @@ public class Main extends Application {
 		exitButton2.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/Exit.png");
+				Image playI = new Image(ClassLoader.getSystemResource("Exit.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -237,12 +242,12 @@ public class Main extends Application {
 		// end setScene3
 
 		// setScene3
-		Image player2Win = new Image("file:res/player2win.png");
+		Image player2Win = new Image(ClassLoader.getSystemResource("player2win.png").toString());
 		ImageView ivP2W = new ImageView(player2Win);
 		Group root4 = new Group();
 
 		// ExitButton
-		Image exitIII = new Image("file:res/Exit.png");
+		Image exitIII =  new Image(ClassLoader.getSystemResource("Exit.png").toString());
 		ImageView iv222 = new ImageView(exitIII);
 		iv222.setFitHeight(100);
 		iv222.setFitWidth(300);
@@ -259,7 +264,7 @@ public class Main extends Application {
 		exitButton3.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/ExitTouch.png");
+				Image playI = new Image(ClassLoader.getSystemResource("ExitTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -271,7 +276,7 @@ public class Main extends Application {
 		exitButton3.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/Exit.png");
+				Image playI = new Image(ClassLoader.getSystemResource("Exit.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -299,13 +304,13 @@ public class Main extends Application {
 		Group root5 = new Group();
 
 		// background
-		Image image5 = new Image("file:res/SelectPlayer.png");
+		Image image5 = new Image(ClassLoader.getSystemResource("SelectPlayer.png").toString());
 		ImageView iv5 = new ImageView();
 		iv5.setImage(image5);
 		root5.getChildren().add(iv5);
 
 		// NextButton
-		Image NextI = new Image("file:res/Next.png");
+		Image NextI =  new Image(ClassLoader.getSystemResource("Next.png").toString());
 		ImageView ivN = new ImageView(NextI);
 		ivN.setFitHeight(100);
 		ivN.setFitWidth(300);
@@ -324,7 +329,7 @@ public class Main extends Application {
 		nextB.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/NextTouch.png");
+				Image playI = new Image(ClassLoader.getSystemResource("NextTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -335,7 +340,7 @@ public class Main extends Application {
 		nextB.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/Next.png");
+				Image playI = new Image(ClassLoader.getSystemResource("Next.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -355,7 +360,7 @@ public class Main extends Application {
 		root5.getChildren().add(nextB);
 
 		// BackButton
-		Image BackI = new Image("file:res/Back.png");
+		Image BackI = new Image(ClassLoader.getSystemResource("Back.png").toString());
 		ImageView ivB = new ImageView(BackI);
 		ivB.setFitHeight(100);
 		ivB.setFitWidth(300);
@@ -373,7 +378,7 @@ public class Main extends Application {
 		backB.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/BackTouch.png");
+				Image playI = new Image(ClassLoader.getSystemResource("BackTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -384,7 +389,7 @@ public class Main extends Application {
 		backB.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				Image playI = new Image("file:res/Back.png");
+				Image playI = new Image(ClassLoader.getSystemResource("Back.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
@@ -404,7 +409,7 @@ public class Main extends Application {
 		root5.getChildren().add(backB);
 
 		// left1
-		Image leftI = new Image("file:res/left.png");
+		Image leftI = new Image(ClassLoader.getSystemResource("left.png").toString());
 		ImageView ivL = new ImageView(leftI);
 
 		left1 = new Pane(ivL);
@@ -415,7 +420,6 @@ public class Main extends Application {
 			public void handle(MouseEvent e) {
 				if (player1Index > 1) {
 					player1Index = player1Index - 1;
-					System.out.println(player1Index + " " + player2Index);
 					setScene5();
 				}
 			}
@@ -438,7 +442,7 @@ public class Main extends Application {
 		root5.getChildren().add(left1);
 
 		// left2
-		Image leftII = new Image("file:res/left.png");
+		Image leftII = new Image(ClassLoader.getSystemResource("left.png").toString());
 		ImageView ivLL = new ImageView(leftII);
 
 		left2 = new Pane(ivLL);
@@ -449,7 +453,6 @@ public class Main extends Application {
 			public void handle(MouseEvent e) {
 				if (player2Index > 1) {
 					player2Index = player2Index - 1;
-					System.out.println(player1Index + " " + player2Index);
 					setScene5();
 				}
 			}
@@ -472,7 +475,7 @@ public class Main extends Application {
 		root5.getChildren().add(left2);
 
 		// right1
-		Image rightI = new Image("file:res/right.png");
+		Image rightI = new Image(ClassLoader.getSystemResource("right.png").toString());
 		ImageView ivR = new ImageView(rightI);
 
 		right1 = new Pane(ivR);
@@ -484,7 +487,6 @@ public class Main extends Application {
 			public void handle(MouseEvent e) {
 				if (player1Index < 7) {
 					player1Index = player1Index + 1;
-					System.out.println(player1Index + " " + player2Index);
 					setScene5();
 				}
 			}
@@ -507,7 +509,7 @@ public class Main extends Application {
 		root5.getChildren().add(right1);
 
 		// right2
-		Image rightII = new Image("file:res/right.png");
+		Image rightII = new Image(ClassLoader.getSystemResource("right.png").toString());
 		ImageView ivRR = new ImageView(rightII);
 
 		right2 = new Pane(ivRR);
@@ -518,7 +520,6 @@ public class Main extends Application {
 			public void handle(MouseEvent e) {
 				if (player2Index < 7) {
 					player2Index = player2Index + 1;
-					System.out.println(player1Index + " " + player2Index);
 					setScene5();
 				}
 			}
@@ -552,9 +553,143 @@ public class Main extends Application {
 
 		scene5 = new Scene(root5, 1280, 720);
 		// end setScene1
+		
+		//button sound effect
+		
+		playB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.3);
+				operate.setAutoPlay(true);
+			}
+
+		});
+		nextB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.3);
+				operate.setAutoPlay(true);
+			}
+
+		});
+		backB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.3);
+				operate.setAutoPlay(true);
+			}
+
+		});
+		exitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.3);
+				operate.setAutoPlay(true);
+			}
+
+		});
+		exitButton2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.3);
+				operate.setAutoPlay(true);
+			}
+
+		});
+		exitButton3.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.3);
+				operate.setAutoPlay(true);
+			}
+
+		});
+		left1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.3);
+				operate.setAutoPlay(true);
+			}
+
+		});
+		left2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.3);
+				operate.setAutoPlay(true);
+			}
+
+		});
+		right1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.3);
+				operate.setAutoPlay(true);
+			}
+
+		});
+		right2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
+				operate = new MediaPlayer(musicFile);
+				operate.setVolume(0.3);
+				operate.setAutoPlay(true);
+			}
+
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		// start
 		setScene(primaryStage, scene1);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 	}
 
@@ -570,7 +705,6 @@ public class Main extends Application {
 	}
 
 	public static void setScene5() {
-		System.out.println(player1Index + " " + player2Index);
 		if (player1Index == 1) {
 			left1.setVisible(false);
 			right1.setVisible(true);
@@ -598,73 +732,73 @@ public class Main extends Application {
 		}
 
 		if (player1Index == 1) {
-			Image PI = new Image("file:res/Token1.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token1.png").toString());
 			ImageView iv = new ImageView(PI);
 			P1.getChildren().clear();
 			P1.getChildren().add(iv);
 		} else if (player1Index == 2) {
-			Image PI = new Image("file:res/Token2.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token2.png").toString());
 			ImageView iv = new ImageView(PI);
 			P1.getChildren().clear();
 			P1.getChildren().add(iv);
 		} else if (player1Index == 3) {
-			Image PI = new Image("file:res/Token3.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token3.png").toString());
 			ImageView iv = new ImageView(PI);
 			P1.getChildren().clear();
 			P1.getChildren().add(iv);
 		} else if (player1Index == 4) {
-			Image PI = new Image("file:res/Token4.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token4.png").toString());
 			ImageView iv = new ImageView(PI);
 			P1.getChildren().clear();
 			P1.getChildren().add(iv);
 		} else if (player1Index == 5) {
-			Image PI = new Image("file:res/Token5.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token5.png").toString());
 			ImageView iv = new ImageView(PI);
 			P1.getChildren().clear();
 			P1.getChildren().add(iv);
 		} else if (player1Index == 6) {
-			Image PI = new Image("file:res/Token6.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token6.png").toString());
 			ImageView iv = new ImageView(PI);
 			P1.getChildren().clear();
 			P1.getChildren().add(iv);
 		} else {
-			Image PI = new Image("file:res/Token7.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token7.png").toString());
 			ImageView iv = new ImageView(PI);
 			P1.getChildren().clear();
 			P1.getChildren().add(iv);
 		}
 		if (player2Index == 1) {
-			Image PI = new Image("file:res/Token1.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token1.png").toString());
 			ImageView iv = new ImageView(PI);
 			P2.getChildren().clear();
 			P2.getChildren().add(iv);
 		} else if (player2Index == 2) {
-			Image PI = new Image("file:res/Token2.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token2.png").toString());
 			ImageView iv = new ImageView(PI);
 			P2.getChildren().clear();
 			P2.getChildren().add(iv);
 		} else if (player2Index == 3) {
-			Image PI = new Image("file:res/Token3.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token3.png").toString());
 			ImageView iv = new ImageView(PI);
 			P2.getChildren().clear();
 			P2.getChildren().add(iv);
 		} else if (player2Index == 4) {
-			Image PI = new Image("file:res/Token4.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token4.png").toString());
 			ImageView iv = new ImageView(PI);
 			P2.getChildren().clear();
 			P2.getChildren().add(iv);
 		} else if (player2Index == 5) {
-			Image PI = new Image("file:res/Token5.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token5.png").toString());
 			ImageView iv = new ImageView(PI);
 			P2.getChildren().clear();
 			P2.getChildren().add(iv);
 		} else if (player2Index == 6) {
-			Image PI = new Image("file:res/Token6.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token6.png").toString());
 			ImageView iv = new ImageView(PI);
 			P2.getChildren().clear();
 			P2.getChildren().add(iv);
 		} else {
-			Image PI = new Image("file:res/Token7.png");
+			Image PI = new Image(ClassLoader.getSystemResource("Token7.png").toString());
 			ImageView iv = new ImageView(PI);
 			P2.getChildren().clear();
 			P2.getChildren().add(iv);
@@ -676,7 +810,6 @@ public class Main extends Application {
 
 	public void handle(ActionEvent event) {
 		if (event.getSource() == playB) {
-			// System.out.println("done");
 			setScene(primary, scene5);
 		}
 	}

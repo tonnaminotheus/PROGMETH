@@ -11,7 +11,6 @@ import interact.Player;
 import interact.SpecialTile;
 import interact.WhiteTile;
 import logic.GameController;
-import logic.Sprites;
 import logic.addBarricadeFail;
 import logic.moveFail;
 import logic.removeBarricadeFail;
@@ -26,7 +25,7 @@ public class ControllerTest {
 
 	@BeforeEach
 	void setUpBeforeEachTest() {
-		GameController.IntializeMap();
+		GameController.IntializeMap(1,2);
 	}
 
 	@Test

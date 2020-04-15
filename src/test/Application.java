@@ -15,7 +15,7 @@ import interact.SpecialTile;
 
 class Application {
 
-	@Test
+	/*@Test
 	void test() throws removeBarricadeFail {
 		GameController.IntializeMap();
 		Scanner scanner = new Scanner(System.in);
@@ -181,6 +181,6 @@ class Application {
 			GameController.setTurn(GameController.getTurn() + 1);
 		}
 
-	}
+	}*/
 
 }

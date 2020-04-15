@@ -14,6 +14,8 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import logic.GameController;
@@ -26,7 +28,7 @@ public class ItemButton extends Button{
 		super();
 		this.setPadding(new Insets(5));
 		this.item=new Item(itemName);
-		Image image=new Image(this.item.getUrl());
+		Image image=new Image(ClassLoader.getSystemResource(this.item.getUrl()).toString());
 		ImageView imageView = new ImageView(image);
 		imageView.setFitHeight(48);
 		imageView.setFitWidth(48);
@@ -142,6 +144,17 @@ public class ItemButton extends Button{
 		});break;
 		
 	}
+	this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		@Override
+		public void handle(MouseEvent e) {
+			MediaPlayer operate;
+			Media musicFile=new Media(ClassLoader.getSystemResource("Toggle.mp3").toString());
+			operate = new MediaPlayer(musicFile);
+			operate.setVolume(0.3);
+			operate.setAutoPlay(true);
+		}
+
+	});
 	}
 
 	public void highlight() {

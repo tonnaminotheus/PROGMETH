@@ -1,6 +1,5 @@
 package interact;
 
-import logic.Sprites;
 import logic.moveFail;
 import gui.ControlPane;
 import gui.ControlPane2;
