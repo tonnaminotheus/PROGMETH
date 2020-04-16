@@ -1,5 +1,6 @@
 package gui;
 
+import entity.base.Entity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -14,6 +15,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import logic.GameController;
+import interact.Player;
 
 //You might need to do something to the following line
 public class FieldPane extends GridPane {
@@ -26,7 +28,7 @@ public class FieldPane extends GridPane {
 		this.setAlignment(Pos.CENTER);
 		this.setPrefWidth(17*40);
 		this.setPrefHeight(17*40);
-		this.setBackground(new Background(new BackgroundFill(Color.DARKSALMON, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		//this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.DASHED, 
 		//		CornerRadii.EMPTY, BorderWidths.FULL)));
 		//this.setVgap(5);
@@ -42,6 +44,28 @@ public class FieldPane extends GridPane {
 					e.add(fieldCells.get(i*17+j), j, i);
 			}
 		}	
+	}
+	
+	public static FieldCell findPlayer(int side) {
+		for(int i=0;i<fieldCells.size();i++) {
+			Entity e =fieldCells.get(i).getEntity();
+			if(e.isPlayer()) {
+				if(((Player)e).getSide()==side) {
+					return fieldCells.get(i);
+				}
+			}
+		}
+		return null;
+	}
+	
+	public static FieldCell getFieldCell(Entity E) {
+		for(int i=0;i<fieldCells.size();i++) {
+			Entity e =fieldCells.get(i).getEntity();
+			if(e.getX()==E.getX()&&e.getY()==E.getY()) {
+				return fieldCells.get(i);
+			}
+		}
+		return null;
 	}
 }
 

@@ -56,9 +56,23 @@ public class GameMap {
 		ArrayList<BlackTile> ans=new ArrayList<BlackTile>();
 		for(int i=0;i<this.allEntity.size();i++)
 		{
+			int x=this.allEntity.get(i).getX();
+			int y=this.allEntity.get(i).getY();
 			if(this.allEntity.get(i).isBlackTile()&&this.allEntity.get(i).getX()!=0&&this.allEntity.get(i).getX()!=16)
 			{
-				ans.add((BlackTile) this.allEntity.get(i));
+				int [] dirx = { 0, 2, 0, -2 };
+				int [] diry = { 2, 0, -2, 0 };
+				boolean t=true;
+				for(int j=0;j<4;j++) {
+					if(!GameController.checkIsPossitionOnBoard(x+dirx[j], y+diry[j])) {
+						continue;
+					}
+					if(GameController.getCurrentMap().getEntity(x+dirx[j], y+diry[j]).isSpecialTile()){
+						t=false;
+					}
+				}
+				if(t)
+					ans.add((BlackTile) this.allEntity.get(i));
 			}
 		}
 		return ans;

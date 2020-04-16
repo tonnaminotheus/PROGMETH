@@ -8,7 +8,11 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import logic.GameController;
 import entity.base.Entity;
@@ -23,6 +27,7 @@ import interact.RemoveAllBarricade;
 import interact.RemoveAllSpecialTile;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
+import javafx.animation.PathTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import application.Main;
@@ -129,6 +134,11 @@ public class FieldCell extends Pane {
 
 								if (ch1 && ch2) {
 									pass = true;
+									MediaPlayer operate;
+									Media musicFile=new Media(ClassLoader.getSystemResource("DoorClose.mp3").toString());
+									operate = new MediaPlayer(musicFile);
+									operate.setVolume(0.05);
+									operate.setAutoPlay(true);
 									/*String playermessage = GameController.getTurn() % 2 == 1
 											? "Player 1 placed a barricade"
 											: "Player 2 placed a barricade";
@@ -166,6 +176,11 @@ public class FieldCell extends Pane {
 								boolean ch2 = GameController.checkbfs(GameController.getPlayer2(), 0);
 								if (ch1 && ch2) {
 									pass = true;
+									MediaPlayer operate;
+									Media musicFile=new Media(ClassLoader.getSystemResource("DoorClose.mp3").toString());
+									operate = new MediaPlayer(musicFile);
+									operate.setVolume(0.05);
+									operate.setAutoPlay(true);
 									/*String playermessage = GameController.getTurn() % 2 == 1
 											? "Player 1 placed a barricade"
 											: "Player 2 placed a barricade";
@@ -247,25 +262,38 @@ public class FieldCell extends Pane {
 				}
 				//FieldPane.setFieldPane(Main.fieldPane);
 				if (pass) {
-					if (GameController.getTurn() % 2 == 0) {
-						GameController.spawnSpecialTile();
-					}
-					GameController.increaseTurn();
+					FieldPane.setFieldPane(Main.fieldPane);
+					ControlPane.labelUpdate();
+					ControlPane2.labelUpdate();
 					FieldPane.setFieldPane(Main.fieldPane);
 					ItemPane.resetButtonsBackGroundColor();
+					Main.gameActionNow=0;
 					if (GameController.getPlayer1().getX() == 16 || GameController.getPlayer2().getLp() == 0) {
-					
 						Main.setScene(Main.primary, Main.scene3);
-						// Main.primary.close();
 					} else if (GameController.getPlayer2().getX() == 0 || GameController.getPlayer1().getLp() == 0) {
 						
 						Main.setScene(Main.primary, Main.scene4);
-						// Main.primary.close();
 					}
-					Main.gameActionNow = 0;
-					
-					ControlPane.labelUpdate();
-					ControlPane2.labelUpdate();
+					GameController.increaseTurn();
+					if (GameController.getTurn() % 2 == 1) {
+						Entity ee=GameController.spawnSpecialTile();
+						if(ee!=null) {
+							FadeTransition T = new FadeTransition();
+							FieldPane.setFieldPane(Main.fieldPane);
+							T.setNode(FieldPane.getFieldCell(ee));
+							T.setFromValue(0);
+							T.setToValue(1);
+							T.setDuration(Duration.millis(3000));
+							T.play();
+							try {
+								wait(1);
+							} catch (InterruptedException e1) {
+								e1.printStackTrace();
+							}
+							T.stop();
+						}
+						FieldPane.setFieldPane(Main.fieldPane);
+					}
 				}
 
 			}
@@ -604,6 +632,8 @@ public class FieldCell extends Pane {
 			}
 		});
 	}
+	
+
 
 	public boolean IsEmpty() {
 		return isEmpty;

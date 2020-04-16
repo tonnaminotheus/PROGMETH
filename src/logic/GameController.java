@@ -14,18 +14,23 @@ import interact.RemoveAllBarricade;
 import interact.RemoveAllSpecialTile;
 import interact.SpecialTile;
 import interact.WhiteTile;
+import javafx.animation.PathTransition;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Line;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-
+import application.Main;
 import entity.base.Coordinate;
 import entity.base.Entity;
 import gui.ControlPane;
 import gui.ControlPane2;
+import gui.FieldCell;
+import gui.FieldPane;
 
 public class GameController {
 
@@ -81,7 +86,7 @@ public class GameController {
 		GameController.setTurn(GameController.getTurn()+1);
 	}
 
-	public static void spawnSpecialTile() {
+	public static SpecialTile spawnSpecialTile() {
 		ArrayList<BlackTile> spawnTile = gameMap.getSpawnTile();
 		int random = (int) (Math.random() * 100) % spawnTile.size();
 		int randomX = spawnTile.get(random).getX();
@@ -90,24 +95,28 @@ public class GameController {
 		if (checkIsPossitionOnBoard(randomX, randomY)) {
 			if (getCurrentMap().getEntity(randomX, randomY).isBlackTile()) {
 				getCurrentMap().removeEntity(randomX, randomY);
+				Entity e = null;
 				if(ran==0)
-					getCurrentMap().addEntity(new RandomTile(randomX, randomY), randomX, randomY);
+					e=new RandomTile(randomX, randomY);
 				else if(ran==1)
-					getCurrentMap().addEntity(new RemoveAllBarricade(randomX, randomY), randomX, randomY);
+					e=new RemoveAllBarricade(randomX, randomY);
 				else if(ran==2)
-					getCurrentMap().addEntity(new RemoveAllSpecialTile(randomX, randomY), randomX, randomY);
+					e=new RemoveAllSpecialTile(randomX, randomY);
 				else if(ran==3)
-					getCurrentMap().addEntity(new AddBomb(randomX, randomY), randomX, randomY);
+					e=new AddBomb(randomX, randomY);
 				else if(ran==4)
-					getCurrentMap().addEntity(new GetBarricade(randomX, randomY), randomX, randomY);
+					e=new GetBarricade(randomX, randomY);
 				else if(ran==5)
-					getCurrentMap().addEntity(new GetHeal(randomX, randomY), randomX, randomY);
+					e=new GetHeal(randomX, randomY);
 				else if(ran==6)
-					getCurrentMap().addEntity(new MovePlayer(randomX, randomY), randomX, randomY);
+					e=new MovePlayer(randomX, randomY);
 				else if(ran==7)
-					getCurrentMap().addEntity(new MoveOtherPlayer(randomX, randomY), randomX, randomY);
+					e=new MoveOtherPlayer(randomX, randomY);
+				getCurrentMap().addEntity(e,randomX,randomY);
+				return (SpecialTile) e;
 			}
 		}
+		return null;
 	}
 	
 	public static void placeBomb(int x,int y) throws Exception{
@@ -124,6 +133,7 @@ public class GameController {
 			operate = new MediaPlayer(musicFile);
 			operate.setVolume(0.05);
 			operate.setAutoPlay(true);
+			ControlPane2.labelUpdate();
 		}else {
 			String playermessage = "can not place bomb there";
 			ControlPane.setNoti(playermessage);
@@ -163,15 +173,45 @@ public class GameController {
 				player.setX(posx);
 				player.setY(posy);
 				Entity now = getCurrentMap().getEntity(posx, posy);
+				/*
+				PathTransition pathTransition = new PathTransition();
+				pathTransition.setDuration(Duration.millis(4000));
+				Line path = new Line();
+				FieldCell P = FieldPane.getFieldCell(player);
+				path.setStartX(P.getLayoutX());
+				path.setStartY(P.getLayoutY());
+				Entity e =GameController.getCurrentMap().getEntity(x, y);
+				FieldCell E = FieldPane.getFieldCell(e);
+				path.setEndX(E.getLayoutX());
+				path.setEndY(E.getLayoutY());
+				pathTransition.setPath(path);
+				pathTransition.setNode(P);
+				pathTransition.play();
+				try {
+					wait(1);
+				}catch(Exception e1) {
+					
+				}*/
+				//Main.fieldPane.set
+				
+				
+				
+				
+				
+				
+				
 				getCurrentMap().removeEntity(posx, posy);
 				getCurrentMap().removeEntity(playerX, playerY);
 				getCurrentMap().addEntity(player, posx, posy);
 				getCurrentMap().addEntity(new BlackTile(playerX, playerY), playerX, playerY);
 				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 moved"
 						: "Player 2 moved";
+				
+				
 				ControlPane.setNoti(playermessage);
 				ControlPane.labelUpdate();
 				ControlPane2.labelUpdate();
+				
 				if (now.isSpecialTile()) {
 					MediaPlayer operate;
 					Media musicFile=new Media(ClassLoader.getSystemResource("PinDrop.mp3").toString());
@@ -179,6 +219,7 @@ public class GameController {
 					operate.setVolume(0.3);
 					operate.setAutoPlay(true);
 					((SpecialTile)now).getAction(player);
+					ControlPane2.labelUpdate();
 				}
 				else if(now.isExplodingTile()){
 					MediaPlayer operate;
@@ -187,12 +228,14 @@ public class GameController {
 					operate.setVolume(0.05);
 					operate.setAutoPlay(true);
 					((ExplodingTile)now).getAction(player);
+					ControlPane2.labelUpdate();
 				}else {
 					MediaPlayer operate;
 					Media musicFile=new Media(ClassLoader.getSystemResource("ButtonPush.mp3").toString());
 					operate = new MediaPlayer(musicFile);
 					operate.setVolume(0.05);
 					operate.setAutoPlay(true);
+					ControlPane2.labelUpdate();
 				}
 			} else {
 				String playermessage = "you cannot move there";
@@ -261,11 +304,6 @@ public class GameController {
 				ControlPane.setNoti(playermessage);
 				ControlPane.labelUpdate();
 				ControlPane2.labelUpdate();
-				MediaPlayer operate;
-				Media musicFile=new Media(ClassLoader.getSystemResource("DoorClose.mp3").toString());
-				operate = new MediaPlayer(musicFile);
-				operate.setVolume(0.05);
-				operate.setAutoPlay(true);
 			} else {
 				String playermessage = "can not place barricade there";
 				ControlPane.setNoti(playermessage);
@@ -300,11 +338,6 @@ public class GameController {
 				ControlPane.setNoti(playermessage);
 				ControlPane.labelUpdate();
 				ControlPane2.labelUpdate();
-				MediaPlayer operate;
-				Media musicFile=new Media(ClassLoader.getSystemResource("DoorClose.mp3").toString());
-				operate = new MediaPlayer(musicFile);
-				operate.setVolume(0.05);
-				operate.setAutoPlay(true);
 			} else {
 				String playermessage = "can not place barricade there";
 				ControlPane.setNoti(playermessage);

@@ -105,5 +105,6 @@ public class Player extends Entity {
 	public void damaged() {
 		this.lp = this.lp - 1;
 	}
+	
 
 }
