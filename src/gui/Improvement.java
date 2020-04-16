@@ -1,6 +1,8 @@
 package gui;
 
-public class Improvement {
+
+
+public class Improvement{
 	/*
 	 * UI improvement, this is demo
 	 * 
@@ -13,7 +15,7 @@ public class Improvement {
 	 * 
 	 * 
 	 * 
-	 * 
+	 * Change the blinking selected tile.
 	 * 
 	 */
 }
