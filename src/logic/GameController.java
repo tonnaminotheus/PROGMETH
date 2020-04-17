@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
@@ -94,7 +95,7 @@ public class GameController {
 		int ran = (int) (Math.random() * 100) % 8;
 		if (checkIsPossitionOnBoard(randomX, randomY)) {
 			if (getCurrentMap().getEntity(randomX, randomY).isBlackTile()) {
-				getCurrentMap().removeEntity(randomX, randomY);
+				
 				Entity e = null;
 				if(ran==0)
 					e=new RandomTile(randomX, randomY);
@@ -112,7 +113,10 @@ public class GameController {
 					e=new MovePlayer(randomX, randomY);
 				else if(ran==7)
 					e=new MoveOtherPlayer(randomX, randomY);
+				
+				getCurrentMap().removeEntity(randomX, randomY);
 				getCurrentMap().addEntity(e,randomX,randomY);
+				Main.fieldPane.setFieldCell(new FieldCell(e),Main.fieldPane);
 				return (SpecialTile) e;
 			}
 		}
@@ -121,8 +125,10 @@ public class GameController {
 	
 	public static void placeBomb(int x,int y) throws Exception{
 		if(GameController.getCurrentMap().getEntity(x, y).isBlackTile()&&x!=16&&x!=0) {
+			ExplodingTile e=new ExplodingTile(x,y);
 			GameController.getCurrentMap().removeEntity(x, y);
-			GameController.getCurrentMap().addEntity(new ExplodingTile(x,y), x, y);
+			GameController.getCurrentMap().addEntity(e, x, y);
+			Main.fieldPane.setFieldCell(new FieldCell(e),Main.fieldPane);
 			String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 placed bomb"
 					: "Player 2 placed bomb";
 			ControlPane.setNoti(playermessage);
@@ -173,25 +179,9 @@ public class GameController {
 				player.setX(posx);
 				player.setY(posy);
 				Entity now = getCurrentMap().getEntity(posx, posy);
-				/*
-				PathTransition pathTransition = new PathTransition();
-				pathTransition.setDuration(Duration.millis(4000));
-				Line path = new Line();
-				FieldCell P = FieldPane.getFieldCell(player);
-				path.setStartX(P.getLayoutX());
-				path.setStartY(P.getLayoutY());
-				Entity e =GameController.getCurrentMap().getEntity(x, y);
-				FieldCell E = FieldPane.getFieldCell(e);
-				path.setEndX(E.getLayoutX());
-				path.setEndY(E.getLayoutY());
-				pathTransition.setPath(path);
-				pathTransition.setNode(P);
-				pathTransition.play();
-				try {
-					wait(1);
-				}catch(Exception e1) {
-					
-				}*/
+				
+				
+				
 				//Main.fieldPane.set
 				
 				
@@ -203,7 +193,22 @@ public class GameController {
 				getCurrentMap().removeEntity(posx, posy);
 				getCurrentMap().removeEntity(playerX, playerY);
 				getCurrentMap().addEntity(player, posx, posy);
-				getCurrentMap().addEntity(new BlackTile(playerX, playerY), playerX, playerY);
+				BlackTile b =new BlackTile(playerX, playerY);
+				getCurrentMap().addEntity(b, playerX, playerY);
+				FieldCell pp = new FieldCell(player);
+				
+				Main.fieldPane.setFieldCell(pp,Main.fieldPane);
+				PathTransition pathTransition = new PathTransition();
+				pathTransition.setDuration(Duration.millis(1000));
+				Line path = new Line((y-posy)*40+30,(x-posx)*40+30,30,30);
+				pathTransition.setPath(path);
+				pathTransition.setNode(pp);
+				pathTransition.play();
+				
+				
+				
+				Main.fieldPane.setFieldCell(new FieldCell(b),Main.fieldPane);
+				Main.fieldPane.setFieldCell(pp,Main.fieldPane);
 				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 moved"
 						: "Player 2 moved";
 				
@@ -266,9 +271,15 @@ public class GameController {
 				getCurrentMap().removeEntity(x1, y1);
 				getCurrentMap().removeEntity(x2, y2);
 				getCurrentMap().removeEntity(x3, y3);
-				getCurrentMap().addEntity(new WhiteTile(x1, y1), x1, y1);
-				getCurrentMap().addEntity(new WhiteTile(x2, y2), x2, y2);
-				getCurrentMap().addEntity(new WhiteTile(x3, y3), x3, y3);
+				WhiteTile w1=new WhiteTile(x1, y1);
+				WhiteTile w2=new WhiteTile(x2, y2);
+				WhiteTile w3=new WhiteTile(x3, y3);
+				getCurrentMap().addEntity(w1, x1, y1);
+				getCurrentMap().addEntity(w2, x2, y2);
+				getCurrentMap().addEntity(w3, x3, y3);
+				Main.fieldPane.setFieldCell(new FieldCell(w1),Main.fieldPane);
+				Main.fieldPane.setFieldCell(new FieldCell(w2),Main.fieldPane);
+				Main.fieldPane.setFieldCell(new FieldCell(w3),Main.fieldPane);
 				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 removed barricade"
 						: "Player 2 removed barricade";
 				ControlPane.setNoti(playermessage);
@@ -296,9 +307,15 @@ public class GameController {
 				getCurrentMap().removeEntity(upEntity.getX(), upEntity.getY());
 				getCurrentMap().removeEntity(downEntity.getX(), downEntity.getY());
 				getCurrentMap().removeEntity(midEntity.getX(), midEntity.getY());
-				getCurrentMap().addEntity(new BarricadeTile(x, y - 1, x, y + 1, x, y), x, y - 1);
-				getCurrentMap().addEntity(new BarricadeTile(x, y + 1, x, y - 1, x, y), x, y + 1);
-				getCurrentMap().addEntity(new BarricadeTile(x, y, x, y - 1, x, y + 1), x, y);
+				BarricadeTile b1=new BarricadeTile(x, y - 1, x, y + 1, x, y);
+				BarricadeTile b2=new BarricadeTile(x, y + 1, x, y - 1, x, y);
+				BarricadeTile b3=new BarricadeTile(x, y, x, y - 1, x, y + 1);
+				getCurrentMap().addEntity(b1, x, y - 1);
+				getCurrentMap().addEntity(b2, x, y + 1);
+				getCurrentMap().addEntity(b3, x, y);
+				Main.fieldPane.setFieldCell(new FieldCell(b1),Main.fieldPane);
+				Main.fieldPane.setFieldCell(new FieldCell(b2),Main.fieldPane);
+				Main.fieldPane.setFieldCell(new FieldCell(b3),Main.fieldPane);
 				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 place barricade"
 						: "Player 2 place barricade";
 				ControlPane.setNoti(playermessage);
@@ -330,9 +347,15 @@ public class GameController {
 				getCurrentMap().removeEntity(leftEntity.getX(), leftEntity.getY());
 				getCurrentMap().removeEntity(rightEntity.getX(), rightEntity.getY());
 				getCurrentMap().removeEntity(midEntity.getX(), midEntity.getY());
-				getCurrentMap().addEntity(new BarricadeTile(x - 1, y, x + 1, y, x, y), x - 1, y);
-				getCurrentMap().addEntity(new BarricadeTile(x + 1, y, x - 1, y, x, y), x + 1, y);
-				getCurrentMap().addEntity(new BarricadeTile(x, y, x - 1, y, x + 1, y), x, y);
+				BarricadeTile b1=new BarricadeTile(x - 1, y, x + 1, y, x, y);
+				BarricadeTile b2=new BarricadeTile(x + 1, y, x - 1, y, x, y);
+				BarricadeTile b3=new BarricadeTile(x, y, x - 1, y, x + 1, y);
+				getCurrentMap().addEntity(b1, x - 1, y);
+				getCurrentMap().addEntity(b2, x + 1, y);
+				getCurrentMap().addEntity(b3, x, y);
+				Main.fieldPane.setFieldCell(new FieldCell(b1),Main.fieldPane);
+				Main.fieldPane.setFieldCell(new FieldCell(b2),Main.fieldPane);
+				Main.fieldPane.setFieldCell(new FieldCell(b3),Main.fieldPane);
 				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 place barricade"
 						: "Player 2 place barricade";
 				ControlPane.setNoti(playermessage);

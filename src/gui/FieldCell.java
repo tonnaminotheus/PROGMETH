@@ -47,6 +47,15 @@ public class FieldCell extends Pane {
 		this.setPrefWidth(60);
 		this.setPrefHeight(60);
 		Image image = null;
+		
+		/*if(t) {
+			FadeTransition T = new FadeTransition();
+			T.setNode(this);
+			T.setFromValue(0);
+			T.setToValue(1);
+			T.setDuration(Duration.millis(3000));
+			T.play();
+		}*/
 		if (entity.isBlackTile()) {
 			this.setBackground(new Background(new BackgroundFill(Color.rgb(230, 230, 230), CornerRadii.EMPTY, Insets.EMPTY)));
 		} else if (entity.isWhiteTile()) {
@@ -112,6 +121,7 @@ public class FieldCell extends Pane {
 		}
 		iv = new ImageView();
 		iv.setImage(image);
+		iv.setVisible(true);
 		this.getChildren().add(iv);
 		isEmpty = false;
 		myEntity = entity;
@@ -260,12 +270,9 @@ public class FieldCell extends Pane {
 					}
 					
 				}
-				//FieldPane.setFieldPane(Main.fieldPane);
 				if (pass) {
-					FieldPane.setFieldPane(Main.fieldPane);
 					ControlPane.labelUpdate();
 					ControlPane2.labelUpdate();
-					FieldPane.setFieldPane(Main.fieldPane);
 					ItemPane.resetButtonsBackGroundColor();
 					Main.gameActionNow=0;
 					if (GameController.getPlayer1().getX() == 16 || GameController.getPlayer2().getLp() == 0) {
@@ -279,20 +286,12 @@ public class FieldCell extends Pane {
 						Entity ee=GameController.spawnSpecialTile();
 						if(ee!=null) {
 							FadeTransition T = new FadeTransition();
-							FieldPane.setFieldPane(Main.fieldPane);
 							T.setNode(FieldPane.getFieldCell(ee));
 							T.setFromValue(0);
 							T.setToValue(1);
 							T.setDuration(Duration.millis(3000));
 							T.play();
-							try {
-								wait(1);
-							} catch (InterruptedException e1) {
-								e1.printStackTrace();
-							}
-							T.stop();
 						}
-						FieldPane.setFieldPane(Main.fieldPane);
 					}
 				}
 
@@ -341,9 +340,6 @@ public class FieldCell extends Pane {
 												new BackgroundFill(Color.DARKRED, CornerRadii.EMPTY, Insets.EMPTY)));
 							}
 						}
-						// now.setBackground(
-						// new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY,
-						// Insets.EMPTY)));
 					}
 				}
 			}

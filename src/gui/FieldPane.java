@@ -1,5 +1,6 @@
 package gui;
 
+import application.Main;
 import entity.base.Entity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,9 +30,6 @@ public class FieldPane extends GridPane {
 		this.setPrefWidth(17*40);
 		this.setPrefHeight(17*40);
 		this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		//this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.DASHED, 
-		//		CornerRadii.EMPTY, BorderWidths.FULL)));
-		//this.setVgap(5);
 		setFieldPane(this);
 	}
 	
@@ -45,6 +43,31 @@ public class FieldPane extends GridPane {
 			}
 		}	
 	}
+	
+	
+	
+	public static void setFieldCell(FieldCell e,FieldPane E) {
+		//E.set(e, E);
+		E.fieldCells.set(e.getEntity().getX()*17+e.getEntity().getY(),e);
+		E.getChildren().clear();
+		for (int i = 0; i < 17; i++) {
+			for (int j = 0; j < 17; j++) {
+					if(e.getEntity().isPlayer()) {
+						if(e.getEntity().getX()==i&&e.getEntity().getY()==j) {
+							continue;
+						}
+					}
+					E.add(fieldCells.get(i*17+j), j, i);
+			}
+		}
+		if(e.getEntity().isPlayer()) {
+			E.add(fieldCells.get(e.getEntity().getX()*17+e.getEntity().getY()), e.getEntity().getY(), e.getEntity().getX());
+		}
+		//E.getChildren().set(e.getEntity().getY()*17+e.getEntity().getX(), E);
+		//fieldCells.notify();
+	}
+	
+	
 	
 	public static FieldCell findPlayer(int side) {
 		for(int i=0;i<fieldCells.size();i++) {
