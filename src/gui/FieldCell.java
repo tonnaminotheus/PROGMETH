@@ -83,19 +83,19 @@ public class FieldCell extends Pane {
 			if(entity.getClass()==RandomTile.class)
 				image = new Image(ClassLoader.getSystemResource("SpecialTile.png").toString());
 			else if(entity.getClass()==RemoveAllBarricade.class)
-				this.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+				image = new Image(ClassLoader.getSystemResource("RemoveAllBarricade.png").toString());
 			else if(entity.getClass()==RemoveAllSpecialTile.class)
-				this.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+				image = new Image(ClassLoader.getSystemResource("RemoveAllTile2.png").toString());
 			else if(entity.getClass()==AddBomb.class)
-				this.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+				image = new Image(ClassLoader.getSystemResource("Get1Bomb.png").toString());
 			else if(entity.getClass()==GetBarricade.class)
-				this.setBackground(new Background(new BackgroundFill(Color.PURPLE, CornerRadii.EMPTY, Insets.EMPTY)));
+				image = new Image(ClassLoader.getSystemResource("Get1Barricade.png").toString());
 			else if(entity.getClass()==GetHeal.class)
-				this.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+				image = new Image(ClassLoader.getSystemResource("Heal.png").toString());
 			else if(entity.getClass()==MovePlayer.class)
-				this.setBackground(new Background(new BackgroundFill(Color.PINK, CornerRadii.EMPTY, Insets.EMPTY)));
+				image = new Image(ClassLoader.getSystemResource("MovePlayer.png").toString());
 			else if(entity.getClass()==MoveOtherPlayer.class)
-				this.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
+				image = new Image(ClassLoader.getSystemResource("MoveOtherPlayer.png").toString());
 			
 		} else {
 			this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -563,19 +563,19 @@ public class FieldCell extends Pane {
 							if(entity.getClass()==RandomTile.class)
 								image = new Image(ClassLoader.getSystemResource("SpecialTile.png").toString());
 							else if(entity.getClass()==RemoveAllBarricade.class)
-								now.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+								image = new Image(ClassLoader.getSystemResource("RemoveAllBarricade.png").toString());
 							else if(entity.getClass()==RemoveAllSpecialTile.class)
-								now.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+								image = new Image(ClassLoader.getSystemResource("RemoveAllTile2.png").toString());
 							else if(entity.getClass()==AddBomb.class)
-								now.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+								image = new Image(ClassLoader.getSystemResource("Get1Bomb.png").toString());
 							else if(entity.getClass()==GetBarricade.class)
-								now.setBackground(new Background(new BackgroundFill(Color.PURPLE, CornerRadii.EMPTY, Insets.EMPTY)));
+								image = new Image(ClassLoader.getSystemResource("Get1Barricade.png").toString());
 							else if(entity.getClass()==GetHeal.class)
-								now.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+								image = new Image(ClassLoader.getSystemResource("Heal.png").toString());
 							else if(entity.getClass()==MovePlayer.class)
-								now.setBackground(new Background(new BackgroundFill(Color.PINK, CornerRadii.EMPTY, Insets.EMPTY)));
+								image = new Image(ClassLoader.getSystemResource("MovePlayer.png").toString());
 							else if(entity.getClass()==MoveOtherPlayer.class)
-								now.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
+								image = new Image(ClassLoader.getSystemResource("MoveOtherPlayer.png").toString());
 						} else {
 							now.setBackground(
 									new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
