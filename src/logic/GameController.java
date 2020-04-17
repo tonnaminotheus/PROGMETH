@@ -224,6 +224,7 @@ public class GameController {
 					operate.setAutoPlay(true);
 					((SpecialTile)now).getAction(player);
 					ControlPane2.labelUpdate();
+					//Main.fieldPane.setFieldPane(Main.fieldPane);
 				}
 				else if(now.isExplodingTile()){
 					MediaPlayer operate;
@@ -233,6 +234,7 @@ public class GameController {
 					operate.setAutoPlay(true);
 					((ExplodingTile)now).getAction(player);
 					ControlPane2.labelUpdate();
+					Main.fieldPane.setFieldPane(Main.fieldPane);
 				}else {
 					MediaPlayer operate;
 					Media musicFile=new Media(ClassLoader.getSystemResource("ButtonPush.mp3").toString());

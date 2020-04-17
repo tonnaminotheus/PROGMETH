@@ -59,24 +59,12 @@ public class FieldPane extends GridPane {
 		fade.play();
 		E.fieldCells.set(e.getEntity().getX()*17+e.getEntity().getY(),e);
 		E.getChildren().clear();
-		//if(e.getEntity().isPlayer()) {
-		//	E.add(fieldCells.get(e.getEntity().getX()*17+e.getEntity().getY()), e.getEntity().getY(), e.getEntity().getX());
-		//}
-		if(e.getEntity().isPlayer()) {
-			E.add(fieldCells.get(e.getEntity().getX()*17+e.getEntity().getY()), e.getEntity().getY(), e.getEntity().getX());
-		}
 		for (int i = 0; i < 17; i++) {
 			for (int j = 0; j < 17; j++) {
-					if(e.getEntity().isPlayer()) {
-						if(e.getEntity().getX()==i&&e.getEntity().getY()==j) {
-							continue;
-						}
-					}
 					E.add(fieldCells.get(i*17+j), j, i);
 			}
 		}
-		//E.getChildren().set(e.getEntity().getY()*17+e.getEntity().getX(), E);
-		//fieldCells.notify();
+		System.out.println(E.fieldCells.size());
 	}
 	
 	

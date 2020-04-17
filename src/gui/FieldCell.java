@@ -510,6 +510,7 @@ public class FieldCell extends Pane {
 						}
 					}
 				}
+				//Main.fieldPane.setFieldPane(Main.fieldPane);
 			}
 		});
 
@@ -623,7 +624,6 @@ public class FieldCell extends Pane {
 							}
 						}
 					}
-
 				}
 			}
 		});
