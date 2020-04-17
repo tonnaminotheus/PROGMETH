@@ -1,5 +1,6 @@
 package interact;
 
+import application.Main;
 import gui.ControlPane;
 import gui.ControlPane2;
 import logic.GameController;
@@ -61,6 +62,7 @@ public class RandomTile extends SpecialTile{
 		}
 		ControlPane.labelUpdate();
 		ControlPane2.labelUpdate();
+		Main.fieldPane.setFieldPane(Main.fieldPane);
 	}
 	
 	public static void heal(Player e){

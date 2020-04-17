@@ -1,5 +1,6 @@
 package interact;
 
+import application.Main;
 import gui.ControlPane;
 import gui.ControlPane2;
 import logic.GameController;
@@ -27,6 +28,7 @@ public class RemoveAllBarricade extends SpecialTile{
 		ControlPane.setNoti(playermessage);
 		ControlPane.labelUpdate();
 		ControlPane2.labelUpdate();
+		Main.fieldPane.setFieldPane(Main.fieldPane);
 	}
 	
 

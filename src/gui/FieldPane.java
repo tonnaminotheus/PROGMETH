@@ -2,6 +2,7 @@ package gui;
 
 import application.Main;
 import entity.base.Entity;
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -15,6 +16,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import logic.GameController;
 import interact.Player;
 import interact.WhiteTile;
@@ -49,11 +51,20 @@ public class FieldPane extends GridPane {
 	
 	public static void setFieldCell(FieldCell e,FieldPane E) {
 		//E.set(e, E);
+		FadeTransition fade = new FadeTransition();
+		fade.setNode(e);
+		fade.setFromValue(0);
+		fade.setToValue(1);
+		fade.setDuration(Duration.millis(3000));
+		fade.play();
 		E.fieldCells.set(e.getEntity().getX()*17+e.getEntity().getY(),e);
 		E.getChildren().clear();
 		//if(e.getEntity().isPlayer()) {
 		//	E.add(fieldCells.get(e.getEntity().getX()*17+e.getEntity().getY()), e.getEntity().getY(), e.getEntity().getX());
 		//}
+		if(e.getEntity().isPlayer()) {
+			E.add(fieldCells.get(e.getEntity().getX()*17+e.getEntity().getY()), e.getEntity().getY(), e.getEntity().getX());
+		}
 		for (int i = 0; i < 17; i++) {
 			for (int j = 0; j < 17; j++) {
 					if(e.getEntity().isPlayer()) {
@@ -63,9 +74,6 @@ public class FieldPane extends GridPane {
 					}
 					E.add(fieldCells.get(i*17+j), j, i);
 			}
-		}
-		if(e.getEntity().isPlayer()) {
-			E.add(fieldCells.get(e.getEntity().getX()*17+e.getEntity().getY()), e.getEntity().getY(), e.getEntity().getX());
 		}
 		//E.getChildren().set(e.getEntity().getY()*17+e.getEntity().getX(), E);
 		//fieldCells.notify();
