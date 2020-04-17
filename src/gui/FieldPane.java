@@ -17,6 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import logic.GameController;
 import interact.Player;
+import interact.WhiteTile;
 
 //You might need to do something to the following line
 public class FieldPane extends GridPane {
@@ -50,6 +51,9 @@ public class FieldPane extends GridPane {
 		//E.set(e, E);
 		E.fieldCells.set(e.getEntity().getX()*17+e.getEntity().getY(),e);
 		E.getChildren().clear();
+		//if(e.getEntity().isPlayer()) {
+		//	E.add(fieldCells.get(e.getEntity().getX()*17+e.getEntity().getY()), e.getEntity().getY(), e.getEntity().getX());
+		//}
 		for (int i = 0; i < 17; i++) {
 			for (int j = 0; j < 17; j++) {
 					if(e.getEntity().isPlayer()) {

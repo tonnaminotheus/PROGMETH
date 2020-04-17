@@ -45,7 +45,7 @@ public class GameController {
 	public static void IntializeMap(int player1index, int player2index) {
 		setIsWin(false);
 		player1 = new Player(0, 8, player1index,new Coordinate(0,8),1,16);
-		player2 = new Player(16, 8, player2index,new Coordinate(16,8),2,16);
+		player2 = new Player(16, 8, player2index,new Coordinate(16,8),2,0);
 		player1.setOtherPlayer(player2);
 		player2.setOtherPlayer(player1);
 		gameMap = new GameMap();
@@ -197,7 +197,6 @@ public class GameController {
 				getCurrentMap().addEntity(b, playerX, playerY);
 				FieldCell pp = new FieldCell(player);
 				
-				Main.fieldPane.setFieldCell(pp,Main.fieldPane);
 				PathTransition pathTransition = new PathTransition();
 				pathTransition.setDuration(Duration.millis(1000));
 				Line path = new Line((y-posy)*40+30,(x-posx)*40+30,30,30);
