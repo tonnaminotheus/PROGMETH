@@ -17,5 +17,13 @@ public class Improvement{
 	 * 
 	 * Change the blinking selected tile. //done
 	 * 
+	 * 
+	 * 
+	 * Timer 
+	 * 
+	 * 
+	 * move by otherplayer's moving tile but the turn count and then changed player's turn
+	 * 
+	 * BACKGROUND CHANGE
 	 */
 }
