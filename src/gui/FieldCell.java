@@ -247,7 +247,7 @@ public class FieldCell extends Pane {
 							else
 								GameController.getPlayer2().setHaveExploding(haveBomb - 1);
 						} catch (Exception e1) {
-							e1.printStackTrace();
+							//e1.printStackTrace();
 						}
 					}
 				} else if (Main.gameActionNow == 5) {
