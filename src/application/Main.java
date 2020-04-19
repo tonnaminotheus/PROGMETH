@@ -322,6 +322,7 @@ public class Main extends Application {
 			public void handle(MouseEvent e) {
 				if (player1Index != player2Index)
 					setScene(primaryStage, scene2);
+					ControlPane2.secTime();
 			}
 
 		});
