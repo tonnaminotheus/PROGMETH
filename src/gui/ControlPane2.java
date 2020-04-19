@@ -1,7 +1,12 @@
 package gui;
 
+
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Border;
@@ -13,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.GameController;
 
@@ -31,6 +37,10 @@ public class ControlPane2 extends VBox {
 	protected static Label player2=new Label("Player2");
 	private static FadeTransition fade1 = new FadeTransition();
 	private static FadeTransition fade2 = new FadeTransition();
+	private static Label Time = new Label();
+	private static int secondCount=0;
+	private static Timeline timeline;
+	
 	
 	public ControlPane2() {
 		super();
@@ -47,8 +57,8 @@ public class ControlPane2 extends VBox {
 		this.setBorder(new Border(
 				new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		labelUpdate();
-
-		this.getChildren().addAll(player1, haveBarricade1, lp1, bomb1,removeBarricade1,player2, haveBarricade2, lp2, bomb2,removeBarricade2);
+		secTime();
+		this.getChildren().addAll(Time,player1, haveBarricade1, lp1, bomb1,removeBarricade1,player2, haveBarricade2, lp2, bomb2,removeBarricade2);
 	}
 
 	public static void labelUpdate() {
@@ -108,6 +118,24 @@ public class ControlPane2 extends VBox {
 	        fade1.play();
 		}
 		
+	}
+	
+	private void secTime() {
+		timeline = new Timeline();
+		timeline.setCycleCount(Animation.INDEFINITE);
+		if (timeline == null) {
+			timeline.stop();
+		}
+		KeyFrame frame = new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				Time.setText("Time: "+secondCount);
+				secondCount++;
+			}
+		});
+		timeline.getKeyFrames().add(frame);
+		timeline.playFromStart();
 	}
 
 }
