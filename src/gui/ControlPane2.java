@@ -57,7 +57,6 @@ public class ControlPane2 extends VBox {
 		this.setBorder(new Border(
 				new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		labelUpdate();
-		secTime();
 		this.getChildren().addAll(Time,player1, haveBarricade1, lp1, bomb1,removeBarricade1,player2, haveBarricade2, lp2, bomb2,removeBarricade2);
 	}
 
@@ -120,7 +119,7 @@ public class ControlPane2 extends VBox {
 		
 	}
 	
-	private void secTime() {
+	public static void secTime() {
 		timeline = new Timeline();
 		timeline.setCycleCount(Animation.INDEFINITE);
 		if (timeline == null) {
@@ -131,6 +130,8 @@ public class ControlPane2 extends VBox {
 			@Override
 			public void handle(ActionEvent arg0) {
 				Time.setText("Time: "+secondCount);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
 				secondCount++;
 			}
 		});
