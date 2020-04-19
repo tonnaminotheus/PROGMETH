@@ -83,7 +83,7 @@ public class ControlPane2 extends VBox {
 				"Current Bomb: " +GameController.getPlayer2().getHaveExploding());
 		bomb2.setFont(new Font(14));
 		removeBarricade2.textProperty().setValue(
-				"Current Barricade removal: " + GameController.getPlayer1().getHaveRemoveBarricade());
+				"Current Barricade removal: " + GameController.getPlayer2().getHaveRemoveBarricade());
 		removeBarricade2.setFont(new Font(14));
 		if(GameController.getTurn() % 2 == 1) {
 			fade1.stop();

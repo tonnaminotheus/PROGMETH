@@ -281,6 +281,13 @@ public class GameController {
 				Main.fieldPane.setFieldCell(new FieldCell(w1),Main.fieldPane);
 				Main.fieldPane.setFieldCell(new FieldCell(w2),Main.fieldPane);
 				Main.fieldPane.setFieldCell(new FieldCell(w3),Main.fieldPane);
+				Player p=null;
+				if(GameController.getTurn() % 2 == 1) {
+					p=GameController.getPlayer1();
+				}else {
+					p=GameController.getPlayer2();
+				}
+				p.setHaveRemoveBarricade(p.getHaveRemoveBarricade()-1);
 				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 removed barricade"
 						: "Player 2 removed barricade";
 				ControlPane.setNoti(playermessage);
@@ -393,9 +400,11 @@ public class GameController {
 			int[] diry = { 2, 0, -2, 0 };
 			if (topQueue.getX() == finish) {
 				ch1=true;
+				//System.out.println("ok1");
 			}
 			if (topQueue.getX() == player.getSpawn().getX()&&topQueue.getY()==player.getSpawn().getY()) {
 				ch2=true;
+				//System.out.println("ok2");
 			}
 			for (int i = 0; i < 4; i++) {
 				if (checkIsPossitionOnBoard(topQueue.getX() + dirx[i], topQueue.getY() + diry[i])) {

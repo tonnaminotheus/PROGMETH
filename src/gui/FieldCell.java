@@ -222,6 +222,7 @@ public class FieldCell extends Pane {
 										GameController.getPlayer1().getY());
 								pass = true;
 							} catch (Exception ee) {
+								System.out.println("okokokokok");
 							}
 						} else {
 							try {
@@ -247,7 +248,6 @@ public class FieldCell extends Pane {
 							else
 								GameController.getPlayer2().setHaveExploding(haveBomb - 1);
 						} catch (Exception e1) {
-							//e1.printStackTrace();
 						}
 					}
 				} else if (Main.gameActionNow == 5) {
@@ -259,12 +259,7 @@ public class FieldCell extends Pane {
 						try {
 							GameController.removeBarricade(now.getEntity().getX(), now.getEntity().getY());
 							pass = true;
-							if (GameController.getTurn() % 2 == 1)
-								GameController.getPlayer1().setHaveRemoveBarricade(haveRemoveBarricade - 1);
-							else
-								GameController.getPlayer2().setHaveRemoveBarricade(haveRemoveBarricade - 1);
 						} catch (Exception e1) {
-							e1.printStackTrace();
 							
 						}
 					}
@@ -278,8 +273,21 @@ public class FieldCell extends Pane {
 					if (GameController.getPlayer1().getX() == 16 || GameController.getPlayer2().getLp() == 0) {
 						Main.setScene(Main.primary, Main.scene3);
 					} else if (GameController.getPlayer2().getX() == 0 || GameController.getPlayer1().getLp() == 0) {
-						
 						Main.setScene(Main.primary, Main.scene4);
+					}
+					//if()
+					if(GameController.getTurn()%2==0) {
+						if(!isNotLose(GameController.getPlayer1())) {
+							Main.setScene(Main.primary, Main.scene4);
+						}else if(!isNotLose(GameController.getPlayer2())) {
+							Main.setScene(Main.primary, Main.scene3);
+						}
+					}else {
+						if(!isNotLose(GameController.getPlayer2())) {
+							Main.setScene(Main.primary, Main.scene3);
+						}else if(!isNotLose(GameController.getPlayer1())) {
+							Main.setScene(Main.primary, Main.scene4);
+						}
 					}
 					GameController.increaseTurn();
 					if (GameController.getTurn() % 2 == 1) {
@@ -627,6 +635,24 @@ public class FieldCell extends Pane {
 				}
 			}
 		});
+	}
+	
+	public static boolean isNotLose(Player p) {
+		boolean t=GameController.checkbfs(p, p.getFinish());
+		int [] dx= {0,2,0,-2};
+		int [] dy= {-2,0,2,0};
+		for(int i=0;i<4;i++) {
+			int X=p.getX()+dx[i];
+			int Y=p.getY()+dy[i];
+			if(X<0||X>=17||Y<0||Y>=17) {
+				continue;
+			}
+			if((!GameController.getCurrentMap().getEntity((X+p.getX())/2, (Y+p.getY())/2).isBarricadeTile())&&(!GameController.getCurrentMap().getEntity(X, Y).isPlayer())) {
+				t=true;
+			}
+		}
+		return t||p.getHaveExploding()!=0||p.getHaveRemoveBarricade()!=0;
+		
 	}
 	
 
