@@ -11,6 +11,6 @@ public class SpecialTile extends Tile implements Special{
 	public SpecialTile(int x, int y) {
 		super(x, y);
 	}
-
+	@Override
 	public void getAction(Player e) throws moveFail{}
 }

@@ -15,6 +15,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import logic.GameController;
+import logic.addBarricadeFail;
+import logic.moveFail;
+import logic.removeBarricadeFail;
 import entity.base.Entity;
 import interact.AddBomb;
 import interact.GetBarricade;
@@ -159,13 +162,18 @@ public class FieldCell extends Pane {
 									else
 										GameController.getPlayer2().setBarricade(haveBarricade - 1);
 								} else {
-									GameController.removeBarricade(now.getEntity().getX(), now.getEntity().getY());
+									try {
+										GameController.removeBarricade(now.getEntity().getX(), now.getEntity().getY());
+									} catch (removeBarricadeFail e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
 									String playermessage = "You cannot place a barricade there";
 									ControlPane.setNoti(playermessage);
 									ControlPane.labelUpdate();
 									ControlPane2.labelUpdate();
 								}
-							} catch (Exception ee) {
+							} catch (addBarricadeFail ee) {
 								
 							}
 						} else {
@@ -200,13 +208,19 @@ public class FieldCell extends Pane {
 									else
 										GameController.getPlayer2().setBarricade(haveBarricade - 1);
 								} else {
-									GameController.removeBarricade(now.getEntity().getX(), now.getEntity().getY());
+									try {
+										GameController.removeBarricade(now.getEntity().getX(), now.getEntity().getY());
+									} catch (removeBarricadeFail e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
 									String playermessage = "You cannot place a barricade there";
 									ControlPane.setNoti(playermessage);
 									ControlPane.labelUpdate();
 									ControlPane2.labelUpdate();
 								}
-							} catch (Exception ee) {
+							} catch (addBarricadeFail ee) {
+								
 							}
 						} else {
 						}
@@ -221,8 +235,8 @@ public class FieldCell extends Pane {
 										now.getEntity().getY(), GameController.getPlayer1().getX(),
 										GameController.getPlayer1().getY());
 								pass = true;
-							} catch (Exception ee) {
-								System.out.println("okokokokok");
+							} catch (moveFail ee) {
+								//System.out.println("okokokokok");
 							}
 						} else {
 							try {
@@ -230,7 +244,7 @@ public class FieldCell extends Pane {
 										now.getEntity().getY(), GameController.getPlayer2().getX(),
 										GameController.getPlayer2().getY());
 								pass = true;
-							} catch (Exception ee) {
+							} catch (moveFail ee) {
 							}
 						}
 					} else {
@@ -258,8 +272,15 @@ public class FieldCell extends Pane {
 					if (haveRemoveBarricade > 0) {
 						try {
 							GameController.removeBarricade(now.getEntity().getX(), now.getEntity().getY());
+							Player p=null;
+							if(GameController.getTurn() % 2 == 1) {
+								p=GameController.getPlayer1();
+							}else {
+								p=GameController.getPlayer2();
+							}
+							p.setHaveRemoveBarricade(p.getHaveRemoveBarricade()-1);
 							pass = true;
-						} catch (Exception e1) {
+						} catch (removeBarricadeFail e1) {
 							
 						}
 					}
@@ -312,9 +333,9 @@ public class FieldCell extends Pane {
 				FieldCell now = (FieldCell) e.getSource();
 				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
 					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile()||now.myEntity.isPlayer())) {
-						Image select = new Image(ClassLoader.getSystemResource("Selected.png").toString());
+						//Image select = new Image(ClassLoader.getSystemResource("Selected.png").toString());
 						// ImageView iv1 = new ImageView(select);
-						now.iv.setImage(select);
+						//now.iv.setImage(select);
 						
 					}
 				} else if (Main.gameActionNow == 1 || Main.gameActionNow == 2) {
@@ -361,14 +382,7 @@ public class FieldCell extends Pane {
 				FieldCell now = (FieldCell) e.getSource();
 				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
 					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile()||now.myEntity.isPlayer())) {
-						now.fade.stop();
-						now.fade.setFromValue(1);
-						now.fade.setToValue(0.2);
-						now.fade.setCycleCount(Animation.INDEFINITE);
-						now.fade.setDuration(Duration.millis(500));
-						now.fade.setAutoReverse(true);
-						now.fade.play();
-						
+						FadeStart(now);
 					}
 				}else if (Main.gameActionNow == 1 || Main.gameActionNow == 2) {
 					if (now.myEntity.isWhiteTile() && now.myEntity.getX() % 2 == 1 && now.myEntity.getY() % 2 == 1) {
@@ -382,27 +396,9 @@ public class FieldCell extends Pane {
 								now1=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y - 17));
 								now2=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y));
 								now3=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y+17));
-								now1.fade.stop();
-								now1.fade.setFromValue(1);
-								now1.fade.setToValue(0.2);
-								now1.fade.setCycleCount(Animation.INDEFINITE);
-								now1.fade.setDuration(Duration.millis(500));
-								now1.fade.setAutoReverse(true);
-								now1.fade.play();
-								now2.fade.stop();
-								now2.fade.setFromValue(1);
-								now2.fade.setToValue(0.2);
-								now2.fade.setCycleCount(Animation.INDEFINITE);
-								now2.fade.setDuration(Duration.millis(500));
-								now2.fade.setAutoReverse(true);
-								now2.fade.play();
-								now3.fade.stop();
-								now3.fade.setFromValue(1);
-								now3.fade.setToValue(0.2);
-								now3.fade.setCycleCount(Animation.INDEFINITE);
-								now3.fade.setDuration(Duration.millis(500));
-								now3.fade.setAutoReverse(true);
-								now3.fade.play();
+								FadeStart(now1);
+								FadeStart(now2);
+								FadeStart(now3);
 							}
 						} else {
 							if (GameController.getCurrentMap().getEntity(x, y - 1).isWhiteTile()
@@ -411,27 +407,9 @@ public class FieldCell extends Pane {
 								now1=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y - 1));
 								now2=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y));
 								now3=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y+1));
-								now1.fade.stop();
-								now1.fade.setFromValue(1);
-								now1.fade.setToValue(0.2);
-								now1.fade.setCycleCount(Animation.INDEFINITE);
-								now1.fade.setDuration(Duration.millis(500));
-								now1.fade.setAutoReverse(true);
-								now1.fade.play();
-								now2.fade.stop();
-								now2.fade.setFromValue(1);
-								now2.fade.setToValue(0.2);
-								now2.fade.setCycleCount(Animation.INDEFINITE);
-								now2.fade.setDuration(Duration.millis(500));
-								now2.fade.setAutoReverse(true);
-								now2.fade.play();
-								now3.fade.stop();
-								now3.fade.setFromValue(1);
-								now3.fade.setToValue(0.2);
-								now3.fade.setCycleCount(Animation.INDEFINITE);
-								now3.fade.setDuration(Duration.millis(500));
-								now3.fade.setAutoReverse(true);
-								now3.fade.play();
+								FadeStart(now1);
+								FadeStart(now2);
+								FadeStart(now3);
 							}
 						}
 					}
@@ -444,13 +422,7 @@ public class FieldCell extends Pane {
 				FieldCell now = (FieldCell) e.getSource();
 				if (Main.gameActionNow == 3 || Main.gameActionNow == 4) {
 					if (!(now.myEntity.isWhiteTile() || now.myEntity.isBarricadeTile()||now.myEntity.isPlayer())) {
-						now.fade.stop();
-						now.fade.setFromValue(0.2);
-						now.fade.setToValue(1);
-						now.fade.setCycleCount(1);
-						now.fade.setDuration(Duration.millis(500));
-						now.fade.setAutoReverse(false);
-						now.fade.play();
+						FadeStop(now);
 					}
 				}else if (Main.gameActionNow == 1 || Main.gameActionNow == 2) {
 					if (now.myEntity.isWhiteTile() && now.myEntity.getX() % 2 == 1 && now.myEntity.getY() % 2 == 1) {
@@ -464,27 +436,9 @@ public class FieldCell extends Pane {
 								now1=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y - 17));
 								now2=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y));
 								now3=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y+17));
-								now1.fade.stop();
-								now1.fade.setFromValue(0.2);
-								now1.fade.setToValue(1);
-								now1.fade.setCycleCount(1);
-								now1.fade.setDuration(Duration.millis(500));
-								now1.fade.setAutoReverse(false);
-								now1.fade.play();
-								now2.fade.stop();
-								now2.fade.setFromValue(0.2);
-								now2.fade.setToValue(1);
-								now2.fade.setCycleCount(1);
-								now2.fade.setDuration(Duration.millis(500));
-								now2.fade.setAutoReverse(false);
-								now2.fade.play();
-								now3.fade.stop();
-								now3.fade.setFromValue(0.2);
-								now3.fade.setToValue(1);
-								now3.fade.setCycleCount(1);
-								now3.fade.setDuration(Duration.millis(500));
-								now3.fade.setAutoReverse(false);
-								now3.fade.play();
+								FadeStop(now1);
+								FadeStop(now2);
+								FadeStop(now3);
 							}
 						} else {
 							if (GameController.getCurrentMap().getEntity(x, y - 1).isWhiteTile()
@@ -493,27 +447,9 @@ public class FieldCell extends Pane {
 								now1=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y - 1));
 								now2=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y));
 								now3=((FieldCell) Main.fieldPane.getChildren().get(x * 17 + y+1));
-								now1.fade.stop();
-								now1.fade.setFromValue(0.2);
-								now1.fade.setToValue(1);
-								now1.fade.setCycleCount(1);
-								now1.fade.setDuration(Duration.millis(500));
-								now1.fade.setAutoReverse(false);
-								now1.fade.play();
-								now2.fade.stop();
-								now2.fade.setFromValue(0.2);
-								now2.fade.setToValue(1);
-								now2.fade.setCycleCount(1);
-								now2.fade.setDuration(Duration.millis(500));
-								now2.fade.setAutoReverse(false);
-								now2.fade.play();
-								now3.fade.stop();
-								now3.fade.setFromValue(0.2);
-								now3.fade.setToValue(1);
-								now3.fade.setCycleCount(1);
-								now3.fade.setDuration(Duration.millis(500));
-								now3.fade.setAutoReverse(false);
-								now3.fade.play();
+								FadeStop(now1);
+								FadeStop(now2);
+								FadeStop(now3);
 							}
 						}
 					}
@@ -635,6 +571,26 @@ public class FieldCell extends Pane {
 				}
 			}
 		});
+	}
+	
+	public static void FadeStart(FieldCell now) {
+		now.fade.stop();
+		now.fade.setFromValue(1);
+		now.fade.setToValue(0.2);
+		now.fade.setCycleCount(Animation.INDEFINITE);
+		now.fade.setDuration(Duration.millis(500));
+		now.fade.setAutoReverse(true);
+		now.fade.play();
+	}
+	
+	public static void FadeStop(FieldCell now) {
+		now.fade.stop();
+		now.fade.setFromValue(0.2);
+		now.fade.setToValue(1);
+		now.fade.setCycleCount(1);
+		now.fade.setDuration(Duration.millis(500));
+		now.fade.setAutoReverse(false);
+		now.fade.play();
 	}
 	
 	public static boolean isNotLose(Player p) {

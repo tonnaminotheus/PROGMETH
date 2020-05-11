@@ -9,6 +9,7 @@ public class GetBarricade extends SpecialTile{
 		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
+	@Override
 	public void getAction(Player e){
 		String playermessage = GameController.getTurn() % 2 == 1
 				? "Player 1 Special get barricade"

@@ -675,21 +675,6 @@ public class Main extends Application {
 
 		// start
 		setScene(primaryStage, scene1);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
 	}
 
@@ -819,7 +804,6 @@ public class Main extends Application {
 		root2.setPadding(new Insets(10));
 		root2.setSpacing(10);
 		root2.setPrefHeight(400);
-
 		controlPane = new ControlPane();
 		fieldPane = new FieldPane();
 		controlPane2 = new ControlPane2();

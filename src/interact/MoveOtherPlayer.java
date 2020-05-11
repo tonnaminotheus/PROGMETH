@@ -10,6 +10,7 @@ public class MoveOtherPlayer extends SpecialTile{
 		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
+	@Override
 	public void getAction(Player e) throws moveFail{
 		moveRandom(e.getOtherPlayer());
 		String playermessage = GameController.getTurn() % 2 == 1

@@ -9,6 +9,7 @@ public class GetHeal extends SpecialTile{
 		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
+	@Override
 	public void getAction(Player e){
 		e.heal();
 		String playermessage = GameController.getTurn() % 2 == 1
