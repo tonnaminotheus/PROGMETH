@@ -8,6 +8,7 @@ public class AddBomb extends SpecialTile{
 	public AddBomb(int x, int y) {
 		super(x, y);
 	}
+	@Override
 	public void getAction(Player e){
 		e.setHaveExploding(e.getHaveExploding()+1);
 		String playermessage = GameController.getTurn() % 2 == 1

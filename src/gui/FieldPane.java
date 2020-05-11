@@ -64,7 +64,7 @@ public class FieldPane extends GridPane {
 					E.add(fieldCells.get(i*17+j), j, i);
 			}
 		}
-		System.out.println(E.fieldCells.size());
+		//System.out.println(E.fieldCells.size());
 	}
 	
 	

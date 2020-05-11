@@ -44,6 +44,7 @@ public class GameController {
 
 	public static void IntializeMap(int player1index, int player2index) {
 		setIsWin(false);
+		turn=1;
 		player1 = new Player(0, 8, player1index,new Coordinate(0,8),1,16);
 		player2 = new Player(16, 8, player2index,new Coordinate(16,8),2,0);
 		player1.setOtherPlayer(player2);
@@ -281,13 +282,6 @@ public class GameController {
 				Main.fieldPane.setFieldCell(new FieldCell(w1),Main.fieldPane);
 				Main.fieldPane.setFieldCell(new FieldCell(w2),Main.fieldPane);
 				Main.fieldPane.setFieldCell(new FieldCell(w3),Main.fieldPane);
-				Player p=null;
-				if(GameController.getTurn() % 2 == 1) {
-					p=GameController.getPlayer1();
-				}else {
-					p=GameController.getPlayer2();
-				}
-				p.setHaveRemoveBarricade(p.getHaveRemoveBarricade()-1);
 				String playermessage = GameController.getTurn() % 2 == 1 ? "Player 1 removed barricade"
 						: "Player 2 removed barricade";
 				ControlPane.setNoti(playermessage);

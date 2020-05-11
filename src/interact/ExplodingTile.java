@@ -8,6 +8,8 @@ public class ExplodingTile extends Tile implements Special{
 	public ExplodingTile(int x, int y) {
 		super(x, y);
 	}
+	
+	@Override
 	public void getAction(Player player) throws moveFail {
 		int playerX=player.getX();
 		int playerY=player.getY();

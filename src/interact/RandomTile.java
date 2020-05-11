@@ -11,6 +11,7 @@ public class RandomTile extends SpecialTile{
 	public RandomTile(int x, int y) {
 		super(x, y);
 	}
+	@Override
 	public void getAction(Player e) throws moveFail {
 		int random = (int) (Math.random() * 100)%8;
 		if (random==0) {
