@@ -6,7 +6,7 @@ import gui.ControlPane2;
 import logic.GameController;
 import logic.moveFail;
 
-public class RemoveAllBarricade extends SpecialTile{
+public class RemoveAllBarricade extends SpecialTile implements Special{
 
 	public RemoveAllBarricade(int x, int y) {
 		super(x, y);

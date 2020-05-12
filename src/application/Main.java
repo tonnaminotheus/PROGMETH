@@ -34,9 +34,9 @@ import logic.GameController;
 
 public class Main extends Application {
 
-	public static Scene scene1, scene2, scene3, scene4, scene5;
-	public static Pane playB, nextB, backB;
-	public static Pane exitButton, exitButton2, exitButton3;
+	public static Scene mainMenu, BoardScene, player1WinScene, player2WinScene, characterSelectScene;
+	public static Pane playButton, nextButton, backButton;
+	public static Pane MenuExitButton, Player1ExitButton, Player2ExitButton;
 	public static ControlPane controlPane;
 	public static ControlPane2 controlPane2;
 	public static FieldPane fieldPane;
@@ -50,14 +50,12 @@ public class Main extends Application {
 	public static Pane P1, P2;
 	public static MediaPlayer mediaplayer;
 	public static MediaPlayer operate;
+	private static Timeline timeline;
+	private static int secondCount;
+	private boolean checkFirstStart=false;
 	
 	@Override
 	public void start(Stage primaryStage) {
-		
-		
-		
-		
-		
 
 		primary = primaryStage;
 		//setMusic
@@ -67,7 +65,7 @@ public class Main extends Application {
 		mediaplayer.setVolume(0.10);
 		mediaplayer.setCycleCount(Animation.INDEFINITE);
 		mediaplayer.setVolume(0.05);
-		// setScene1
+		// setmainMenu
 
 		Group root = new Group();
 
@@ -83,223 +81,223 @@ public class Main extends Application {
 		iv1.setFitHeight(100);
 		iv1.setFitWidth(300);
 		
-		playB = new Pane(iv1);
-		playB.setLayoutX(440);
-		playB.setLayoutY(360);
-		playB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		playButton = new Pane(iv1);
+		playButton.setLayoutX(440);
+		playButton.setLayoutY(360);
+		playButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				setScene(primaryStage, scene5);
+				setScene(primaryStage, characterSelectScene);
 			}
 
 		});
-		playB.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		playButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("PlayTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				//playB.setGraphic(iv1);
-				playB.getChildren().clear();
-				playB.getChildren().add(iv1);
+				//playButton.setGraphic(iv1);
+				playButton.getChildren().clear();
+				playButton.getChildren().add(iv1);
 			}
 		});
-		playB.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+		playButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("Play.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				playB.getChildren().clear();
-				playB.getChildren().add(iv1);
+				playButton.getChildren().clear();
+				playButton.getChildren().add(iv1);
 			}
 
 		});
-		FadeTransition playBAction = new FadeTransition();
-		playBAction.setNode(playB);
-		playBAction.setFromValue(1);
-		playBAction.setToValue(0.2);
-		playBAction.setCycleCount(Animation.INDEFINITE);
-		playBAction.setDuration(Duration.millis(500));
-		playBAction.setAutoReverse(true);
-		playBAction.play();
-		root.getChildren().add(playB);
+		FadeTransition playButtonAction = new FadeTransition();
+		playButtonAction.setNode(playButton);
+		playButtonAction.setFromValue(1);
+		playButtonAction.setToValue(0.2);
+		playButtonAction.setCycleCount(Animation.INDEFINITE);
+		playButtonAction.setDuration(Duration.millis(500));
+		playButtonAction.setAutoReverse(true);
+		playButtonAction.play();
+		root.getChildren().add(playButton);
 
-		// ExitButton
+		// MenuExitButton
 		Image exitI = new Image(ClassLoader.getSystemResource("Exit.png").toString());
 		ImageView iv2 = new ImageView(exitI);
 		iv2.setFitHeight(100);
 		iv2.setFitWidth(300);
-		exitButton = new Pane(iv2);
-		exitButton.setLayoutX(440);
-		exitButton.setLayoutY(490);
-		exitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		MenuExitButton = new Pane(iv2);
+		MenuExitButton.setLayoutX(440);
+		MenuExitButton.setLayoutY(490);
+		MenuExitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				primaryStage.close();
 			}
 
 		});
-		exitButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		MenuExitButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("ExitTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton.getChildren().clear();
-				exitButton.getChildren().add(iv1);
+				MenuExitButton.getChildren().clear();
+				MenuExitButton.getChildren().add(iv1);
 			}
 
 		});
-		exitButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+		MenuExitButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("Exit.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton.getChildren().clear();
-				exitButton.getChildren().add(iv1);
+				MenuExitButton.getChildren().clear();
+				MenuExitButton.getChildren().add(iv1);
 			}
 
 		});
 		FadeTransition exitBAction = new FadeTransition();
-		exitBAction.setNode(exitButton);
+		exitBAction.setNode(MenuExitButton);
 		exitBAction.setFromValue(1);
 		exitBAction.setToValue(0.2);
 		exitBAction.setCycleCount(Animation.INDEFINITE);
 		exitBAction.setDuration(Duration.millis(500));
 		exitBAction.setAutoReverse(true);
 		exitBAction.play();
-		root.getChildren().add(exitButton);
+		root.getChildren().add(MenuExitButton);
 
-		scene1 = new Scene(root, 1280, 720);
-		// end setScene1
+		mainMenu = new Scene(root, 1280, 720);
+		// end setmainMenu
 
-		// setScene2
+		// setBoardScene
 		restart();
-		// end setScene2
+		// end setBoardScene
 
-		// setScene3
+		// setplayer1WinScene
 		Image player1Win = new Image(ClassLoader.getSystemResource("player1win.png").toString());
 		ImageView ivP1W = new ImageView(player1Win);
 		Group root3 = new Group();
 
-		// ExitButton
+		// MenuExitButton
 		Image exitII = new Image(ClassLoader.getSystemResource("Exit.png").toString());
 		ImageView iv22 = new ImageView(exitII);
 		iv22.setFitHeight(100);
 		iv22.setFitWidth(300);
-		exitButton2 = new Pane(iv22);
-		exitButton2.setLayoutX(440);
-		exitButton2.setLayoutY(490);
-		exitButton2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		Player1ExitButton = new Pane(iv22);
+		Player1ExitButton.setLayoutX(440);
+		Player1ExitButton.setLayoutY(490);
+		Player1ExitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				primaryStage.close();
 			}
 
 		});
-		exitButton2.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		Player1ExitButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("ExitTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton2.getChildren().clear();
-				exitButton2.getChildren().add(iv1);
+				Player1ExitButton.getChildren().clear();
+				Player1ExitButton.getChildren().add(iv1);
 			}
 
 		});
-		exitButton2.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+		Player1ExitButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("Exit.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton2.getChildren().clear();
-				exitButton2.getChildren().add(iv1);
+				Player1ExitButton.getChildren().clear();
+				Player1ExitButton.getChildren().add(iv1);
 			}
 
 		});
 		FadeTransition exitB2Action = new FadeTransition();
-		exitB2Action.setNode(exitButton2);
+		exitB2Action.setNode(Player1ExitButton);
 		exitB2Action.setFromValue(1);
 		exitB2Action.setToValue(0.2);
 		exitB2Action.setCycleCount(Animation.INDEFINITE);
 		exitB2Action.setDuration(Duration.millis(500));
 		exitB2Action.setAutoReverse(true);
 		exitB2Action.play();
-		root3.getChildren().add(exitButton2);
+		root3.getChildren().add(Player1ExitButton);
 		root3.getChildren().add(ivP1W);
 
-		scene3 = new Scene(root3,1280,720);
-		// end setScene3
+		player1WinScene = new Scene(root3,1280,720);
+		// end setplayer1WinScene
 
-		// setScene3
+		// setplayer1WinScene
 		Image player2Win = new Image(ClassLoader.getSystemResource("player2win.png").toString());
 		ImageView ivP2W = new ImageView(player2Win);
 		Group root4 = new Group();
 
-		// ExitButton
+		// MenuExitButton
 		Image exitIII =  new Image(ClassLoader.getSystemResource("Exit.png").toString());
 		ImageView iv222 = new ImageView(exitIII);
 		iv222.setFitHeight(100);
 		iv222.setFitWidth(300);
-		exitButton3 = new Pane(iv222);
-		exitButton3.setLayoutX(440);
-		exitButton3.setLayoutY(490);
-		exitButton3.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		Player2ExitButton = new Pane(iv222);
+		Player2ExitButton.setLayoutX(440);
+		Player2ExitButton.setLayoutY(490);
+		Player2ExitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				primaryStage.close();
 			}
 
 		});
-		exitButton3.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		Player2ExitButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("ExitTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton3.getChildren().clear();
-				exitButton3.getChildren().add(iv1);
+				Player2ExitButton.getChildren().clear();
+				Player2ExitButton.getChildren().add(iv1);
 			}
 
 		});
-		exitButton3.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+		Player2ExitButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("Exit.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				exitButton3.getChildren().clear();
-				exitButton3.getChildren().add(iv1);
+				Player2ExitButton.getChildren().clear();
+				Player2ExitButton.getChildren().add(iv1);
 			}
 
 		});
 		FadeTransition exitB3Action = new FadeTransition();
-		exitB3Action.setNode(exitButton3);
+		exitB3Action.setNode(Player2ExitButton);
 		exitB3Action.setFromValue(1);
 		exitB3Action.setToValue(0.2);
 		exitB3Action.setCycleCount(Animation.INDEFINITE);
 		exitB3Action.setDuration(Duration.millis(500));
 		exitB3Action.setAutoReverse(true);
 		exitB3Action.play();
-		root4.getChildren().add(exitButton3);
+		root4.getChildren().add(Player2ExitButton);
 		root4.getChildren().add(ivP2W);
 
-		scene4 = new Scene(root4,1280,720);
-		// end setScene3
+		player2WinScene = new Scene(root4,1280,720);
+		// end setplayer1WinScene
 
-		// setScene5
+		// setcharacterSelectScene
 
 		Group root5 = new Group();
 
@@ -309,105 +307,110 @@ public class Main extends Application {
 		iv5.setImage(image5);
 		root5.getChildren().add(iv5);
 
-		// NextButton
+		// nextButtonutton
 		Image NextI =  new Image(ClassLoader.getSystemResource("Next.png").toString());
 		ImageView ivN = new ImageView(NextI);
 		ivN.setFitHeight(100);
 		ivN.setFitWidth(300);
 
-		nextB = new Pane(ivN);
-		nextB.setLayoutX(900);
-		nextB.setLayoutY(600);
-		nextB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		nextButton = new Pane(ivN);
+		nextButton.setLayoutX(900);
+		nextButton.setLayoutY(600);
+		nextButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				if (player1Index != player2Index)
-					setScene(primaryStage, scene2);
-					ControlPane2.secTime();
+					setScene(primaryStage, BoardScene);
+					secondCount = 0;
+					gameActionNow=0;
+					if(!checkFirstStart) {
+						secTime();
+						checkFirstStart=true;
+					}
 			}
 
 		});
-		nextB.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		nextButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("NextTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				nextB.getChildren().clear();
-				nextB.getChildren().add(iv1);
+				nextButton.getChildren().clear();
+				nextButton.getChildren().add(iv1);
 			}
 		});
-		nextB.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+		nextButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("Next.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				nextB.getChildren().clear();
-				nextB.getChildren().add(iv1);
+				nextButton.getChildren().clear();
+				nextButton.getChildren().add(iv1);
 			}
 
 		});
-		FadeTransition nextBAction = new FadeTransition();
-		nextBAction.setNode(nextB);
-		nextBAction.setFromValue(1);
-		nextBAction.setToValue(0.2);
-		nextBAction.setCycleCount(Animation.INDEFINITE);
-		nextBAction.setDuration(Duration.millis(500));
-		nextBAction.setAutoReverse(true);
-		nextBAction.play();
-		root5.getChildren().add(nextB);
+		FadeTransition nextButtonAction = new FadeTransition();
+		nextButtonAction.setNode(nextButton);
+		nextButtonAction.setFromValue(1);
+		nextButtonAction.setToValue(0.2);
+		nextButtonAction.setCycleCount(Animation.INDEFINITE);
+		nextButtonAction.setDuration(Duration.millis(500));
+		nextButtonAction.setAutoReverse(true);
+		nextButtonAction.play();
+		root5.getChildren().add(nextButton);
 
-		// BackButton
+		// backButtonutton
 		Image BackI = new Image(ClassLoader.getSystemResource("Back.png").toString());
 		ImageView ivB = new ImageView(BackI);
 		ivB.setFitHeight(100);
 		ivB.setFitWidth(300);
 
-		backB = new Pane(ivB);
-		backB.setLayoutX(100);
-		backB.setLayoutY(600);
-		backB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		backButton = new Pane(ivB);
+		backButton.setLayoutX(100);
+		backButton.setLayoutY(600);
+		backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				setScene(primaryStage, scene1);
+				setScene(primaryStage, mainMenu);
 			}
 
 		});
-		backB.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		backButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("BackTouch.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				backB.getChildren().clear();
-				backB.getChildren().add(iv1);
+				backButton.getChildren().clear();
+				backButton.getChildren().add(iv1);
 			}
 		});
-		backB.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+		backButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Image playI = new Image(ClassLoader.getSystemResource("Back.png").toString());
 				ImageView iv1 = new ImageView(playI);
 				iv1.setFitHeight(100);
 				iv1.setFitWidth(300);
-				backB.getChildren().clear();
-				backB.getChildren().add(iv1);
+				backButton.getChildren().clear();
+				backButton.getChildren().add(iv1);
 			}
 
 		});
-		FadeTransition backBAction = new FadeTransition();
-		backBAction.setNode(backB);
-		backBAction.setFromValue(1);
-		backBAction.setToValue(0.2);
-		backBAction.setCycleCount(Animation.INDEFINITE);
-		backBAction.setDuration(Duration.millis(500));
-		backBAction.setAutoReverse(true);
-		backBAction.play();
-		root5.getChildren().add(backB);
+		FadeTransition backButtonAction = new FadeTransition();
+		backButtonAction.setNode(backButton);
+		backButtonAction.setFromValue(1);
+		backButtonAction.setToValue(0.2);
+		backButtonAction.setCycleCount(Animation.INDEFINITE);
+		backButtonAction.setDuration(Duration.millis(500));
+		backButtonAction.setAutoReverse(true);
+		backButtonAction.play();
+		root5.getChildren().add(backButton);
 
 		// left1
 		Image leftI = new Image(ClassLoader.getSystemResource("left.png").toString());
@@ -421,7 +424,7 @@ public class Main extends Application {
 			public void handle(MouseEvent e) {
 				if (player1Index > 1) {
 					player1Index = player1Index - 1;
-					setScene5();
+					setcharacterSelectScene();
 				}
 			}
 
@@ -454,7 +457,7 @@ public class Main extends Application {
 			public void handle(MouseEvent e) {
 				if (player2Index > 1) {
 					player2Index = player2Index - 1;
-					setScene5();
+					setcharacterSelectScene();
 				}
 			}
 
@@ -488,7 +491,7 @@ public class Main extends Application {
 			public void handle(MouseEvent e) {
 				if (player1Index < 7) {
 					player1Index = player1Index + 1;
-					setScene5();
+					setcharacterSelectScene();
 				}
 			}
 
@@ -521,7 +524,7 @@ public class Main extends Application {
 			public void handle(MouseEvent e) {
 				if (player2Index < 7) {
 					player2Index = player2Index + 1;
-					setScene5();
+					setcharacterSelectScene();
 				}
 			}
 
@@ -550,14 +553,14 @@ public class Main extends Application {
 		P2.setLayoutY(yposlr - 100);
 		root5.getChildren().add(P1);
 		root5.getChildren().add(P2);
-		setScene5();
+		setcharacterSelectScene();
 
-		scene5 = new Scene(root5, 1280, 720);
-		// end setScene1
+		characterSelectScene = new Scene(root5, 1280, 720);
+		// end setmainMenu
 		
 		//button sound effect
 		
-		playB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		playButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
@@ -567,7 +570,7 @@ public class Main extends Application {
 			}
 
 		});
-		nextB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		nextButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
@@ -577,7 +580,7 @@ public class Main extends Application {
 			}
 
 		});
-		backB.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
@@ -587,7 +590,7 @@ public class Main extends Application {
 			}
 
 		});
-		exitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		MenuExitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
@@ -597,7 +600,7 @@ public class Main extends Application {
 			}
 
 		});
-		exitButton2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		Player1ExitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
@@ -607,7 +610,7 @@ public class Main extends Application {
 			}
 
 		});
-		exitButton3.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		Player2ExitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				Media musicFile=new Media(ClassLoader.getSystemResource("Click.mp3").toString());
@@ -657,25 +660,9 @@ public class Main extends Application {
 			}
 
 		});
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
 		// start
-		setScene(primaryStage, scene1);
+		setScene(primaryStage, mainMenu);
 
 	}
 
@@ -690,7 +677,7 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 
-	public static void setScene5() {
+	public static void setcharacterSelectScene() {
 		if (player1Index == 1) {
 			left1.setVisible(false);
 			right1.setVisible(true);
@@ -712,9 +699,9 @@ public class Main extends Application {
 			right2.setVisible(true);
 		}
 		if(player1Index==player2Index) {
-			nextB.setVisible(false);
+			nextButton.setVisible(false);
 		}else {
-			nextB.setVisible(true);
+			nextButton.setVisible(true);
 		}
 
 		if (player1Index == 1) {
@@ -795,8 +782,8 @@ public class Main extends Application {
 	}
 
 	public void handle(ActionEvent event) {
-		if (event.getSource() == playB) {
-			setScene(primary, scene5);
+		if (event.getSource() == playButton) {
+			setScene(primary, characterSelectScene);
 		}
 	}
 	public static void restart() {
@@ -812,8 +799,27 @@ public class Main extends Application {
 		root2.getChildren().add(controlPane);
 		root2.getChildren().add(fieldPane);
 		root2.getChildren().add(controlPane2);
-		
-		scene2 = new Scene(root2,1280,720);
+		BoardScene = new Scene(root2,1280,720);
+	}
+	
+	public static void secTime() {
+		timeline = new Timeline();
+		timeline.setCycleCount(Animation.INDEFINITE);
+		if (timeline == null) {
+			timeline.stop();
+		}
+		KeyFrame frame = new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				ControlPane2.Time.setText("Time: "+secondCount);
+				ControlPane.labelUpdate();
+				ControlPane2.labelUpdate();
+				secondCount++;
+			}
+		});
+		timeline.getKeyFrames().add(frame);
+		timeline.playFromStart();
 	}
 
 }

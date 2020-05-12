@@ -4,7 +4,7 @@ import gui.ControlPane;
 import gui.ControlPane2;
 import logic.GameController;
 
-public class GetHeal extends SpecialTile{
+public class GetHeal extends SpecialTile implements Special{
 	public GetHeal(int x, int y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub

@@ -5,7 +5,7 @@ import gui.ControlPane;
 import gui.ControlPane2;
 import logic.GameController;
 
-public class RemoveAllSpecialTile extends SpecialTile{
+public class RemoveAllSpecialTile extends SpecialTile implements Special{
 
 	
 	public RemoveAllSpecialTile(int x, int y) {

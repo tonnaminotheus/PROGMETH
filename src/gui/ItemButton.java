@@ -86,7 +86,7 @@ public class ItemButton extends Button{
 			@Override
 			public void handle(MouseEvent e) {
 				ItemPane.resetButtonsBackGroundColor();
-				Main.setScene(Main.primary,Main.scene1);
+				Main.setScene(Main.primary,Main.mainMenu);
 				ItemButton now = (ItemButton)e.getSource();
 				Main.restart();
 				String playermessage ="";

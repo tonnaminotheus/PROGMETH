@@ -292,22 +292,22 @@ public class FieldCell extends Pane {
 					ItemPane.resetButtonsBackGroundColor();
 					Main.gameActionNow=0;
 					if (GameController.getPlayer1().getX() == 16 || GameController.getPlayer2().getLp() == 0) {
-						Main.setScene(Main.primary, Main.scene3);
+						Main.setScene(Main.primary, Main.player1WinScene);
 					} else if (GameController.getPlayer2().getX() == 0 || GameController.getPlayer1().getLp() == 0) {
-						Main.setScene(Main.primary, Main.scene4);
+						Main.setScene(Main.primary, Main.player2WinScene);
 					}
 					//if()
 					if(GameController.getTurn()%2==0) {
 						if(!isNotLose(GameController.getPlayer1())) {
-							Main.setScene(Main.primary, Main.scene4);
+							Main.setScene(Main.primary, Main.player2WinScene);
 						}else if(!isNotLose(GameController.getPlayer2())) {
-							Main.setScene(Main.primary, Main.scene3);
+							Main.setScene(Main.primary, Main.player1WinScene);
 						}
 					}else {
 						if(!isNotLose(GameController.getPlayer2())) {
-							Main.setScene(Main.primary, Main.scene3);
+							Main.setScene(Main.primary, Main.player1WinScene);
 						}else if(!isNotLose(GameController.getPlayer1())) {
-							Main.setScene(Main.primary, Main.scene4);
+							Main.setScene(Main.primary, Main.player2WinScene);
 						}
 					}
 					GameController.increaseTurn();

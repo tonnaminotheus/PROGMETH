@@ -37,9 +37,7 @@ public class ControlPane2 extends VBox {
 	protected static Label player2=new Label("Player2");
 	private static FadeTransition fade1 = new FadeTransition();
 	private static FadeTransition fade2 = new FadeTransition();
-	private static Label Time = new Label();
-	private static int secondCount=0;
-	private static Timeline timeline;
+	public static Label Time = new Label();
 	
 	
 	public ControlPane2() {
@@ -50,7 +48,6 @@ public class ControlPane2 extends VBox {
 		this.setPrefWidth(300);
 		this.setSpacing(15);
 		this.setFillWidth(true);
-		
 		fade1.setNode(player1);
 		fade2.setNode(player2);
 
@@ -117,26 +114,6 @@ public class ControlPane2 extends VBox {
 	        fade1.play();
 		}
 		
-	}
-	
-	public static void secTime() {
-		timeline = new Timeline();
-		timeline.setCycleCount(Animation.INDEFINITE);
-		if (timeline == null) {
-			timeline.stop();
-		}
-		KeyFrame frame = new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent arg0) {
-				Time.setText("Time: "+secondCount);
-				ControlPane.labelUpdate();
-				ControlPane2.labelUpdate();
-				secondCount++;
-			}
-		});
-		timeline.getKeyFrames().add(frame);
-		timeline.playFromStart();
 	}
 
 }

@@ -4,7 +4,7 @@ import gui.ControlPane;
 import gui.ControlPane2;
 import logic.GameController;
 
-public class GetBarricade extends SpecialTile{
+public class GetBarricade extends SpecialTile implements Special{
 	public GetBarricade(int x, int y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub

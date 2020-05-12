@@ -13,21 +13,6 @@ public class GameMap {
 
 	private ArrayList<Entity> allEntity;
 
-	public GameMap(int column, int row) {
-
-		allEntity = new ArrayList<Entity>();
-
-		setWidth(column);
-		setHeight(row);
-
-		cellmap = new Cell[row][column];
-		for (int i = 0; i < column; i++) {
-			for (int j = 0; j < row; j++) {
-				cellmap[i][j] = new Cell();
-			}
-		}
-	}
-
 	public GameMap() {
 
 		allEntity = new ArrayList<Entity>();

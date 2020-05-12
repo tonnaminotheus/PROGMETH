@@ -4,7 +4,7 @@ import gui.ControlPane;
 import gui.ControlPane2;
 import logic.GameController;
 
-public class AddBomb extends SpecialTile{
+public class AddBomb extends SpecialTile implements Special{
 	public AddBomb(int x, int y) {
 		super(x, y);
 	}

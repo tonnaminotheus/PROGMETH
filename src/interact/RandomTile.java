@@ -6,7 +6,7 @@ import gui.ControlPane2;
 import logic.GameController;
 import logic.moveFail;
 
-public class RandomTile extends SpecialTile{
+public class RandomTile extends SpecialTile implements Special{
 
 	public RandomTile(int x, int y) {
 		super(x, y);

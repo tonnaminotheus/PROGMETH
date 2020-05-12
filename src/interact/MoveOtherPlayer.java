@@ -5,7 +5,7 @@ import gui.ControlPane2;
 import logic.GameController;
 import logic.moveFail;
 
-public class MoveOtherPlayer extends SpecialTile{
+public class MoveOtherPlayer extends SpecialTile implements Special{
 	public MoveOtherPlayer(int x, int y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub
