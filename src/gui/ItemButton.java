@@ -23,7 +23,7 @@ import application.Main;
 
 public class ItemButton extends Button{
 	private Item item;
-	ItemButton(String itemName){
+	public ItemButton(String itemName){
 		// TODO complete the constructor
 		super();
 		this.setPadding(new Insets(5));

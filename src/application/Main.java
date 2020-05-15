@@ -62,10 +62,12 @@ public class Main extends Application {
 		Media musicFile=new Media(ClassLoader.getSystemResource("gameSong.mp3").toString());
 		mediaplayer = new MediaPlayer(musicFile);
 		mediaplayer.setAutoPlay(true);
-		mediaplayer.setVolume(0.10);
+		mediaplayer.setVolume(0.50);
 		mediaplayer.setCycleCount(Animation.INDEFINITE);
 		mediaplayer.setVolume(0.05);
 		// setmainMenu
+		// setScene1
+
 
 		Group root = new Group();
 
